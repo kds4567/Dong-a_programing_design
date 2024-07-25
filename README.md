@@ -1,2 +1,2 @@
 # BBsabermetrix
-<h1>KBO ±â¹Ý ±¸´Ü ¼¼ÀÌ¹ö ¸ÅÆ®¸¯½º µ¥ÀÌÅÍ ºÐ¼® ¹× °á°ú Ç¥Ãâ</h1>
+<h1>í•˜ì´í•˜ì´ ë°˜ê°€ë£¨</h1>
