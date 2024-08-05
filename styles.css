@@ -1,0 +1,30 @@
+.test {
+    color: red;
+}
+
+.main-header {
+    background-color: #f8f9fa;
+    padding: 20px;
+    text-align: center;
+}
+
+.header-top h1 {
+    font-size: 2em;
+    color: #333;
+}
+
+.menu-bar-wrapper {
+    display: flex;
+    justify-content: center;
+    background-color: #007bff;
+}
+
+.menu-wrapper {
+    margin: 0 10px;
+    padding: 10px;
+}
+
+.menu-wrapper .text {
+    color: #fff;
+    font-weight: bold;
+}

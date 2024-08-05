@@ -5,7 +5,7 @@ require('dotenv').config();
 const app = express();
 const port = 3000;
 
-// MySQL ¿¬°á ¼³Á¤
+// MySQL ì—°ê²° ì„¤ì •
 const connection = mysql.createConnection({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
@@ -21,16 +21,27 @@ connection.connect(err => {
   console.log('Connected to MySQL as id ' + connection.threadId);
 });
 
-// EJS ÅÛÇÃ¸´ ¿£Áø ¼³Á¤
-app.set('view engine', 'ejs');
-app.set('views', './views');  // ºä ÆÄÀÏÀÌ À§Ä¡ÇÑ µð·ºÅä¸® ¼³Á¤ (±âº»°ª: 'views')
+// ì •ì  íŒŒì¼ ì œê³µ ì„¤ì •
+app.use(express.static('public'));  // public ë””ë ‰í† ë¦¬ì—ì„œ ì •ì  íŒŒì¼ì„ ì œê³µ
 
-// ±âº» ¶ó¿ìÆ® ¼³Á¤
+// EJS í…œí”Œë¦¿ ì—”ì§„ ì„¤ì •
+app.set('view engine', 'ejs');
+app.set('views', './views');  // ë·° íŒŒì¼ì´ ìœ„ì¹˜í•œ ë””ë ‰í† ë¦¬ ì„¤ì • (ê¸°ë³¸ê°’: 'views')
+
+// ê¸°ë³¸ ë¼ìš°íŠ¸ ì„¤ì •
 app.get('/', (req, res) => {
-  res.render('test'); // views/index.ejs ÆÄÀÏÀ» ·»´õ¸µ
+  const query = 'SELECT * FROM kbo_team_rank';
+  connection.query(query, (err, results) => {
+    if (err) {
+      console.error('Error executing query:', err.stack);
+      res.status(500).send('Error executing query');
+      return;
+    }
+    res.render('test', { data: results });  // ì¿¼ë¦¬ ê²°ê³¼ë¥¼ í…œí”Œë¦¿ìœ¼ë¡œ ì „ë‹¬
+  });
 });
 
-// ¼­¹ö ½ÃÀÛ
+// ì„œë²„ ì‹œìž‘
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}/`);
 });
