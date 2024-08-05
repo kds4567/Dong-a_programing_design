@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>테스트</title>
+    <title>세이버매트릭스</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -62,9 +62,9 @@
                             <tbody>
                                 <% data.forEach(row => { %>
                                     <tr>
-                                        <td><%= row.team %></td>
+                                        <td id="bold-text"><%= row.team %></td>
                                         <td><%= row.game %></td>
-                                        <td><%= row.win %></td>
+                                        <td id="bold-text"><%= row.win %></td>
                                         <td><%= row.draw %></td>
                                         <td><%= row.lose %></td>
                                         <td><%= row.winrate %></td>
@@ -79,6 +79,53 @@
                 <div class="main-box1">
                     <div class="box-header">
                         <span>구단 WAR 상위 10명</span>
+                    </div>
+                    <div class="box-main">
+                        <table class="table-main">
+                            <thead class="box-menu">
+                                <tr>
+                                    <th>순위</th>
+                                    <th>이름</th>
+                                    <th>포지션</th>
+                                    <th>정렬WAR</th>
+                                    <th>WAR</th>
+                                    <th>WAA_BT</th>
+                                    <th>WAA_SB</th>
+                                    <th>WAA_BR</th>
+                                    <th>WAA_DEF</th>
+                                    <th>REF_WINS</th>
+                                    <th>POS_WINS</th>
+                                    <th>WAA_P_GS</th>
+                                    <th>WAA_P_GR</th>
+                                    <th>REP_WIN_P_GS</th>
+                                    <th>REP_WIN_P_GR</th>
+                                    <th>WAR_GS</th>
+                                    <th>WAR_GR</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% data2.forEach(row2 => { %>
+                                    <tr>
+                                        <td id="bold-text"><%= row2.rank %></td>
+                                        <td><%= row2.name %></td>
+                                        <td id="bold-text"><%= row2.sort_war %></td>
+                                        <td><%= row2.war %></td>
+                                        <td><%= row2.waa_bt %></td>
+                                        <td><%= row2.waa_sb %></td>
+                                        <td><%= row2.waa_br %></td>
+                                        <td><%= row2.waa_def %></td>
+                                        <td><%= row2.rep_wins %></td>
+                                        <td><%= row2.pos_wins %></td>
+                                        <td><%= row2.waa_p_gs %></td>
+                                        <td><%= row2.waa_p_gr %></td>
+                                        <td><%= row2.rep_win_p_gs %></td>
+                                        <td><%= row2.rep_win_p_gr %></td>
+                                        <td><%= row2.war_gs %></td>
+                                        <td><%= row2.war_gr %></td>
+                                    </tr>
+                                <% }); %>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

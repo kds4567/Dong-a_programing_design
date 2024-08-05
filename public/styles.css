@@ -32,18 +32,33 @@ body{
     align-items: center;
     margin-top: 10px;
 }
-.main-box1{
-    width:30rem;
-    margin:0 10px;
+.main-box1 {
+    width: 30rem;
+    margin: 0 10px;
+    border-radius: .5rem !important;
+    overflow: hidden; /* 꼭 필요하지 않다면 제거해도 됩니다 */
 }
 .box-header{
-    height:2rem;
+    height:2.5rem;
     font-weight: bold;
     background-color: #041E42;
     color:white;
+    display: flex;
+    align-items: center;  /* 수직 중앙 정렬 */  
+    text-align: center;  /* 텍스트 정렬 */
+}
+.box-header span{
+    margin-left: 10px;
+}
+.box-main{
+    overflow: auto;
+    height:280px;
 }
 .table-main{
     background-color: white;
     width:30rem;
     text-align: center;
+}
+#bold-text{
+    font-weight: bold;
 }
