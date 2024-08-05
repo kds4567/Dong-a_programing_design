@@ -31,15 +31,28 @@ app.set('views', './views');  // 뷰 파일이 위치한 디렉토리 설정 (�
 // 기본 라우트 설정
 app.get('/', (req, res) => {
   const query = 'SELECT * FROM kbo_team_rank';
+  const query2 = 'SELECT * FROM kbo_player_rank';  // rank 기준으로 정렬
+
   connection.query(query, (err, results) => {
     if (err) {
       console.error('Error executing query:', err.stack);
       res.status(500).send('Error executing query');
       return;
     }
-    res.render('test', { data: results });  // 쿼리 결과를 템플릿으로 전달
+
+    connection.query(query2, (err, results2) => {
+      if (err) {
+        console.error('Error executing query:', err.stack);
+        res.status(500).send('Error executing query');
+        return;
+      }
+
+      // 두 쿼리 결과를 템플릿에 전달
+      res.render('test', { data: results, data2: results2 });
+    });
   });
 });
+
 
 // 서버 시작
 app.listen(port, () => {
