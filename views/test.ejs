@@ -1,4 +1,112 @@
 <!DOCTYPE html>
-<head><meta charset="UTF-8">
-<title>테스트</title></head>
-<h1>Mysql데이터베이스 연결 및 Node.js 구동 확인</h1>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>테스트</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="main-header">
+        <div class="header-top">
+            <h1>롯데자이언츠 데이터 매트릭스</a>
+        </div>
+        <div class="main-bottom">
+            <div class="menu-bar-wrapper">
+                <div class="menu-wrapper">
+                    <span class="text">메뉴1</span>
+                </div>
+                <div class="menu-wrapper">
+                    <span class="text">메뉴2</span>
+                </div>
+                <div class="menu-wrapper">
+                    <span class="text">메뉴3</span>
+                </div>
+                <div class="menu-wrapper">
+                    <span class="text">메뉴4</span>
+                </div>
+                <div class="menu-wrapper">
+                    <span class="text">메뉴5</span>
+                </div>
+                <div class="menu-wrapper">
+                    <span class="text">메뉴6</span>
+                </div>
+                <div class="menu-wrapper">
+                    <span class="text">메뉴7</span>
+                </div>
+                <div class="menu-wrapper">
+                    <span class="text">메뉴8</span>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="main-box-wrapper">
+            <div class="main-box">
+                <div class="main-box1">
+                    <div class="box-header">
+                        <span>구단 순위</span>
+                    </div>
+                    <div class="box_main">
+                        <table class="table-main">
+                            <thead class="box-menu">
+                                <tr>
+                                    <th>팀명</th>
+                                    <th>경기</th>
+                                    <th>승</th>
+                                    <th>무</th>
+                                    <th>패</th>
+                                    <th>승률</th>
+                                    <th>게임차</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% data.forEach(row => { %>
+                                    <tr>
+                                        <td><%= row.team %></td>
+                                        <td><%= row.game %></td>
+                                        <td><%= row.win %></td>
+                                        <td><%= row.draw %></td>
+                                        <td><%= row.lose %></td>
+                                        <td><%= row.winrate %></td>
+                                        <td><%= row.game_behind %></td>
+                                    </tr>
+                                <% }); %>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                </div>
+                <div class="main-box1">
+                    <div class="box-header">
+                        <span>구단 WAR 상위 10명</span>
+                    </div>
+                </div>
+            </div>
+            <div class="main-box">
+                <div class="main-box1">
+                    <div class="box-header">
+                        <span>구단 타자 순위</span>
+                    </div>
+                </div>
+                <div class="main-box1">
+                    <div class="box-header">
+                        <span>구단 투수 순위</span>
+                    </div>
+                </div>
+            </div>
+            <div class="main-box">
+                <div class="main-box1">
+                    <div class="box-header">
+                        <span>최근 경기 결과</span>
+                    </div>
+                </div>
+                <div class="main-box1">
+                    <div class="box-header">
+                        <span>다음 경기 일정</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

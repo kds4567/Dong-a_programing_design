@@ -1,0 +1,49 @@
+body{
+    background-color:#f0f0f0;   
+}
+.main-header {
+    background-color: #ffffff;
+    width: 100%;
+    padding:1rem;
+}
+
+.header-top h1 {
+    font-size: 1.5rem;
+    color: #041E42;
+    margin-top: 0;
+}
+
+.menu-bar-wrapper {
+    display: flex;
+}
+
+.menu-wrapper {
+    margin: 0 10px;
+}
+
+.menu-wrapper .text {
+    color:#041E42;
+    font-weight: bold;
+    font-size: 1.3rem;
+}
+.main-box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+}
+.main-box1{
+    width:30rem;
+    margin:0 10px;
+}
+.box-header{
+    height:2rem;
+    font-weight: bold;
+    background-color: #041E42;
+    color:white;
+}
+.table-main{
+    background-color: white;
+    width:30rem;
+    text-align: center;
+}
