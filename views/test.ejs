@@ -81,7 +81,7 @@
                         <span>구단 WAR 상위 10명</span>
                     </div>
                     <div class="box-main">
-                        <table class="table-main">
+                        <table class="table-main2">
                             <thead class="box-menu">
                                 <tr>
                                     <th>순위</th>
@@ -106,8 +106,9 @@
                             <tbody>
                                 <% data2.forEach(row2 => { %>
                                     <tr>
-                                        <td id="bold-text"><%= row2.rank %></td>
+                                        <td id="bold-text"><%= row2.num %></td>
                                         <td><%= row2.name %></td>
+                                        <td><%= row2.team %></td>
                                         <td id="bold-text"><%= row2.sort_war %></td>
                                         <td><%= row2.war %></td>
                                         <td><%= row2.waa_bt %></td>
@@ -144,7 +145,7 @@
             <div class="main-box">
                 <div class="main-box1">
                     <div class="box-header">
-                        <span>최근 경기 결과</span>
+                        <span>최근 경기 결과입니다.</span>
                     </div>
                 </div>
                 <div class="main-box1">

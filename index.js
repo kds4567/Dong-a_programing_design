@@ -30,8 +30,8 @@ app.set('views', './views');  // 뷰 파일이 위치한 디렉토리 설정 (�
 
 // 기본 라우트 설정
 app.get('/', (req, res) => {
-  const query = 'SELECT * FROM kbo_team_rank';
-  const query2 = 'SELECT * FROM kbo_player_rank';  // rank 기준으로 정렬
+  const query = 'SELECT * FROM kbo_team_rank ORDER BY winrate DESC';
+  const query2 = 'SELECT * FROM kbo_player_rank ORDER BY num ASC';  // rank 기준으로 정렬
 
   connection.query(query, (err, results) => {
     if (err) {

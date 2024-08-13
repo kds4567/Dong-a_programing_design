@@ -56,7 +56,12 @@ body{
 }
 .table-main{
     background-color: white;
-    width:30rem;
+    width: 30rem;
+    text-align: center;
+}
+.table-main2{
+    background-color: white;
+    width:100rem;
     text-align: center;
 }
 #bold-text{
