@@ -36,7 +36,7 @@ body{
     width: 30rem;
     margin: 0 10px;
     border-radius: .5rem !important;
-    overflow: hidden; /* 꼭 필요하지 않다면 제거해도 됩니다 */
+
 }
 .box-header{
     height:2.5rem;
@@ -52,11 +52,16 @@ body{
 }
 .box-main{
     overflow: auto;
-    height:280px;
+    height:300px;
 }
 .table-main{
     background-color: white;
-    width:30rem;
+    width: 30rem;
+    text-align: center;
+}
+.table-main2{
+    background-color: white;
+    width:100rem;
     text-align: center;
 }
 #bold-text{

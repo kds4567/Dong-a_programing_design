@@ -81,7 +81,7 @@
                         <span>구단 WAR 상위 10명</span>
                     </div>
                     <div class="box-main">
-                        <table class="table-main">
+                        <table class="table-main2">
                             <thead class="box-menu">
                                 <tr>
                                     <th>순위</th>
@@ -106,8 +106,9 @@
                             <tbody>
                                 <% data2.forEach(row2 => { %>
                                     <tr>
-                                        <td id="bold-text"><%= row2.rank %></td>
+                                        <td id="bold-text"><%= row2.num %></td>
                                         <td><%= row2.name %></td>
+                                        <td><%= row2.team %></td>
                                         <td id="bold-text"><%= row2.sort_war %></td>
                                         <td><%= row2.war %></td>
                                         <td><%= row2.waa_bt %></td>
@@ -134,10 +135,122 @@
                     <div class="box-header">
                         <span>구단 타자 순위</span>
                     </div>
+                    <div class="box_main">
+                        <table class="table-main">
+                            <thead class="box-menu">
+                                <tr>
+                                    <th>항목</th>
+                                    <th>1위</th>
+                                    <th>2위</th>
+                                    <th>3위</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                    <tr>
+                                        <td>WAR</td>
+                                        <% data3.forEach(row3 => { %>
+                                        <td><%= row3.name %>
+                                        <%= row3.WAR %></td>
+                                        <% }); %>
+                                    </tr>
+                                    <tr>
+                                        <td>타율</td>
+                                        <% data4.forEach(row4 => { %>
+                                        <td><%= row4.name %>
+                                        <%= row4.AVG %></td>
+                                        <% }); %>
+                                    </tr>
+                                    <tr>
+                                        <td>안타</td>
+                                        <% data5.forEach(row5 => { %>
+                                        <td><%= row5.name %>
+                                        <%= row5.H %></td>
+                                        <% }); %>
+                                    </tr>
+                                    <tr>
+                                        <td>홈런</td>
+                                        <% data6.forEach(row6 => { %>
+                                        <td><%= row6.name %>
+                                        <%= row6.HR %></td>
+                                        <% }); %>
+                                    </tr>
+                                    <tr>
+                                        <td>출루율</td>
+                                        <% data7.forEach(row7 => { %>
+                                        <td><%= row7.name %>
+                                        <%= row7.OBP %></td>
+                                        <% }); %>
+                                        </tr>
+                                    <tr>
+                                        <td>장타율</td>
+                                        <% data8.forEach(row8 => { %>
+                                        <td><%= row8.name %>
+                                        <%= row8.SLG %></td>
+                                        <% }); %>
+                                    </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
                 <div class="main-box1">
                     <div class="box-header">
                         <span>구단 투수 순위</span>
+                    </div>
+                    <div class="box_main">
+                        <table class="table-main">
+                            <thead class="box-menu">
+                                <tr>
+                                    <th>항목</th>
+                                    <th>1위</th>
+                                    <th>2위</th>
+                                    <th>3위</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                    <tr>
+                                        <td>ERA</td>
+                                        <% data9.forEach(row9 => { %>
+                                        <td><%= row9.name %>
+                                        <%= row9.era %></td>
+                                        <% }); %>
+                                    </tr>
+                                    <tr>
+                                        <td>WHIP</td>
+                                        <% data10.forEach(row10 => { %>
+                                        <td><%= row10.name %>
+                                        <%= row10.whip %></td>
+                                        <% }); %>
+                                    </tr>
+                                    <tr>
+                                        <td>삼진</td>
+                                        <% data11.forEach(row11 => { %>
+                                        <td><%= row11.name %>
+                                        <%= row11.so %></td>
+                                        <% }); %>
+                                    </tr>
+                                    <tr>
+                                        <td>승</td>
+                                        <% data12.forEach(row12 => { %>
+                                        <td><%= row12.name %>
+                                        <%= row12.win %></td>
+                                        <% }); %>
+                                    </tr>
+                                    <tr>
+                                        <td>홀드</td>
+                                        <% data13.forEach(row13 => { %>
+                                        <td><%= row13.name %>
+                                        <%= row13.hold %></td>
+                                        <% }); %>
+                                        </tr>
+                                    <tr>
+                                        <td>세이브</td>
+                                        <% data14.forEach(row14 => { %>
+                                        <td><%= row14.name %>
+                                        <%= row14.save %></td>
+                                        <% }); %>
+                                    </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
