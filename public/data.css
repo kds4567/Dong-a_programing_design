@@ -26,43 +26,23 @@ body{
     font-weight: bold;
     font-size: 1.3rem;
 }
-.main-box{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 10px;
-}
-.main-box1 {
-    width: 30rem;
-    margin: 0 10px;
-    border-radius: .5rem !important;
-
-}
-.box-header{
-    height:2.5rem;
-    font-weight: bold;
-    background-color: #041E42;
-    color:white;
-    display: flex;
-    align-items: center;  /* 수직 중앙 정렬 */  
-    text-align: center;  /* 텍스트 정렬 */
-}
-.box-header span{
-    margin-left: 10px;
-}
 .box-main{
-    overflow: auto;
-    height:300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .table-main{
     background-color: white;
-    width: 30rem;
+    width: 95%;
     text-align: center;
+    border-collapse: collapse;
 }
-.table-main2{
-    background-color: white;
-    width:100rem;
-    text-align: center;
+th{
+    border-bottom: 1px solid black;
+}
+td{
+    border-bottom: 1px solid black;
+    padding: 6px;
 }
 #bold-text{
     font-weight: bold;

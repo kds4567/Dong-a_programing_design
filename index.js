@@ -145,6 +145,24 @@ app.get('/', (req, res) => {
     });
 });
 
+app.get('/data', (req, res) => {
+  query1 = 'SELECT * FROM kbo_player_rank ORDER BY WAR DESC';
+
+  const query1Promise = new Promise((resolve, reject) => {
+    connection.query(query1, (err, results) => {
+      if (err) reject(err);
+      else resolve(results);
+    });
+  });
+
+  Promise.all([query1Promise]).then(([results]) => {
+      res.render('data',{ data: results })
+    })
+    .catch(err => {
+      console.error('Error executing query:', err.stack);
+      res.status(500).send('Error executing query');
+    });
+  });
 
 
 // 서버 시작
