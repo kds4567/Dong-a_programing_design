@@ -162,7 +162,37 @@ app.get('/data', (req, res) => {
       console.error('Error executing query:', err.stack);
       res.status(500).send('Error executing query');
     });
+});
+
+app.get('/data/P', (req, res) => {
+  const query = "SELECT * FROM kbo_pitcher_rank ORDER BY war DESC";
+
+  connection.query(query, (err, results) => {
+    if (err) {
+      console.error('Error executing query:', err.stack);
+      res.status(500).send('Error executing query');
+      return;
+    }
+    
+    // 데이터를 EJS 템플릿으로 전달
+    res.render('pdata', { data: results });
   });
+});
+app.get('/data/B', (req, res) => {
+  const query = "SELECT * FROM kbo_hitter_rank ORDER BY war DESC";
+
+  connection.query(query, (err, results) => {
+    if (err) {
+      console.error('Error executing query:', err.stack);
+      res.status(500).send('Error executing query');
+      return;
+    }
+    
+    // 데이터를 EJS 템플릿으로 전달
+    res.render('hdata', { data: results });
+  });
+});
+
 
 
 // 서버 시작

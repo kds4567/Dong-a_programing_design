@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>세이버매트릭스</title>
+    <link rel="stylesheet" href="/data.css">
+</head>
+<body>
+    <header class="main-header">
+        <div class="header-top">
+            <a href="/" class="logo">롯데자이언츠 데이터 매트릭스</a>
+        </div>
+        <div class="main-bottom">
+            <div class="menu-bar-wrapper">
+                <div class="menu-wrapper">
+                    <a href="/data" class="text">기록실</a>
+                </div>
+                <div class="menu-wrapper">
+                    <span class="text">메뉴2</span>
+                </div>
+                <div class="menu-wrapper">
+                    <span class="text">메뉴3</span>
+                </div>
+                <div class="menu-wrapper">
+                    <span class="text">메뉴4</span>
+                </div>
+                <div class="menu-wrapper">
+                    <span class="text">메뉴5</span>
+                </div>
+                <div class="menu-wrapper">
+                    <span class="text">메뉴6</span>
+                </div>
+                <div class="menu-wrapper">
+                    <span class="text">메뉴7</span>
+                </div>
+                <div class="menu-wrapper">
+                    <span class="text">메뉴8</span>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main>
+        <button class="btn01" onclick="location.href='/data';">전체</button>
+        <button class="btn01" onclick="location.href='/data/P';">투수</button>
+        <button class="btn02" onclick="location.href='/data/B';">타자</button>
+        <div class="box-main">
+            <table class="table-main">
+                <thead class="box-menu">
+                    <tr>
+                        <th>순위</th>
+                        <th>이름</th>
+                        <th>포지션</th>
+                        <th>정렬WAR</th>
+                        <th>게임수</th>
+                        <th>GS</th>
+                        <th>GR</th>
+                        <th>GF</th>
+                        <th>CG</th>
+                        <th>SHO</th>
+                        <th>W</th>
+                        <th>L</th>
+                        <th>S</th>
+                        <th>HD</th>
+                        <th>IP</th>
+                        <th>ER</th>
+                        <th>R</th>
+                        <th>RRA</th>
+                        <th>TBF</th>
+                        <th>H</th>
+                        <th>2B</th>
+                        <th>3B</th>
+                        <th>HR</th>
+                        <th>BB</th>
+                        <th>HP</th>
+                        <th>IB</th>
+                        <th>SO</th>
+                        <th>ROE</th>
+                        <th>BK</th>
+                        <th>WP</th>
+                        <th>ERA</th>
+                        <th>RA9</th>
+                        <th>RRA</th>
+                        <th>RRA9PF</th>
+                        <th>FIP</th>
+                        <th>WHIP</th>
+                        <th>WAR</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% data.forEach(row => { %>
+                        <tr>
+                            <td id="bold-text"><%= row.num %></td>
+                            <td><%= row.name %></td>
+                            <td id="bold-text"><%= row.team %></td>
+                            <td><%= row.sort_war %></td>
+                            <td><%= row.game %></td>
+                            <td><%= row.gs %></td>
+                            <td><%= row.gr %></td>
+                            <td><%= row.gf %></td>
+                            <td><%= row.cg %></td>
+                            <td><%= row.sho %></td>
+                            <td><%= row.win %></td>
+                            <td><%= row.lose %></td>
+                            <td><%= row.save %></td>
+                            <td><%= row.hold %></td>
+                            <td><%= row.ip %></td>
+                            <td><%= row.er %></td>
+                            <td><%= row.r %></td>
+                            <td><%= row.rra %></td>
+                            <td><%= row.tbf %></td>
+                            <td><%= row.h %></td>
+                            <td><%= row.doubles %></td>
+                            <td><%= row.triples %></td>
+                            <td><%= row.hr %></td>
+                            <td><%= row.bb %></td>
+                            <td><%= row.hp %></td>
+                            <td><%= row.ib %></td>
+                            <td><%= row.so %></td>
+                            <td><%= row.roe %></td>
+                            <td><%= row.bk %></td>
+                            <td><%= row.wp %></td>
+                            <td><%= row.era %></td>
+                            <td><%= row.ra9 %></td>
+                            <td><%= row.rra9 %></td>
+                            <td><%= row.rra9pf %></td>
+                            <td><%= row.fip %></td>
+                            <td><%= row.whip %></td>
+                            <td><%= row.war %></td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        </div>
+    </main>
+</body>
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>세이버매트릭스</title>
+    <link rel="stylesheet" href="/data.css">
+</head>
+<body>
+    <header class="main-header">
+        <div class="header-top">
+            <a href="/" class="logo">롯데자이언츠 데이터 매트릭스</a>
+        </div>
+        <div class="main-bottom">
+            <div class="menu-bar-wrapper">
+                <div class="menu-wrapper">
+                    <a href="/data" class="text">기록실</a>
+                </div>
+                <div class="menu-wrapper">
+                    <span class="text">메뉴2</span>
+                </div>
+                <div class="menu-wrapper">
+                    <span class="text">메뉴3</span>
+                </div>
+                <div class="menu-wrapper">
+                    <span class="text">메뉴4</span>
+                </div>
+                <div class="menu-wrapper">
+                    <span class="text">메뉴5</span>
+                </div>
+                <div class="menu-wrapper">
+                    <span class="text">메뉴6</span>
+                </div>
+                <div class="menu-wrapper">
+                    <span class="text">메뉴7</span>
+                </div>
+                <div class="menu-wrapper">
+                    <span class="text">메뉴8</span>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main>
+        <button class="btn01" onclick="location.href='/data';">전체</button>
+        <button class="btn01" onclick="location.href='/data/P';">투수</button>
+        <button class="btn02" onclick="location.href='/data/B';">타자</button>
+        <div class="box-main">
+            <table class="table-main">
+                <thead class="box-menu">
+                    <tr>
+                        <th>순위</th>
+                        <th>이름</th>
+                        <th>포지션</th>
+                        <th>oWAR</th>
+                        <th>dWAR</th>
+                        <th>G</th>
+                        <th>PA</th>
+                        <th>ePA</th>
+                        <th>AB</th>
+                        <th>R</th>
+                        <th>H</th>
+                        <th>2B</th>
+                        <th>3B</th>
+                        <th>HR</th>
+                        <th>TB</th>
+                        <th>RBI</th>
+                        <th>SB</th>
+                        <th>CS</th>
+                        <th>BB</th>
+                        <th>HP</th>
+                        <th>IB</th>
+                        <th>SO</th>
+                        <th>GDP</th>
+                        <th>SH</th>
+                        <th>SF</th>
+                        <th>AVG</th>
+                        <th>OBP</th>
+                        <th>SLG</th>
+                        <th>OPS</th>
+                        <th>R/ePA</th>
+                        <th>wRC+</th>
+                        <th>WAR</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    <% data.forEach(row => { %>
+                        <tr>
+                            <td id="bold-text"><%= row.num %></td>
+                            <td><%= row.name %></td>
+                            <td id="bold-text"><%= row.team %></td>
+                            <td><%= row.oWAR %></td>
+                            <td><%= row.dWAR %></td>
+                            <td><%= row.game%></td>
+                            <td><%= row.PA %></td>
+                            <td><%= row.ePA %></td>
+                            <td><%= row.AB %></td>
+                            <td><%= row.R %></td>
+                            <td><%= row.H %></td>
+                            <td><%= row.DOUBLES %></td>
+                            <td><%= row.TRIPLES %></td>
+                            <td><%= row.HR %></td>
+                            <td><%= row.TB %></td>
+                            <td><%= row.RBI %></td>
+                            <td><%= row.SB %></td>
+                            <td><%= row.CS %></td>
+                            <td><%= row.BB %></td>
+                            <td><%= row.HP %></td>
+                            <td><%= row.IB %></td>
+                            <td><%= row.SO %></td>
+                            <td><%= row.GDP %></td>
+                            <td><%= row.SH %></td>
+                            <td><%= row.SF %></td>
+                            <td><%= row.AVG %></td>
+                            <td><%= row.OBP %></td>
+                            <td><%= row.SLG %></td>
+                            <td><%= row.OPS %></td>
+                            <td><%= row.RePA %></td>
+                            <td><%= row.wRCp %></td>
+                            <td><%= row.WAR2 %></td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        </div>
+    </main>
+</body>
+</html>
