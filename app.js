@@ -21,18 +21,16 @@ connection.connect(err => {
   console.log('Connected to MySQL as id ' + connection.threadId);
 });
 
-// 정적 파일 제공 설정
-app.use(express.static('public'));  // public 디렉토리에서 정적 파일을 제공
-
 // EJS 템플릿 엔진 설정
 app.set('view engine', 'ejs');
 app.set('views', './views');  // 뷰 파일이 위치한 디렉토리 설정 (기본값: 'views')
 
 // 기본 라우트 설정
-app.get('/', (req, res) => {
-  res.render('test');
+app.use('/', require('./routes/index'));
+app.use('/', require('./routes/admin'));
 
-});
+// 정적 파일 제공 설정
+app.use(express.static('public'));  // public 디렉토리에서 정적 파일을 제공
 
 
 // 서버 시작

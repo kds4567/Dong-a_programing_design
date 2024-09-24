@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>사용자 목록</title>
+</head>
+<body>
+<h1>사용자 목록</h1>
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Username</th>
+        <th>Name</th>
+        <th>Action</th>
+    </tr>
+    <% user.forEach(users => { %>
+        <tr>
+            <td><%= users.Id %></td>
+            <td><%= users.Username %></td>
+            <td><%= users.Name %></td>
+            <td>
+                <a href="/user/edit/<%= users.Id %>">수정</a>
+                <form action="/user/delete/<%= users.Id %>" method="POST" style="display:inline;">
+                    <button type="submit">삭제</button>
+                </form>
+            </td>
+        </tr>
+    <% }) %>
+
+</table>
+<p><a href="/"> 돌아가기</a>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>사용자 수정</title>
+</head>
+<body>
+<h1>사용자 수정</h1>
+<form method="POST" action="/user/edit/<%= user.Id %>">
+    <table>
+        <tr>
+            <td><label for="username">Username:</label></td>
+            <td><input type="text" id="username" name="username" value="<%= user.Username %>" required></td>
+        </tr>
+        <tr>
+            <td><label for="password">Password:</label></td>
+            <td><input type="password" id="password" name="password" value="<%= user.Password %>" required></td>
+        </tr>
+        <tr>
+            <td><label for="name">Name:</label></td>
+            <td><input type="text" id="name" name="name" value="<%= user.Name %>" required></td>
+        </tr>
+    </table>
+    <p></p><button type="submit">수정 완료</button>
+
+</form>
+</body>
+</html>
