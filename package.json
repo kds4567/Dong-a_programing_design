@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bbsabermetrix": "file:",
     "body-parser": "^1.20.3",
     "cookie-parser": "^1.4.6",
     "cookieparser": "^0.1.0",
