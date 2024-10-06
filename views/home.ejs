@@ -15,8 +15,16 @@
     <% if (user) { %>
         <h1><%= user.Name %>님 어서오시고 </h1><br>
         <a href="/logout">logout</a>
+        보유 repo
+        <% data.forEach(row => { %>
+            <tr>
+                <td id="bold-text"><%= row.Name %></td>
+            </tr>
+        <% }) %>
         <% if (user.Username == 'admin') { %>
                 <a href="/user">유저 관리 페이지</a>
+                <a href="/repo">저장소 관리 페이지 </a>
+                <a href="/commit">커밋 관리 페이지 </a>
         <% } %>
 
     <% } %>

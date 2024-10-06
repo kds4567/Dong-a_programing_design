@@ -79,5 +79,12 @@ router.post('/user/delete/:id', (req, res) => {
     });
 });
 
+router.get('/repo', (req, res) => {
+    res.render('repo');
+})
+
+router.get('/commit', (req, res) => {
+    res.render('commit');
+})
 
 module.exports = router;

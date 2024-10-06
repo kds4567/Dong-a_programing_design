@@ -23,15 +23,31 @@ router.use(session({
 }));
 
 // home 페이지
-router.get('/', async (req, res) => {
-        if (req.session.user) {
-                res.render('home', { user : req.session.user });
-        } else {
-                res.render('home', {user : null}); // 로그인하지 않은 경우
-        }
-});
+router.get('/', (req, res) => {
+        // 로그인한 사용자의 ID를 가져옵니다.
+        const ownerId = req.session.user ? req.session.user.Id : null;
 
-
+    
+        const query1 = 'SELECT Name FROM repo WHERE Owner_id = ?'; // 쿼리에서 ?를 사용하여 매개변수로 Owner_id를 설정합니다.
+    
+        const query1Promise = new Promise((resolve, reject) => {
+            connection.query(query1, [ownerId], (err, results) => { // ownerId를 쿼리 매개변수로 사용
+                if (err) reject(err);
+                else resolve(results);
+            });
+        });
+    
+        Promise.all([query1Promise])
+            .then(([results]) => {
+                res.render('home', { data: results, user: req.session.user }); // user를 세션에서 가져옵니다.
+            })
+            .catch(err => {
+                console.error('Error executing query:', err.stack);
+                res.status(500).send('Error executing query');
+            });
+    });
+    
+    
 // login 페이지
 router.get('/login', async (req, res) => {
         res.render('login',);
@@ -41,9 +57,8 @@ router.get('/login', async (req, res) => {
 // 로그인 처리
 router.post('/login', (req, res) => {
         const { username, password } = req.body;
-
         // 데이터베이스에서 사용자 정보 조회
-        connection.query(
+        connection.query(       
             'SELECT * FROM user WHERE Username = ? AND Password = ?',
             [username, password],
             (err, results) => {
