@@ -113,6 +113,29 @@ router.get('/logout', (req, res) => {
         });
 });
 
+router.post('/createrepo', (req, res) => {
+        const repoName = req.body.Name;
+    
+        // 로그인한 사용자의 Owner_id (예시로 1로 설정, 실제로는 세션에서 가져와야 함)
+        const ownerId = req.session.user ? req.session.user.Id : null;
+    
+        if (!ownerId) {
+            return res.status(401).send('사용자가 로그인하지 않았습니다.');
+        }
+    
+        // SQL 쿼리
+        const query = 'INSERT INTO repo (Name, Owner_id, Created, Updated) VALUES (?, ?, NOW(), NOW())';
+        
+        connection.query(query, [repoName, ownerId], (err, results) => {
+            if (err) {
+                console.error('Error inserting data:', err);
+                return res.status(500).send('데이터베이스에 레코드를 생성하는 데 실패했습니다.');
+            }
+            res.redirect('/');
+        });
+    });
+    
+
 // 세션 상태 확인
 router.get('/profile', (req, res) => {
         if (req.session.user) {

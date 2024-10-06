@@ -21,6 +21,11 @@
                 <td id="bold-text"><%= row.Name %></td>
             </tr>
         <% }) %>
+        <form action="/createrepo" method="post">
+            <input type="text" id="repoName" name="Name" required>
+            <button type="submit">생성</button>
+        </form>
+
         <% if (user.Username == 'admin') { %>
                 <a href="/user">유저 관리 페이지</a>
                 <a href="/repo">저장소 관리 페이지 </a>
