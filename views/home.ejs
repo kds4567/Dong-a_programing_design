@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>소프트웨어공학</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<div>
+    <% if  (user == null) { %>
+        <h1><a href="/login">로그인 </a></h1><br>
+        <h1><a href="/register">register</a></h1>
+    <% } %>
+
+    <% if (user) { %>
+        <h1><%= user.Name %>님 어서오시고 </h1><br>
+        <a href="/logout">logout</a>
+        보유 repo
+        <% data.forEach(row => { %>
+            <tr>
+                <td id="bold-text"><%= row.Name %></td>
+            </tr>
+        <% }) %>
+        <form action="/createrepo" method="post">
+            <input type="text" id="repoName" name="Name" required>
+            <button type="submit">생성</button>
+        </form>
+
+        <% if (user.Username == 'admin') { %>
+            <a href="/user">유저 관리 페이지</a>
+            <a href="/repo">저장소 관리 페이지 </a>
+            <a href="/commit">커밋 관리 페이지 </a>
+        <% } %>
+
+    <% } %>
+
+    <p>환영합니다! 소프트웨어 공학 페이지에 오신 것을 환영합니다.</p>
+</div>
+</body>
+</html>
