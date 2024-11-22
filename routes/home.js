@@ -6,9 +6,13 @@ router.use(bodyParser.urlencoded({ extended: true }));
 
 // 홈 페이지
 router.get('/', (req, res) => {
+    // 세션 정보 사용하는 법.
+    // req.session.user.?
+    // req.session.user 안에는 로그인한 유저의 db정보가 들어있음 (Id, Password, ....)
     const ownerId = req.session.user ? req.session.user.Id : null;
     const query1 = 'SELECT Name FROM repo WHERE Owner_id = ?';
 
+    // 아래 처럼 db쿼리 사용 가능(req.db)
     req.db.query(query1, [ownerId], (err, results) => {
         if (err) {
             console.error('Error executing query:', err.stack);

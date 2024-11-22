@@ -9,10 +9,6 @@ router.post('/', (req, res) => {
     const { Title, Content } = req.body;
     const Author = req.session.user ? req.session.user.Name : null;
 
-    console.log('Title:', Title); // 제목 확인
-    console.log('Content:', Content); // 내용 확인
-    console.log('Author:', Author); // 작성자 확인
-
     const query = 'INSERT INTO post (Title, Content, Author) VALUES (?, ?, ?)';
 
     req.db.query(query, [Title, Content, Author], (err, results) => {
