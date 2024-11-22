@@ -48,6 +48,7 @@ app.use('/', require('./routes/home'));
 app.use('/login', require('./routes/login'));
 app.use('/logout', require('./routes/logout'));
 app.use('/register', require('./routes/register'));
+app.use('/post', require('./routes/post'));
 
 // 서버 시작
 app.listen(PORT, () => {
