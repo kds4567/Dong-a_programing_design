@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Layout</title>
+  <style>
+    /* 상단 네비게이션 바 스타일 */
+    .navbar {
+      display: flex;
+      justify-content: space-around;
+      background-color: black;
+      padding: 10px;
+    }
+    .navbar button {
+      background-color: white;
+      border: 1px solid black;
+      padding: 10px 20px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    .navbar button:hover {
+      background-color: #f0f0f0;
+    }
+
+    /* 메인 콘텐츠 스타일 */
+    .repository {
+      border: 2px solid black;
+      margin: 20px;
+      padding: 20px;
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <!-- 네비게이션 바 -->
+  <div class="navbar">
+    <button>검색</button>
+    <button>게시물 공유 페이지</button>
+    <button>가이드 페이지</button>
+  </div>
+
+  <!-- 리포지토리 섹션 -->
+  <div class="repository">
+    <a href="/index/repository1" style="text-decoration: none; color: black;">Repository 1</a>
+  </div>
+  <div class="repository">
+    <a href="/index/repository2" style="text-decoration: none; color: black;">Repository 2</a>
+  </div>
+  <div class="repository">
+    <a href="/index/repository3" style="text-decoration: none; color: black;">Repository 3</a>
+  </div>
+
+</body>
+</html>
