@@ -49,6 +49,7 @@ app.use('/login', require('./routes/login'));
 app.use('/logout', require('./routes/logout'));
 app.use('/register', require('./routes/register'));
 app.use('/post', require('./routes/post'));
+app.use('/index', require('./routes/index')); // my repository
 
 // 서버 시작
 app.listen(PORT, () => {
