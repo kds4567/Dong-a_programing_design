@@ -18,7 +18,7 @@
         <table>
             <% data.forEach(row => { %>
                 <tr>
-                    <td id="bold-text"><%= row.Name %></td>
+                    <td id="bold-text"><a href="/repo/<%= row.Name %>"><%= row.Name %></a></td>
                 </tr>
             <% }) %>
         </table>
@@ -28,6 +28,7 @@
         </form>
 
         <a href="/post">게시판 홈페이지</a>
+        <a href="/share"> 설계 코드 공유</a>
 
         <% if (user.Username == 'admin') { %>
             <a href="/user">유저 관리 페이지</a>
