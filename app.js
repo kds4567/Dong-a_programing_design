@@ -44,7 +44,7 @@ app.use((req, res, next) => {
   next();
 });
 
-// app.use('/', require('./routes/home'));
+app.use('/', require('./routes/home'));
 app.use('/login', require('./routes/login'));
 app.use('/logout', require('./routes/logout'));
 app.use('/register', require('./routes/register'));
