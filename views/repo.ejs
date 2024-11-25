@@ -17,6 +17,37 @@
         minute: '2-digit',
         hour12: false
     }) %></p>
+    <table>
+        <thead>
+            <tr>
+                <th>게시물 이름</th>
+                <th>저장소 이름</th>
+                <th>마지막 업데이트</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% if (data3.length > 0) { %>
+                <% data3.forEach(post => { %>
+                    <tr>
+                        <td><%= post.Title %></td>
+                        <td><%= post.Name %></td>
+                        <td><%= new Date(post.Post_Updated).toLocaleDateString('ko-KR', {
+                            year: 'numeric',
+                            month: '2-digit',
+                            day: '2-digit',
+                            hour: '2-digit',
+                            minute: '2-digit',
+                            hour12: false
+                        }) %></td>
+                    </tr>
+                <% }) %>
+            <% } else { %>
+                <tr>
+                    <td colspan="3">작성된 게시물이 없습니다.</td>
+                </tr>
+            <% } %>
+        </tbody>
+    </table>
     <a href="/">홈으로 돌아가기</a>
 </div>
 </body>
