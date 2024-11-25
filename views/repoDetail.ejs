@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= repoName %> - Repository</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .sidebar {
+            width: 300px;
+            background-color: #f4f4f4;
+            border-right: 1px solid #ddd;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .content {
+            flex-grow: 1;
+            padding: 20px;
+            background-color: #fff;
+            overflow-y: auto;
+        }
+
+        .file-item {
+            margin: 10px 0;
+        }
+
+        .file-item a {
+            color: #3498db;
+            text-decoration: none;
+            display: block;
+        }
+
+        .file-item a:hover {
+            text-decoration: underline;
+        }
+
+        .file-item .icon {
+            margin-right: 8px;
+        }
+
+        .file-content {
+            white-space: pre-wrap;
+            background: #f9f9f9;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 왼쪽 사이드바 -->
+    <div class="sidebar">
+        <h3>Directories</h3>
+        <% files.forEach(file => { %>
+            <div class="file-item">
+                <% if (file.isFolder) { %>
+                    <span class="icon">📁</span> <%= file.File_name %>
+                <% } else { %>
+                    <span class="icon">📄</span> 
+                    <a href="#" onclick="loadFile('<%= file.Path %>')"><%= file.File_name %></a>
+                <% } %>
+            </div>
+        <% }); %>
+    </div>
+
+    <!-- 중앙 컨텐츠 영역 -->
+    <div class="content">
+        <h1>File Viewer</h1>
+        <div id="file-content" class="file-content">파일을 선택해주세요.</div>
+    </div>
+
+    <script>
+        // 파일 선택 시 내용 로드
+        async function loadFile(filePath) {
+            try {
+                const response = await fetch(`/file-content?path=${encodeURIComponent(filePath)}`);
+                if (!response.ok) throw new Error('파일을 불러오지 못했습니다.');
+                const content = await response.text();
+                document.getElementById('file-content').textContent = content;
+            } catch (err) {
+                document.getElementById('file-content').textContent = '오류 발생: ' + err.message;
+            }
+        }
+    </script>
+</body>
+</html>
