@@ -2,25 +2,56 @@
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/login.css">
+
     <title>login</title>
 </head>
-<body>
-<h1>login</h1>
-<form method="post" action="/login">
-    <table>
-        <tr>
-            <td><label>ID:</label></td>
-            <td><input type="text" id="username" name="username"></td>
-        </tr>
-        <tr>
-            <td><label>PW:</label></td>
-            <td><input type="password" id="password" name="password"></td>
-        </tr>
-        <tr>
-            <td><input type="submit" value="submit" name=" "></td>
-        </tr>
-    </table>
-</form>
-<a href="/register">회원가입</a>
+<body class="side-panel-light has-loading-screen color-theme-blue" data-background-color="#002254">
+    <div class="main-container">
+        <h1 class="title">
+            <span class="bold">DONG-A</span> University Design 
+            <span class="green">Hub</span>
+        </h1>
+        <div class="base-layer">
+            <canvas id="displayCanvas"></canvas>
+        </div>
+        <div class="ring">
+            <i style="--clr:#528eff;"></i>
+            <i style="--clr:#45ff8c;"></i>
+            <i style="--clr:#ffffff;"></i>
+            <form method="post" action="/login">
+                <div class="login">
+                    <h2>Login</h2>
+                    <div class="inputBx">
+                        <input type="text" placeholder="Username" id="username" name="username">
+                    </div>
+                    <div class="inputBx">
+                        <input type="password" placeholder="Password" id="password" name="password">
+                    </div>
+                    <div class="inputBx">
+                        <input type="submit" value="Sign in" name=" ">
+                    </div>
+                    <div class="links">
+                        <a href="#">Forget Password</a>
+                        <a href="/register">Sign up</a>
+                    </div>
+                </div>
+            </form> 
+        </div>
+    </div>
 </body>
+<script src="/js/jquery-2.1.1.js"></script>
+<script src="/js/pace.min.js"></script>
+<script src="/js/modernizr.js"></script>
+<script src="/js/particle-sphere.js"></script>
+<script src="/js/custom.js"></script>
+<script type="text/javascript">
+    // RGB Color
+    var r = 51;
+    var g = 200;
+    var b = 240;
+    var backgroundColor = "#002254";
+    window.addEventListener("load", particleSphree(r,g,b, backgroundColor), false);
+</script>
 </html>
