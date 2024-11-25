@@ -1,7 +1,4 @@
-//repo.js로 옮김. 
-
-
-/*const express = require('express');
+const express = require('express');
 const bodyParser = require('body-parser');
 const router = express.Router();
 
@@ -43,4 +40,3 @@ router.get('/:name', async (req, res) => {
 });
 
 module.exports = router;
-*/
