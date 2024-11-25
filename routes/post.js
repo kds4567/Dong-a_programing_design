@@ -25,7 +25,7 @@ router.get('/new', (req, res) => {
 // 게시물 작성 처리
 router.post('/', (req, res) => {
     const { Title, Content } = req.body;
-    const Author = req.session.user ? req.session.user.Name : null;
+    const Author = req.session.user ? req.session.user.Id : null;
 
     const query = 'INSERT INTO post (Title, Content, Author) VALUES (?, ?, ?)';
     req.db.query(query, [Title, Content, Author], (err) => {

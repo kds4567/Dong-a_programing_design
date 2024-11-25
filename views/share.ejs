@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>추천 저장소</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<div>
+    <h1>추천 저장소</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>저장소 이름</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% if (data.length > 0) { %>
+                <% data.forEach(repo => { %>
+                    <tr>
+                        <td> 저장소 이름 </td>
+                        <td> 조회수 </td>
+                        <td> 마지막 업데이트</td>
+                    </tr>
+                    <tr>
+                        <td><a href="/share/<%= repo.Name %>"><%= repo.Name %></a></td>
+                        <td><%= repo.Views %></td>
+                        <td><%= new Date(repo.Updated).toLocaleDateString('ko-KR', {
+                            year: 'numeric',
+                            month: '2-digit',
+                            day: '2-digit',
+                            hour: '2-digit',
+                            minute: '2-digit',
+                            weekday: 'long',
+                            hour12: false
+                        }) %></td>
+                    </tr>
+                <% }) %>
+            <% } else { %>
+                <tr>
+                    <td>추천할 저장소가 없습니다.</td>
+                </tr>
+            <% } %>
+        </tbody>
+    </table>
+    <a href="/">홈으로 돌아가기</a>
+</div>
+</body>
+</html>
