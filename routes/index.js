@@ -36,4 +36,15 @@ router.get('/repository3', (req, res) => {
     res.render('repository3', { repositoryName: 'Repository 3' });
 });
 
+
+
+router.get('/faq', (req, res) => {
+  res.send('<h1>FAQ 페이지입니다.</h1><a href="/index">돌아가기</a>');
+});
+
+router.get('/guide', (req, res) => {
+  res.send('<h1>가이드 페이지입니다.</h1><a href="/index">돌아가기</a>');
+});
+
+
 module.exports = router;
