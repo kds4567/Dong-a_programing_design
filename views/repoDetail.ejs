@@ -87,6 +87,26 @@
         .file-list button:disabled {
             background-color: #ccc;
         }
+        /* 파일 업로드 스타일 */
+        .upload-section {
+            margin-top: 20px;
+        }
+        .upload-section input {
+            padding: 5px;
+            font-size: 14px;
+        }
+        .upload-section button {
+            margin-left: 10px;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .upload-section button:disabled {
+            background-color: #ccc;
+        }
     </style>
 </head>
 <body>
@@ -125,6 +145,16 @@
     <% } else { %>
         <button disabled>Save File</button>
     <% } %>
+
+    <!-- 파일 업로드 섹션 -->
+    <% if (isOwner) { %>
+        <div class="upload-section">
+            <label for="file-upload">파일 업로드:</label>
+            <input type="file" id="file-upload" name="file">
+            <input type="hidden" name="repoId" value="<%= repoId %>">
+            <button onclick="uploadFile()">Upload</button>
+        </div>
+    <% } %>
 </div>
 
 <script>
@@ -133,7 +163,6 @@
     if(start){
         loadFile(start);
     }
-
     async function loadFile(filePath) {
         currentFilePath = filePath;
         try {
@@ -219,6 +248,32 @@
             if (!response.ok) throw new Error('레포지토리 삭제 실패');
             alert(await response.text());
             window.location.href = '/';  // 레포지토리 삭제 후 메인 페이지로 이동
+        } catch (err) {
+            alert('오류 발생: ' + err.message);
+        }
+    }
+
+    async function uploadFile() {
+        const fileInput = document.getElementById('file-upload');
+        const repoId = document.querySelector('input[name="repoId"]').value;
+        const file = fileInput.files[0];
+        if (!file) {
+            alert('업로드할 파일을 선택해주세요.');
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('repoId', repoId);
+
+        try {
+            const response = await fetch('/repoDetail/upload-file', {
+                method: 'POST',
+                body: formData,
+            });
+            if (!response.ok) throw new Error('파일 업로드 실패');
+            alert(await response.text());
+            location.reload();  // 업로드 후 페이지 새로 고침
         } catch (err) {
             alert('오류 발생: ' + err.message);
         }
