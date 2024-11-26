@@ -76,7 +76,7 @@ router.post('/createrepo', async (req, res) => {
         fs.writeFileSync(readmePath, readmeContent);
 
         // 5. 파일 정보를 file 테이블에 삽입
-        const filePathForDB = `/repos/${ownerId}/${repoName}/${readmePath}`; // DB에 저장할 파일 경로
+        const filePathForDB = readmePath; // DB에 저장할 파일 경로
         await new Promise((resolve, reject) => {
             req.db.query(insertFileQuery, [repoId, readmeName, filePathForDB], (err) => {
                 if (err) reject(err);
@@ -101,7 +101,7 @@ router.get('/profile', (req, res) => {
     }
 });
 router.get('/share', (req,res) => {
-    const query = "SELECT Name, Views, Updated FROM repo ORDER BY Views DESC LIMIT 10"
+    const query = "SELECT Id, Name, Views, Updated FROM repo ORDER BY Views DESC LIMIT 10"
     const queryPromise = new Promise((resolve, reject) => {
         req.db.query(query, (err, results) => {
             if (err) reject(err);

@@ -30,7 +30,7 @@
                         <td> 마지막 업데이트</td>
                     </tr>
                     <tr>
-                        <td><a href="/repo/<%= repo.Name %>"><%= repo.Name %></a></td>
+                        <td><a href="/repoDetail/<%= repo.Id %>"><%= repo.Name %></a></td>
                         <td><%= repo.Views %></td>
                         <td><%= new Date(repo.Updated).toLocaleDateString('ko-KR', {
                             year: 'numeric',
