@@ -6,24 +6,24 @@
     <title>게시물 수정</title>
 </head>
 <body>
-    <h1>게시물 수정</h1>
+<h1>게시물 수정</h1>
 
-    <!-- 수정 폼 -->
-    <form action="/post/<%= post.Id %>" method="POST">
-        <div>
-            <label for="Title">제목</label>
-            <input type="text" name="Title" id="Title" value="<%= post.Title %>" required>
-        </div>
-        <div>
-            <label for="Content">내용</label>
-            <textarea name="Content" id="Content" required><%= post.Content %></textarea>
-        </div>
-        <div>
-            <button type="submit">수정</button>
-        </div>
-    </form>
+<!-- 수정 폼 -->
+<form action="/post/edit/<%= post.Id %>" method="POST">
+    <div>
+        <label for="Title">제목</label>
+        <input type="text" name="Title" id="Title" value="<%= post.Title %>" required>
+    </div>
+    <div>
+        <label for="Content">내용</label>
+        <textarea name="Content" id="Content" required><%= post.Content %></textarea>
+    </div>
+    <div>
+        <button type="submit">수정</button>
+    </div>
+</form>
 
-    <!-- 게시물 목록으로 돌아가기 -->
-    <a href="/post">목록으로 돌아가기</a>
+<!-- 게시물 목록으로 돌아가기 -->
+<a href="/post/<%= post.Title%>">목록으로 돌아가기</a>
 </body>
 </html>

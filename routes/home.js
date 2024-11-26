@@ -103,18 +103,18 @@ router.get('/profile', (req, res) => {
 router.get('/share', (req,res) => {
     const query = "SELECT Name, Views, Updated FROM repo ORDER BY Views DESC LIMIT 10"
     const queryPromise = new Promise((resolve, reject) => {
-            req.db.query(query, (err, results) => {
-              if (err) reject(err);
-              else resolve(results);
-            });
+        req.db.query(query, (err, results) => {
+            if (err) reject(err);
+            else resolve(results);
+        });
     });
     Promise.all([queryPromise]).then(([results]) => {
-            res.render('share',{ data: results })
+        res.render('share',{ data: results })
     })
-    .catch(err => {
+        .catch(err => {
             console.error('Error executing query:', err.stack);
             res.status(500).send('Error executing query');
-    });
+        });
 
 });
 
