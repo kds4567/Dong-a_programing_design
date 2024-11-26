@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const path = require('path');
 const fs = require('fs');
+const multer = require('multer');
+
+let currentFilePath = '';
 
 // 파일 내용 반환 라우터 (보안 강화 및 경로 확인 추가)
 router.get('/file-content', (req, res) => {
@@ -9,6 +12,7 @@ router.get('/file-content', (req, res) => {
 
     // query로 받은 경로를 안전하게 처리 (절대 경로로 변환)
     const filePath = req.query.path;
+    currentFilePath = path.join(filePath, '../');
 
     // 파일 존재 여부 확인
     fs.exists(filePath, (exists) => {
@@ -32,6 +36,7 @@ router.get('/file-content', (req, res) => {
 // 특정 repo의 상세 정보 및 파일 목록
 router.get('/:id', async (req, res) => {
     const repoId = req.params.id;
+    currentRepoId = repoId;
 
     const repoQuery = `
         SELECT r.Name, r.Created, r.Updated, r.Views, u.Name AS OwnerName
@@ -183,6 +188,50 @@ router.delete('/delete-repo', (req, res) => {
 
             res.send('레포지토리가 성공적으로 삭제되었습니다.');
         });
+    });
+});
+
+// storage 설정: 업로드된 파일의 경로와 이름을 지정
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        // currentFilePath를 디렉토리로 설정
+        cb(null, currentFilePath); // currentFilePath를 경로로 사용
+    },
+    filename: (req, file, cb) => {
+        // 파일 이름을 원본 파일 이름 그대로 저장
+        cb(null, file.originalname); // 예: 'hi.txt'
+    }
+});
+
+// multer 설정
+const upload = multer({
+    storage: storage, // storage 설정을 사용
+    limits: { fileSize: 10 * 1024 * 1024 } // 파일 크기 제한
+}).single('file'); // 업로드할 파일은 'file' 필드로 받기
+router.post('/upload-file', upload, (req, res) => {
+    const { repoId } = req.body;
+    const file = req.file;
+    console.log(file);
+    if (!file) {
+        return res.status(400).send('파일을 선택해주세요.');
+    }
+
+    const fileName = file.originalname;
+    const filePath = path.join(currentFilePath, fileName);
+
+    // 파일 정보를 데이터베이스에 저장 (필요한 경우)
+    const insertFileQuery = `
+        INSERT INTO file (File_name, Path, Repo_id)
+        VALUES (?, ?, ?)
+    `;
+
+    req.db.query(insertFileQuery, [fileName, filePath, repoId], (err, result) => {
+        if (err) {
+            console.error('파일 데이터베이스 저장 오류:', err);
+            return res.status(500).send('파일 업로드 중 오류가 발생했습니다.');
+        }
+        console.log(currentFilePath);
+        res.send('파일이 성공적으로 업로드되었습니다.');
     });
 });
 
