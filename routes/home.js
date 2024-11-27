@@ -100,22 +100,5 @@ router.get('/profile', (req, res) => {
         res.send('로그인 해주세요! <a href="/login">Login</a>');
     }
 });
-router.get('/share', (req,res) => {
-    const query = "SELECT Id, Name, Views, Updated FROM repo ORDER BY Views DESC LIMIT 10"
-    const queryPromise = new Promise((resolve, reject) => {
-        req.db.query(query, (err, results) => {
-            if (err) reject(err);
-            else resolve(results);
-        });
-    });
-    Promise.all([queryPromise]).then(([results]) => {
-        res.render('share',{ data: results })
-    })
-        .catch(err => {
-            console.error('Error executing query:', err.stack);
-            res.status(500).send('Error executing query');
-        });
-
-});
 
 module.exports = router;
