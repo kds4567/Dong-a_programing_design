@@ -53,6 +53,7 @@ app.use('/index', require('./routes/index')); // my repository
 app.use('/', require('./routes/pages')); // Search, FAQ, Guide 라우트 추가
 app.use('/repo', require('./routes/repo'));
 app.use('/repoDetail', require('./routes/repoDetail'));
+app.use('/share', require('./routes/share'));
 
 // 서버 시작
 app.listen(PORT, () => {
