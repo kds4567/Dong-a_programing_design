@@ -7,6 +7,13 @@
 </head>
 <body>
 <div>
+    <!-- 상단 버튼 -->
+    <div class="navigation-buttons">
+        <a href="/search" class="btn">검색</a>
+        <a href="/faq" class="btn">FAQ</a>
+        <a href="/guide" class="btn">가이드</a>
+    </div>
+    
     <h1>추천 저장소</h1>
     <table>
         <thead>
@@ -23,7 +30,7 @@
                         <td> 마지막 업데이트</td>
                     </tr>
                     <tr>
-                        <td><a href="/repo/<%= repo.Name %>"><%= repo.Name %></a></td>
+                        <td><a href="/repoDetail/<%= repo.Id %>"><%= repo.Name %></a></td>
                         <td><%= repo.Views %></td>
                         <td><%= new Date(repo.Updated).toLocaleDateString('ko-KR', {
                             year: 'numeric',
@@ -45,5 +52,27 @@
     </table>
     <a href="/">홈으로 돌아가기</a>
 </div>
+
+<!-- 스타일 -->
+<style>
+    .navigation-buttons {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+        gap: 10px;
+    }
+    .btn {
+        padding: 10px 20px;
+        text-decoration: none;
+        color: white;
+        background-color: #007BFF;
+        border-radius: 5px;
+        font-size: 16px;
+        text-align: center;
+    }
+    .btn:hover {
+        background-color: #0056b3;
+    }
+</style>
 </body>
 </html>

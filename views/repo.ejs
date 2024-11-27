@@ -10,28 +10,31 @@
     <h1><%= data2.Name %> 저장소 정보</h1>
     <p>조회수: <%= data2.Views %></p>
     <p>마지막 업데이트: <%= new Date(data2.Updated).toLocaleString('ko-KR', {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: false
-    }) %></p>
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: false
+        }) %></p>
+    <div>
+        <a href="/post/new/<%= data2.Id %>">새 게시물 작성</a>
+    </div>
     <table>
         <thead>
-            <tr>
-                <th>게시물 이름</th>
-                <th>저장소 이름</th>
-                <th>마지막 업데이트</th>
-            </tr>
+        <tr>
+            <th>게시물 이름</th>
+            <th>저장소 이름</th>
+            <th>마지막 업데이트</th>
+        </tr>
         </thead>
         <tbody>
-            <% if (data3.length > 0) { %>
-                <% data3.forEach(post => { %>
-                    <tr>
-                        <td><%= post.Title %></td>
-                        <td><%= post.Name %></td>
-                        <td><%= new Date(post.Post_Updated).toLocaleDateString('ko-KR', {
+        <% if (data3.length > 0) { %>
+            <% data3.forEach(post => { %>
+                <tr>
+                    <td><a href = /post/<%= post.Title %>><%= post.Title %></a></td>
+                    <td><%= post.Name %></td>
+                    <td><%= new Date(post.Post_Updated).toLocaleDateString('ko-KR', {
                             year: 'numeric',
                             month: '2-digit',
                             day: '2-digit',
@@ -39,13 +42,13 @@
                             minute: '2-digit',
                             hour12: false
                         }) %></td>
-                    </tr>
-                <% }) %>
-            <% } else { %>
-                <tr>
-                    <td colspan="3">작성된 게시물이 없습니다.</td>
                 </tr>
-            <% } %>
+            <% }) %>
+        <% } else { %>
+            <tr>
+                <td colspan="3">작성된 게시물이 없습니다.</td>
+            </tr>
+        <% } %>
         </tbody>
     </table>
     <a href="/">홈으로 돌아가기</a>

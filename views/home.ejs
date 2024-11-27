@@ -7,61 +7,68 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 </head>
 <body>
-    <div class="top-bar">
-        <img src="/images/donga.png" alt="Donga Icon" class="icon">
-        <nav>
-            <div class="nav-links">
-                <input type="text" placeholder="Search Repository">
-                <a href="/search"><i class="fa fa-search"></i></a> 
-                <a href="/">Home</a>
-                <a href="/share">Share Repo</a>
-                <a href="/guide">Guide</a>
-                <a href="/logout">Logout</a>
+<div class="top-bar">
+    <img src="/images/donga.png" alt="Donga Icon" class="icon">
+    <nav>
+        <div class="nav-links">
+            <input type="text" placeholder="Search Repository">
+            <a href="/search"><i class="fa fa-search"></i></a>
+            <a href="/">Home</a>
+            <a href="/share">Share Repo</a>
+            <a href="/guide">Guide</a>
+            <a href="/logout">Logout</a>
+        </div>
+    </nav>
+</div>
+
+<div class="main-container">
+    <aside class="side-bar">
+        <h2>내 Repository (성민)</h2>
+        <hr>
+        <ul>
+            <% data.forEach(repo => { %>
+                <li><a href="/repo/<%= repo.Name %>"><%= repo.Name %></a></li>
+            <% }) %>
+        </ul>
+        <h2>내 Repository File (민수)</h2>
+        <hr>
+        <ul>
+            <% data.forEach(row => { %>
+                <li><a href="/repoDetail/<%= row.Id %>"><%= row.Name %></a></li>
+            <% }) %>
+        </ul>
+    </aside>
+    <main class="content">
+        <% if (user == null) { %>
+            <h1><a href="/login">로그인</a></h1>
+            <h1><a href="/register">Register</a></h1>
+        <% } else { %>
+            <div class="welcome-container">
+                <div class="welcome-message">
+                    <h1><span><%= user.Name %></span>님 SW Design Page에 오신 것을 환영합니다!</h1>
+                    <p>여기서 프로젝트를 시작해보세요!</p>
+                </div>
             </div>
-        </nav>
-    </div>
 
-    <div class="main-container">
-        <aside class="side-bar">
-            <h2>내 Repository</h2>
-            <hr>
-            <ul>
-                <% data.forEach(row => { %>
-                    <li><a href="/repo/<%= row.Name %>"><%= row.Name %></a></li>
-                <% }) %>
-            </ul>
-        </aside>
-        <main class="content">
-            <% if (user == null) { %>
-                <h1><a href="/login">로그인</a></h1>
-                <h1><a href="/register">Register</a></h1>
-            <% } else { %>
-                <div class="welcome-container">
-                    <div class="welcome-message">
-                        <h1><span><%= user.Name %></span>님 SW Design Page에 오신 것을 환영합니다!</h1>
-                        <p>여기서 프로젝트를 시작해보세요!</p>
-                    </div>
-                </div>
-                
-                <form action="/createrepo" method="post">
-                    <input type="text" id="repoName" name="Name" required placeholder="새 Repo 이름">
-                    <button type="submit">생성</button>
-                </form>
-                <div class="post">
-                    <h2>게시물</h2>
-                    <p>
-                        이 곳에 게시글 생성, 삭제, 수정 위치
-                    </p>
-                    
-                </div>
+            <form action="/createrepo" method="post">
+                <input type="text" id="repoName" name="Name" required placeholder="새 Repo 이름">
+                <button type="submit">생성</button>
+            </form>
+            <div class="post">
+                <h2>게시물</h2>
+                <p>
+                    이 곳에 게시글 생성, 삭제, 수정 위치
+                </p>
 
-                <% if (user.Username == 'admin') { %>
-                    <a href="/user">유저 관리 페이지</a>
-                    <a href="/repo">저장소 관리 페이지</a>
-                    <a href="/commit">커밋 관리 페이지</a>
-                <% } %>
+            </div>
+
+            <% if (user.Username == 'admin') { %>
+                <a href="/user">유저 관리 페이지</a>
+                <a href="/repo">저장소 관리 페이지</a>
+                <a href="/commit">커밋 관리 페이지</a>
             <% } %>
-        </main>
-    </div>
+        <% } %>
+    </main>
+</div>
 </body>
 </html>

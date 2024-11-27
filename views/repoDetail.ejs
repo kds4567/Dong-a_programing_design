@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= repoName %> - Repository</title>
+    <style>
+        body {
+            display: flex;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .sidebar {
+            width: 300px;
+            background-color: #f4f4f4;
+            border-right: 1px solid #ddd;
+            padding: 20px;
+            overflow-y: auto;
+            box-sizing: border-box;
+        }
+        .content {
+            flex-grow: 1;
+            padding: 20px;
+            overflow-y: auto;
+            box-sizing: border-box;
+        }
+        .file-content {
+            white-space: pre-wrap;
+            background: #f9f9f9;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            max-height: 400px; /* 높이를 제한하여 스크롤 가능하게 */
+            overflow-y: auto;
+        }
+        .editor {
+            width: 100%;
+            height: 300px;
+            margin-bottom: 20px;
+            padding: 10px;
+            font-family: monospace;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            box-sizing: border-box;
+        }
+        .repo-actions {
+            text-align: right;
+            margin-bottom: 20px;
+        }
+        .repo-actions button {
+            padding: 10px;
+            background-color: #f44336;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .repo-actions button:disabled {
+            background-color: #ccc;
+        }
+        /* 파일 목록을 보기 좋게 정렬 */
+        .file-list {
+            margin-top: 10px;
+        }
+        .file-list div {
+            margin-bottom: 10px;
+        }
+        .file-list a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .file-list a:hover {
+            text-decoration: underline;
+        }
+        .file-list button {
+            margin-left: 10px;
+            padding: 5px 10px;
+            font-size: 14px;
+            cursor: pointer;
+            background-color: #f44336;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        .file-list button:disabled {
+            background-color: #ccc;
+        }
+        /* 파일 업로드 스타일 */
+        .upload-section {
+            margin-top: 20px;
+        }
+        .upload-section input {
+            padding: 5px;
+            font-size: 14px;
+        }
+        .upload-section button {
+            margin-left: 10px;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .upload-section button:disabled {
+            background-color: #ccc;
+        }
+    </style>
+</head>
+<body>
+<div class="sidebar">
+    <h3>Directories</h3>
+    <div class="file-list">
+        <% files.forEach(file => { %>
+            <div>
+                <% if (file.isFolder) { %>
+                    📁 <%= file.File_name %>
+                <% } else { %>
+                    📄
+                    <a href="#" onclick="loadFile('<%= file.Path %>')"><%= file.File_name %></a>
+                    <% if (isOwner) { %>
+                        <button onclick="deleteFile('<%= file.Path %>', '<%= repoId %>')">Delete</button>
+                    <% } %>
+                <% } %>
+            </div>
+        <% }); %>
+    </div>
+</div>
+
+<div class="content">
+    <div class="repo-actions">
+        <% if (isOwner) { %>
+            <button onclick="deleteRepo('<%= repoId %>')">Delete Repository</button>
+        <% } %>
+    </div>
+
+    <h1>File Viewer & Editor</h1>
+    <div id="file-content" class="file-content">파일을 선택해주세요.</div>
+    <textarea id="editor" class="editor" placeholder="파일 내용을 편집하세요."></textarea>
+
+    <% if (isOwner) { %>
+        <button onclick="saveFile()">Save File</button>
+    <% } else { %>
+        <button disabled>Save File</button>
+    <% } %>
+
+    <!-- 파일 업로드 섹션 -->
+    <% if (isOwner) { %>
+        <div class="upload-section">
+            <label for="file-upload">파일 업로드:</label>
+            <input type="file" id="file-upload" name="file">
+            <input type="hidden" name="repoId" value="<%= repoId %>">
+            <button onclick="uploadFile()">Upload</button>
+        </div>
+    <% } %>
+</div>
+
+<script>
+    let currentFilePath = null;
+    let start = '<%= initialFilePath %>';
+    if(start){
+        loadFile(start);
+    }
+    async function loadFile(filePath) {
+        currentFilePath = filePath;
+        try {
+            const response = await fetch(`/repoDetail/file-content?path=${encodeURIComponent(filePath)}`);
+            console.log('현재 파일 경로: ', currentFilePath);
+            if (!response.ok) throw new Error('파일을 불러올 수 없습니다.');
+            const content = await response.text();
+            document.getElementById('file-content').textContent = content;
+            document.getElementById('editor').value = content;
+        } catch (err) {
+            alert('오류 발생: ' + err.message);
+        }
+    }
+
+    async function saveFile() {
+        const content = document.getElementById('editor').value;
+        if (!currentFilePath) {
+            alert('저장할 파일이 선택되지 않았습니다.');
+            return;
+        }
+
+        console.log('보낼 파일 경로:', currentFilePath);
+        console.log('보낼 파일 내용:', content);
+
+        try {
+            const response = await fetch('/repoDetail/edit-file', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ filePath: currentFilePath, content }),
+            });
+            if (!response.ok) throw new Error('파일 저장 실패');
+            alert(await response.text());
+            location.reload();
+        } catch (err) {
+            alert('오류 발생: ' + err.message);
+        }
+    }
+
+    async function deleteFile(filePath, repoId) {
+        if (!filePath) {
+            alert('삭제할 파일 경로가 없습니다.');
+            return;
+        }
+
+        const confirmDelete = confirm('정말로 이 파일을 삭제하시겠습니까?');
+        if (!confirmDelete) return;
+
+        try {
+            const response = await fetch('/repoDetail/delete-file', {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    filePath: filePath,
+                    repoId: repoId  // 서버에서 전달받은 repoId
+                }),
+            });
+            if (!response.ok) throw new Error('파일 삭제 실패');
+            alert(await response.text());
+            location.reload();  // 삭제 후 페이지 새로 고침
+        } catch (err) {
+            alert('오류 발생: ' + err.message);
+        }
+    }
+
+    async function deleteRepo(repoId) {
+        const confirmDelete = confirm('정말로 이 레포지토리를 삭제하시겠습니까?');
+        if (!confirmDelete) return;
+
+        try {
+            const response = await fetch('/repoDetail/delete-repo', {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    repoId: repoId
+                }),
+            });
+            if (!response.ok) throw new Error('레포지토리 삭제 실패');
+            alert(await response.text());
+            window.location.href = '/';  // 레포지토리 삭제 후 메인 페이지로 이동
+        } catch (err) {
+            alert('오류 발생: ' + err.message);
+        }
+    }
+
+    async function uploadFile() {
+        const fileInput = document.getElementById('file-upload');
+        const repoId = document.querySelector('input[name="repoId"]').value;
+        const file = fileInput.files[0];
+        if (!file) {
+            alert('업로드할 파일을 선택해주세요.');
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('repoId', repoId);
+
+        try {
+            const response = await fetch('/repoDetail/upload-file', {
+                method: 'POST',
+                body: formData,
+            });
+            if (!response.ok) throw new Error('파일 업로드 실패');
+            alert(await response.text());
+            location.reload();  // 업로드 후 페이지 새로 고침
+        } catch (err) {
+            alert('오류 발생: ' + err.message);
+        }
+    }
+</script>
+</body>
+</html>

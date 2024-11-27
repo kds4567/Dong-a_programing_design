@@ -1,10 +1,9 @@
-// app.js
-
 const express = require('express');
 const mysql = require('mysql2');
 const session = require('express-session');
 require("dotenv").config();
 const app = express();
+
 const PORT = process.env.PORT; // 환경변수에서 포트 가져오기
 
 // MySQL 연결 설정
@@ -29,6 +28,7 @@ app.set('views', './views');  // 뷰 파일이 위치한 디렉토리 설정 (�
 
 // 정적 파일 제공 설정
 app.use(express.static('public'));  // public 디렉토리에서 정적 파일을 제공
+app.use(express.json());
 
 // 세션 설정
 app.use(session({
@@ -52,6 +52,7 @@ app.use('/post', require('./routes/post'));
 app.use('/index', require('./routes/index')); // my repository
 app.use('/', require('./routes/pages')); // Search, FAQ, Guide 라우트 추가
 app.use('/repo', require('./routes/repo'));
+app.use('/repoDetail', require('./routes/repoDetail'));
 
 // 서버 시작
 app.listen(PORT, () => {
