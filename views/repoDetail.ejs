@@ -32,7 +32,7 @@
             border: 1px solid #ddd;
             border-radius: 8px;
             margin-bottom: 20px;
-            max-height: 400px; /* 높이를 제한하여 스크롤 가능하게 */
+            max-height: 400px;
             overflow-y: auto;
         }
         .editor {
@@ -60,7 +60,6 @@
         .repo-actions button:disabled {
             background-color: #ccc;
         }
-        /* 파일 목록을 보기 좋게 정렬 */
         .file-list {
             margin-top: 10px;
         }
@@ -87,7 +86,6 @@
         .file-list button:disabled {
             background-color: #ccc;
         }
-        /* 파일 업로드 스타일 */
         .upload-section {
             margin-top: 20px;
         }
@@ -127,6 +125,9 @@
             </div>
         <% }); %>
     </div>
+    <% if (isOwner) { %>
+        <button onclick="createFile('<%= repoId %>')">Create File</button>
+    <% } %>
 </div>
 
 <div class="content">
@@ -158,16 +159,19 @@
 </div>
 
 <script>
-    let currentFilePath = null;
     let start = '<%= initialFilePath %>';
-    if(start){
+    if (start){
+        console.log('initialFilePath : ', start);
         loadFile(start);
     }
+    let currentFilePath = start;
+    let currentRepoId = '<%= repoId %>';
+
     async function loadFile(filePath) {
-        currentFilePath = filePath;
         try {
             const response = await fetch(`/repoDetail/file-content?path=${encodeURIComponent(filePath)}`);
-            console.log('현재 파일 경로: ', currentFilePath);
+            currentFilePath = filePath;
+            console.log('loadFile() 경로: ', currentFilePath);
             if (!response.ok) throw new Error('파일을 불러올 수 없습니다.');
             const content = await response.text();
             document.getElementById('file-content').textContent = content;
@@ -184,8 +188,8 @@
             return;
         }
 
-        console.log('보낼 파일 경로:', currentFilePath);
-        console.log('보낼 파일 내용:', content);
+        console.log('saveFile() 경로:', currentFilePath);
+        console.log('savdFile() 내용:', content);
 
         try {
             const response = await fetch('/repoDetail/edit-file', {
@@ -197,7 +201,7 @@
             });
             if (!response.ok) throw new Error('파일 저장 실패');
             alert(await response.text());
-            location.reload();
+            await loadFile(currentFilePath);
         } catch (err) {
             alert('오류 발생: ' + err.message);
         }
@@ -208,6 +212,8 @@
             alert('삭제할 파일 경로가 없습니다.');
             return;
         }
+        console.log('deleteFile() 경로 : ', filePath);
+        console.log('deleteFile() repoID : ', repoId);
 
         const confirmDelete = confirm('정말로 이 파일을 삭제하시겠습니까?');
         if (!confirmDelete) return;
@@ -257,6 +263,7 @@
         const fileInput = document.getElementById('file-upload');
         const repoId = document.querySelector('input[name="repoId"]').value;
         const file = fileInput.files[0];
+
         if (!file) {
             alert('업로드할 파일을 선택해주세요.');
             return;
@@ -274,6 +281,32 @@
             if (!response.ok) throw new Error('파일 업로드 실패');
             alert(await response.text());
             location.reload();  // 업로드 후 페이지 새로 고침
+        } catch (err) {
+            alert('오류 발생: ' + err.message);
+        }
+    }
+
+    // 파일 생성 함수
+    async function createFile(repoId) {
+        const fileName = prompt('새 파일 이름을 입력하세요:');
+        if (!fileName) {
+            alert('파일 이름을 입력해주세요.');
+            return;
+        }
+        const filePath = currentFilePath;
+
+        try {
+            const response = await fetch('/repoDetail/create-file', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ repoId, fileName, filePath}),
+            });
+
+            if (!response.ok) throw new Error('파일 생성 실패');
+            alert(await response.text());
+            location.reload();  // 파일 생성 후 페이지 새로 고침
         } catch (err) {
             alert('오류 발생: ' + err.message);
         }
