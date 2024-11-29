@@ -12,7 +12,7 @@ router.get('/file-content', (req, res) => {
 
     // query로 받은 경로를 안전하게 처리 (절대 경로로 변환)
     const filePath = req.query.path;
-    currentFilePath = path.join(filePath, '../');
+    currentFilePath = path.join(filePath, '..');
 
     // 파일 존재 여부 확인
     fs.exists(filePath, (exists) => {
@@ -49,12 +49,26 @@ router.get('/:id', async (req, res) => {
         FROM file 
         WHERE Repo_id = ?`;
 
+    const updateViewsQuery = `
+        UPDATE repo 
+        SET Views = Views + 1 
+        WHERE Id = ?`;
+
     try {
         console.log('요청된 레퍼지토리 ID :', repoId);
+
+        // 조회수 증가 쿼리 실행
+        await new Promise((resolve, reject) => {
+            req.db.query(updateViewsQuery, [repoId], (err, result) => {
+                if (err) reject(err);
+                else resolve(result);
+            });
+        });
+
         const repoInfo = await new Promise((resolve, reject) => {
             req.db.query(repoQuery, [repoId], (err, result) => {
                 if (err) reject(err);
-                if (result.length === 0) return reject(new Error('해당 레포지토리를 찾을 수 없습니다.'))
+                if (result.length === 0) return reject(new Error('해당 레포지토리를 찾을 수 없습니다.'));
                 resolve(result[0]);
             });
         });
@@ -73,6 +87,8 @@ router.get('/:id', async (req, res) => {
             });
         });
 
+        currentFilePath = files[0].Path;
+        console.log(currentFilePath);
         const readmeFile = files.find(file => file.File_name === 'README.md');
         const initialFilePath = readmeFile ? readmeFile.Path : null;
 
@@ -88,13 +104,14 @@ router.get('/:id', async (req, res) => {
             })),
             isOwner: isOwner,  // 주인 여부를 클라이언트로 전달
             repoId: repoId,
-            initialFilePath: initialFilePath
+            initialFilePath: currentFilePath
         });
     } catch (err) {
         console.error(err);
         res.status(500).send('오류 발생');
     }
 });
+
 
 
 // 파일 수정 API
@@ -194,32 +211,37 @@ router.delete('/delete-repo', (req, res) => {
 // storage 설정: 업로드된 파일의 경로와 이름을 지정
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        // currentFilePath를 디렉토리로 설정
-        cb(null, currentFilePath); // currentFilePath를 경로로 사용
+        // 업로드 파일의 저장 경로를 currentFilePath로 설정
+        cb(null, currentFilePath);
     },
     filename: (req, file, cb) => {
-        // 파일 이름을 원본 파일 이름 그대로 저장
-        cb(null, file.originalname); // 예: 'hi.txt'
+        // 파일 이름을 UTF-8로 변환하여 저장
+        const utf8FileName = Buffer.from(file.originalname, 'latin1').toString('utf8');
+        cb(null, utf8FileName); // 예: 'hi.txt'
     }
 });
 
 // multer 설정
 const upload = multer({
     storage: storage, // storage 설정을 사용
-    limits: { fileSize: 10 * 1024 * 1024 } // 파일 크기 제한
+    limits: { fileSize: 10 * 1024 * 1024 } // 파일 크기 제한 (10MB)
 }).single('file'); // 업로드할 파일은 'file' 필드로 받기
+
+// 업로드 라우터
 router.post('/upload-file', upload, (req, res) => {
-    const { repoId } = req.body;
+    const { repoId } = req.body; // 요청 본문에서 repoId 추출
     const file = req.file;
-    console.log(file);
+
+    // 파일 업로드 여부 확인
     if (!file) {
         return res.status(400).send('파일을 선택해주세요.');
     }
 
-    const fileName = file.originalname;
+    // 파일 이름과 경로 설정
+    const fileName = Buffer.from(file.originalname, 'latin1').toString('utf8');
     const filePath = path.join(currentFilePath, fileName);
 
-    // 파일 정보를 데이터베이스에 저장 (필요한 경우)
+    // 파일 정보를 데이터베이스에 저장
     const insertFileQuery = `
         INSERT INTO file (File_name, Path, Repo_id)
         VALUES (?, ?, ?)
@@ -230,11 +252,46 @@ router.post('/upload-file', upload, (req, res) => {
             console.error('파일 데이터베이스 저장 오류:', err);
             return res.status(500).send('파일 업로드 중 오류가 발생했습니다.');
         }
-        console.log(currentFilePath);
+
+        console.log(`파일 업로드 경로: ${filePath}`);
         res.send('파일이 성공적으로 업로드되었습니다.');
     });
 });
 
+// 파일 생성 라우터
+router.post('/create-file', (req, res) => {
+    let { repoId, fileName, filePath } = req.body;
 
+    if(!fileName.endsWith('.txt')){
+        fileName += '.txt';
+    }
+    // 저장할 디렉토리 경로 (예: 리포지토리 내부의 디렉토리 경로)
+    const directoryPath = path.join(filePath, '..');
+    console.log('새로운 파일을 저장할 경로 : ', directoryPath);
+
+    // 파일이 이미 존재하는지 확인
+    if (fs.existsSync(path.join(directoryPath, fileName))) {
+        return res.status(400).send('파일이 이미 존재합니다.');
+    }
+
+
+    // 파일 생성
+    fs.writeFile(path.join(directoryPath, fileName), '', (err) => {
+        if (err) {
+            return res.status(500).send('파일 생성 실패');
+        }
+
+        const query = `INSERT INTO file (Repo_id, File_name, Path) VALUES (?, ?, ?)`;
+        req.db.query(query, [repoId, fileName, path.join(directoryPath, fileName)], (err, result) => {
+            if(err){
+                console.error('파일 생성 DB 업데이트 실패.', err);
+                return res.status(500).send('파일 생성 후 DB 업데이트 실패');
+            }
+        })
+
+
+        res.status(200).send('파일 생성 성공');
+    });
+});
 
 module.exports = router;
