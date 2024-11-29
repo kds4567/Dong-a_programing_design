@@ -12,6 +12,8 @@ router.get('/', (req, res) => {
     // 세션 정보 사용하는 법.
     // req.session.user.?
     // req.session.user 안에는 로그인한 유저의 db정보가 들어있음 (Id, Password, ....)
+    const message = req.session.message;
+    delete req.session.message; // 메시지 사용 후 삭제
     const ownerId = req.session.user ? req.session.user.Id : null;
     const query1 = 'SELECT Id, Name FROM repo WHERE Owner_id = ?';
 
@@ -21,7 +23,7 @@ router.get('/', (req, res) => {
             console.error('Error executing query:', err.stack);
             return res.status(500).send('Error executing query');
         }
-        res.render('home', { data: results, user: req.session.user });
+        res.render('home', { data: results, user: req.session.user, message });
     });
 });
 
@@ -85,7 +87,9 @@ router.post('/createrepo', async (req, res) => {
         });
 
         // 성공 응답
-        res.redirect('/?message=레포지토리가 성공적으로 생성되었습니다!');
+
+        req.session.message = '레포지토리가 성공적으로 생성되었습니다!';
+        res.redirect('/myrepo');    
     } catch (err) {
         console.error('레포지토리 생성 중 오류: ', err);
         res.status(500).send('레포지토리 생성 중 오류가 발생했습니다.');
