@@ -31,14 +31,7 @@
 
 <div class="main-container">
     <aside class="side-bar">
-        <h2>내 Repository (성민)</h2>
-        <hr>
-        <ul>
-            <% data.forEach(repo => { %>
-                <li><a href="/repo/<%= repo.Name %>"><%= repo.Name %></a></li>
-            <% }) %>
-        </ul>
-        <h2>내 Repository File (민수)</h2>
+        <h2>내 Repository</h2>
         <hr>
         <ul>
             <% data.forEach(row => { %>
@@ -48,8 +41,8 @@
     </aside>
     <main class="content">
         <% if (user == null) { %>
-            <h1><a href="/login">로그인</a></h1>
-            <h1><a href="/register">Register</a></h1>
+            <h1><a href="/login">Sign in</a></h1>
+            <h1><a href="/register">Sign up</a></h1>
         <% } else { %>
             <div class="welcome-container">
                 <div class="welcome-message">
