@@ -49,12 +49,26 @@ router.get('/:id', async (req, res) => {
         FROM file 
         WHERE Repo_id = ?`;
 
+    const updateViewsQuery = `
+        UPDATE repo 
+        SET Views = Views + 1 
+        WHERE Id = ?`;
+
     try {
         console.log('요청된 레퍼지토리 ID :', repoId);
+
+        // 조회수 증가 쿼리 실행
+        await new Promise((resolve, reject) => {
+            req.db.query(updateViewsQuery, [repoId], (err, result) => {
+                if (err) reject(err);
+                else resolve(result);
+            });
+        });
+
         const repoInfo = await new Promise((resolve, reject) => {
             req.db.query(repoQuery, [repoId], (err, result) => {
                 if (err) reject(err);
-                if (result.length === 0) return reject(new Error('해당 레포지토리를 찾을 수 없습니다.'))
+                if (result.length === 0) return reject(new Error('해당 레포지토리를 찾을 수 없습니다.'));
                 resolve(result[0]);
             });
         });
@@ -97,6 +111,7 @@ router.get('/:id', async (req, res) => {
         res.status(500).send('오류 발생');
     }
 });
+
 
 
 // 파일 수정 API
