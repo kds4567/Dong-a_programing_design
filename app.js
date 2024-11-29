@@ -50,7 +50,7 @@ app.use('/logout', require('./routes/logout'));
 app.use('/register', require('./routes/register'));
 app.use('/post', require('./routes/post'));
 app.use('/index', require('./routes/index')); // my repository
-app.use('/', require('./routes/pages')); // Search, FAQ, Guide 라우트 추가
+// app.use('/', require('./routes/pages')); // Search, FAQ, Guide 라우트 추가
 app.use('/repo', require('./routes/repo'));
 app.use('/repoDetail', require('./routes/repoDetail'));
 
