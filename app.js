@@ -44,7 +44,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('/', require('./routes/home'));
+app.use('/', require('./routes/share'));
 app.use('/login', require('./routes/login'));
 app.use('/logout', require('./routes/logout'));
 app.use('/register', require('./routes/register'));
@@ -53,7 +53,7 @@ app.use('/index', require('./routes/index')); // my repository
 app.use('/', require('./routes/pages')); // Search, FAQ, Guide 라우트 추가
 app.use('/repo', require('./routes/repo'));
 app.use('/repoDetail', require('./routes/repoDetail'));
-app.use('/share', require('./routes/share'));
+app.use('/myrepo', require('./routes/home'));
 
 // 서버 시작
 app.listen(PORT, () => {
