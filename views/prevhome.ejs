@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>소프트웨어공학</title>
+    <script>
+        window.onload = function() {
+            const message = '<%= message %>'; // 서버에서 전달된 메시지
+            if (message) {
+                alert(message); // 팝업창 표시
+            }
+        };
+    </script>
+    <link rel="stylesheet" href="/css/home.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="top-bar">
+    <img src="/images/donga.png" alt="Donga Icon" class="icon">
+    <nav>
+        <div class="nav-links">
+            <input type="text" placeholder="Search Repository">
+            <a href="/search"><i class="fa fa-search"></i></a>
+            <a href="/">Home</a>
+            <a href="/guide">Guide</a>
+            <a href="/logout">Logout</a>
+        </div>
+    </nav>
+</div>
+
+<div class="main-container">
+    <main class="content">
+        <% if (user == null) { %>
+            <h1><a href="/login">Sign in</a></h1>
+            <h1><a href="/register">Sign up</a></h1>
+        <% } else { %>
+            <div class="welcome-container">
+                <div class="welcome-message">
+                    <h1><span><%= user.Name %></span>님 SW Design Page에 오신 것을 환영합니다!</h1>
+                    <p>여기서 프로젝트를 시작해보세요!</p>
+                </div>
+            </div>
+            <form action="/myrepo/createrepo" method="post" class="create-repo-form">
+                <input type="text" id="repoName" name="Name" required placeholder="새 Repo 이름">
+                <button type="submit">생성</button>
+            </form>
+            <div class="post">
+                <h2>My Repository</h2>
+                <div class="rss-container">    
+                    <% data.forEach(row => { %>
+                        <div class="rss-card">
+                            <a href="/repoDetail/<%= row.Id %>">
+                                <h3><%= row.Name %></h3>
+                            </a>
+                            <p>Description: <%= row.Description || "No Description" %></p>
+                        </div>
+                    <% }) %>
+                </div>  
+            </div>
+            
+
+            <% if (user.Username == 'admin') { %>
+                <a href="/user">유저 관리 페이지</a>
+                <a href="/repo">저장소 관리 페이지</a>
+                <a href="/commit">커밋 관리 페이지</a>
+            <% } %>
+        <% } %>
+    </main>
+</div>
+</body>
+</html>

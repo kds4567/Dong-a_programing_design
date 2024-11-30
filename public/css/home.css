@@ -7,14 +7,13 @@
 
 body {
     font-family: Arial, sans-serif;
-    background-color: #f8f9fa;
     color: #333;
     height: 100vh;
     display: flex;
     flex-direction: column;
+    
 }
 
-/* 상단 바 스타일 */
 /* 상단 바 스타일 */
 .top-bar {
     display: flex;
@@ -79,49 +78,6 @@ body {
     display: flex;
     flex: 1;
 }
-
-/* 좌측 바 스타일 */
-.side-bar {
-    width: 200px;
-    background-color: #ecf0f1;
-    padding: 20px;
-    border-right: 1px solid #ddd;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    height: 100vh; /* 좌측 바가 페이지 끝까지 */
-}
-
-.side-bar h2 {
-    font-size: 1.2em;
-    color: #2c3e50;
-    margin-bottom: 10px;
-}
-
-.side-bar hr {
-    border: none;
-    border-top: 1px solid #ddd;
-    margin-bottom: 15px;
-}
-
-.side-bar ul {
-    list-style: none;
-}
-
-.side-bar ul li {
-    margin-bottom: 10px;
-}
-
-.side-bar ul li a {
-    color: #3498db;
-    text-decoration: none;
-    font-size: 1em;
-}
-
-.side-bar ul li a:hover {
-    text-decoration: underline;
-}
-
 /* 메인 컨텐츠 스타일 */
 main.content {
     flex: 1;
@@ -208,7 +164,7 @@ main.content input[type="text"] {
 
 main.content button {
     padding: 0 15px;
-    background-color: #3498db;
+    background-color: #34dbb4;
     color: #fff;
     border: none;
     border-radius: 4px;
@@ -222,27 +178,122 @@ main.content button:hover {
 }
 
 /* 새 패널 스타일 */
+/* 게시물 영역 스타일 */
 .post {
     margin-top: 20px;
     padding: 20px;
     background: rgba(255, 255, 255, 0.6); /* 약간 투명한 흰색 */
     color: #333;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(5px);
-    height: 70vh; /* 임시 높이 지정 <게시물 넣고 지우면 알아서 변경될듯>*/
+    max-height: 70vh; /* 최대 높이 지정 (스크롤 가능) */
+    overflow-y: auto; /* 스크롤 활성화 */
 }
 
+/* 제목 스타일 */
 .post h2 {
     font-size: 1.5em;
     color: #2c3e50;
-    margin-bottom: 15px;
+    margin-bottom: 20px; /* 제목 아래 간격 */
 }
 
-.post p {
-    font-size: 1.1em;
+/* 게시물 내용 영역 - flexbox로 수정 */
+.rss-container {
+    display: flex;
+    flex-wrap: wrap; /* 카드들이 여러 줄로 배치되도록 설정 */
+    gap: 15px; /* 카드 간 간격 */
+    justify-content: space-between; /* 카드들이 공간을 고르게 차지하도록 설정 */
+}
+
+/* RSS 카드 스타일 */
+.rss-card {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: 100%; /* 기본적으로 가로 100% */
+    max-width: 300px; /* 최대 너비를 설정하여 카드의 크기를 제한 */
+    box-sizing: border-box;
+}
+
+/* 카드 호버 효과 */
+.rss-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* 카드 제목 스타일 */
+.rss-card h3 {
+    font-size: 1.2em;
+    color: #3498db;
+    margin-bottom: 10px;
+}
+
+/* 카드 설명 스타일 */
+.rss-card p {
+    font-size: 0.9em;
     color: #555;
-    line-height: 1.6;
 }
 
+.rss-card a {
+    text-decoration: none; /* 밑줄 제거 */
+}
 
+/*user profile card*/
+.card {
+    border-radius: 8px;
+    -webkit-box-shadow: 0 1px 20px 0 rgba(69,90,100,0.08);
+    box-shadow: 0 1px 20px 0 rgba(69,90,100,0.08);
+}
+
+.user-card-full .user-profile {
+    border-radius: 5px 0 0 5px;
+}
+
+.bg-c-lite-green {
+    background: linear-gradient(45deg, #528eff, #45ff8c, #ffffff);
+}
+
+.user-profile {
+    padding: 20px 0;
+}
+
+.card-block {
+    padding: 1.25rem;
+}
+
+.m-b-25 {
+    margin-bottom: 25px;
+}
+
+.img-radius {
+    border-radius: 5px;
+}
+
+h6 {
+    font-size: 16px;
+}
+
+.text-muted {
+    color: #919aa3 !important;
+}
+
+.f-w-600 {
+    font-weight: 600;
+}
+
+.m-t-40 {
+    margin-top: 20px;
+}
+
+.social-link li {
+    display: inline-block;
+}
+
+.social-link li a {
+    font-size: 20px;
+    margin-right: 10px;
+    transition: all 0.3s ease-in-out;
+}

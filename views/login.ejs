@@ -8,6 +8,9 @@
     <title>login</title>
 </head>
 <body class="side-panel-light has-loading-screen color-theme-blue" data-background-color="#002254">
+    <div class="back-button">
+        <a href="javascript:void(0);" class="back-link" onclick="goBack()">← Back</a>
+    </div>
     <div class="main-container">
         <h1 class="title">
             <span class="bold">DONG-A</span> University Design 
@@ -53,5 +56,12 @@
     var b = 240;
     var backgroundColor = "#002254";
     window.addEventListener("load", particleSphree(r,g,b, backgroundColor), false);
+    function goBack() {;
+        if (document.referrer) {
+            window.history.back();
+        } else {
+            window.location.href = '/';
+        }
+    }
 </script>
 </html>
