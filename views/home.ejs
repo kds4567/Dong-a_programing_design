@@ -3,6 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>소프트웨어공학</title>
+    <script>
+        window.onload = function() {
+            const message = '<%= message %>'; // 서버에서 전달된 메시지
+            if (message) {
+                alert(message); // 팝업창 표시
+            }
+        };
+    </script>
     <link rel="stylesheet" href="/css/home.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 </head>
@@ -42,7 +50,7 @@
                 </div>
             </div>
 
-            <form action="/createrepo" method="post">
+            <form action="/myrepo/createrepo" method="post">
                 <input type="text" id="repoName" name="Name" required placeholder="새 Repo 이름">
                 <button type="submit">생성</button>
             </form>
