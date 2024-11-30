@@ -3,6 +3,7 @@ const mysql = require('mysql2');
 const session = require('express-session');
 require("dotenv").config();
 const app = express();
+const path = require('path');
 
 const PORT = process.env.PORT; // 환경변수에서 포트 가져오기
 
@@ -25,6 +26,7 @@ connection.connect(err => {
 // EJS 템플릿 엔진 설정
 app.set('view engine', 'ejs');
 app.set('views', './views');  // 뷰 파일이 위치한 디렉토리 설정 (기본값: 'views')
+app.use('/assets', express.static(path.join(__dirname, 'public/atorn/assets')))
 
 // 정적 파일 제공 설정
 app.use(express.static('public'));  // public 디렉토리에서 정적 파일을 제공

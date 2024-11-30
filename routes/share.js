@@ -10,7 +10,7 @@ router.use(bodyParser.urlencoded({ extended: true }));
 
 router.get('/', (req,res) => {
     const ownerId = req.session.user ? req.session.user.Id : null;
-    const query = "SELECT Id, Name, Views, Updated FROM repo ORDER BY Views DESC LIMIT 10";
+    const query = "SELECT * FROM repo ORDER BY Views DESC LIMIT 10";
     const query1 = 'SELECT Id, Name FROM repo WHERE Owner_id = ?';
 
     const queryPromise = new Promise((resolve, reject) => {
@@ -27,7 +27,12 @@ router.get('/', (req,res) => {
     });
 
     Promise.all([queryPromise, query2Promise]).then(([results, results2]) => {
-        res.render('share',{ data: results, data2: results2, user:  req.session.user });
+        console.log(results);
+        console.log(results2);
+        
+        const user = req.session.user === undefined ? "null" : req.session.user;
+        console.log(user);
+        res.render('share',{ data: results, data2: results2, user:  user });
     })
         .catch(err => {
             console.error('Error executing query:', err.stack);

@@ -4,15 +4,15 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!-- bootstrap css -->
-        <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+        <link rel="stylesheet" href="assets/css/bootstrap.min.css">
         <!-- Line Awesome CSS -->
-        <link rel="stylesheet" href="/assets/css/line-awesome.min.css">
+        <link rel="stylesheet" href="assets/css/line-awesome.min.css">
         <!-- Owl Carousel CSS -->
-        <link rel="stylesheet" href="/assets/css/owl.carousel.min.css">
+        <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
         <!-- Stylesheet CSS -->
-        <link rel="stylesheet" href="/assets/css/style.css">
+        <link rel="stylesheet" href="assets/css/style.css">
         <!-- Stylesheet Responsive CSS -->
-        <link rel="stylesheet" href="/assets/css/responsive.css">
+        <link rel="stylesheet" href="assets/css/responsive.css">
         <!-- Title -->
         <title>Dong-A Hub</title>
     </head>
@@ -26,222 +26,126 @@
             </div>
         </div>
         <!-- End Preloder Area -->
-        
+
         <!-- Heder Area -->
-        <% if (user === 'null') { %>
-            <header class="header-area">
-                <div class="top-header">
-                    <div class="container">
-                        <div class="row align-items-center justify-content-center">
-                            <div class="col-lg-6 col-sm-6">
-                                <ul class="left-info">
-                                    <li>
-                                        <a href="mailto:hello@atorn.com">
-                                            <i class="las la-envelope"></i>
-                                            subin.cho@m4ml.re.kr
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="tel:+823-456-879">
-                                            <i class="las la-phone"></i>
-                                            +82 2362 3174
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-    
-                            <div class="col-lg-6 col-sm-6">
-                                <ul class="right-info">
-                                    
-                                    <li class="heder-btn">
-                                        <!--myrepository 생성 html 연결-->
-                                        <a href="/login">Take a Login</a>
-                                    </li>
-                                </ul>
-                            </div>
+        <header class="header-area">
+            <div class="top-header">
+                <div class="container">
+                    <div class="row align-items-center justify-content-center">
+                        <div class="col-lg-6 col-sm-6">
+                            <ul class="left-info">
+                                <li>
+                                    <a href="mailto:hello@atorn.com">
+                                        <i class="las la-envelope"></i>
+                                        subin.cho@m4ml.re.kr
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="tel:+823-456-879">
+                                        <i class="las la-phone"></i>
+                                        +82 2362 3174
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="col-lg-6 col-sm-6">
+                            <ul class="right-info">
+                                <li>
+                                    <a href="https://www.facebook.com/login/" target="_blank">
+                                        <i class="lab la-facebook-f"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://twitter.com/i/flow/login" target="_blank">
+                                        <i class="lab la-twitter"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.instagram.com/" target="_blank">
+                                        <i class="lab la-instagram"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                     <a href="https://www.google.co.uk/" target="_blank">
+                                        <i class="lab la-google-plus"></i>
+                                    </a>
+                                </li>
+                                
+                                <li class="heder-btn">
+                                    <!--myrepository 생성 html 연결-->
+                                    <a href="">Make a Repository</a>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
-    
-                <!-- Start Navbar Area -->
-                <div class="navbar-area">
-                    <div class="atorn-responsive-nav">
-                        <div class="container">
-                            <div class="atorn-responsive-menu">
-                                <div class="logo">
-                                        <img src="./assets/img/Donga_logo1.png" class="logo1" alt="logo">
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-    
-                    <div class="atorn-nav">
-                        <div class="container">
-                            <nav class="navbar navbar-expand-md navbar-light">
-                                <a class="navbar-brand">
+            </div>
+
+            <!-- Start Navbar Area -->
+            <div class="navbar-area">
+                <div class="atorn-responsive-nav">
+                    <div class="container">
+                        <div class="atorn-responsive-menu">
+                            <div class="logo">
                                     <img src="./assets/img/Donga_logo1.png" class="logo1" alt="logo">
                                 </a>
-    
-                                <div class="collapse navbar-collapse mean-menu">
-                                    <ul class="navbar-nav ms-auto">
-                                        <!--<li class="nav-item">
-                                            <a href="" class="nav-link">
-                                                My Repository
-                                            </a>
-                                        </li>-->
-                                        <li class="nav-item">
-                                            <a href="#" class="nav-link">
-                                                FAQ <i class="las la-angle-down"></i>
-                                            </a>
-                                            <ul class="dropdown-menu">
-                                                <li class="nav-item">
-                                                    <!--FAQ html 연결-->
-                                                    <a href="" class="nav-link">FAQ 작성</a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a href="" class="nav-link">자주 묻는 질문</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li class="nav-item">
-                                            <!--가이드 페이지 html 연결-->
-                                            <a href="" class="nav-link">Guide Page</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="javascript:void(0)" class="nav-link search-box">
-                                                <i class="las la-search"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </nav>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <!-- End Navbar Area -->
-            </header>
-        <% } %>
-        <% if (user !== 'null') {%>
-            <header class="header-area">
-                <div class="top-header">
+
+                <div class="atorn-nav">
                     <div class="container">
-                        <div class="row align-items-center justify-content-center">
-                            <div class="col-lg-6 col-sm-6">
-                                <ul class="left-info">
-                                    <li>
-                                        <a href="mailto:hello@atorn.com">
-                                            <i class="las la-envelope"></i>
-                                            subin.cho@m4ml.re.kr
+                        <nav class="navbar navbar-expand-md navbar-light">
+                            <a class="navbar-brand">
+                                <img src="./assets/img/Donga_logo1.png" class="logo1" alt="logo">
+                            </a>
+
+                            <div class="collapse navbar-collapse mean-menu">
+                                <ul class="navbar-nav ms-auto">
+                                    <li class="nav-item">
+                                         <!--내 레파지토리 html 연결-->
+                                        <a href="" class="nav-link">
+                                            My Repository
                                         </a>
                                     </li>
-                                    <li>
-                                        <a href="tel:+823-456-879">
-                                            <i class="las la-phone"></i>
-                                            +82 2362 3174
+                                    <li class="nav-item">
+                                        <a href="#" class="nav-link">
+                                            FAQ <i class="las la-angle-down"></i>
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            <li class="nav-item">
+                                                <!--FAQ html 연결-->
+                                                <a href="" class="nav-link">FAQ 작성</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="" class="nav-link">자주 묻는 질문</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="nav-item">
+                                        <!--가이드 페이지 html 연결-->
+                                        <a href="" class="nav-link">Guide Page</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="home.html" class="nav-link">
+                                            Logout
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="javascript:void(0)" class="nav-link search-box">
+                                            <i class="las la-search"></i>
                                         </a>
                                     </li>
                                 </ul>
                             </div>
-    
-                            <div class="col-lg-6 col-sm-6">
-                                <ul class="right-info">
-                                    <li>
-                                        <a href="https://www.facebook.com/login/" target="_blank">
-                                            <i class="lab la-facebook-f"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="https://twitter.com/i/flow/login" target="_blank">
-                                            <i class="lab la-twitter"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="https://www.instagram.com/" target="_blank">
-                                            <i class="lab la-instagram"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                         <a href="https://www.google.co.uk/" target="_blank">
-                                            <i class="lab la-google-plus"></i>
-                                        </a>
-                                    </li>
-                                    
-                                    <li class="heder-btn">
-                                        <!--myrepository 생성 html 연결-->
-                                        <a href="/repoDetail">Make a Repository</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
+                        </nav>
                     </div>
                 </div>
-    
-                <!-- Start Navbar Area -->
-                <div class="navbar-area">
-                    <div class="atorn-responsive-nav">
-                        <div class="container">
-                            <div class="atorn-responsive-menu">
-                                <div class="logo">
-                                        <img src="./assets/img/Donga_logo1.png" class="logo1" alt="logo">
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-    
-                    <div class="atorn-nav">
-                        <div class="container">
-                            <nav class="navbar navbar-expand-md navbar-light">
-                                <a class="navbar-brand">
-                                    <img src="./assets/img/Donga_logo1.png" class="logo1" alt="logo">
-                                </a>
-    
-                                <div class="collapse navbar-collapse mean-menu">
-                                    <ul class="navbar-nav ms-auto">
-                                        <li class="nav-item">
-                                             <!--내 레파지토리 html 연결-->
-                                            <a href="" class="nav-link">
-                                                My Repository
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="#" class="nav-link">
-                                                FAQ <i class="las la-angle-down"></i>
-                                            </a>
-                                            <ul class="dropdown-menu">
-                                                <li class="nav-item">
-                                                    <!--FAQ html 연결-->
-                                                    <a href="" class="nav-link">FAQ 작성</a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a href="" class="nav-link">자주 묻는 질문</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li class="nav-item">
-                                            <!--가이드 페이지 html 연결-->
-                                            <a href="" class="nav-link">Guide Page</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="home.html" class="nav-link">
-                                                Logout
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="javascript:void(0)" class="nav-link search-box">
-                                                <i class="las la-search"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </nav>
-                        </div>
-                    </div>
-                </div>
-                <!-- End Navbar Area -->
-            </header>
-        <% } %>
+            </div>
+            <!-- End Navbar Area -->
+        </header>
         <!-- End Heder Area -->
 
         <!-- Search Overlay -->
@@ -342,36 +246,33 @@
         <div class="blog-area ptb-100">
             <div class="container">
                 <div class="row justify-content-center">
-                    <% data.forEach(r => { %>
-                        <div class="col-lg-4 col-sm-6">
-                            <div class="blog-card">
-                                <a href="/share2">
+                    <div class="col-lg-4 col-sm-6">
+                        <div class="blog-card">
+                            <a href="blog-details.html">
+                            </a>
+                            <div class="blog-card-text">
+                                <h3><a href="blog-details.html">geekyutao/Inpaint-Anything</a></h3>
+                                <ul>
+                                    <li>
+                                        <i class="las la-calendar"></i>
+                                        22 Sep 2024
+                                    </li>
+                                    <li>
+                                        <i class="las la-user-alt"></i>
+                                        Jupyter Notebook
+                                    </li>
+                                </ul>
+
+                                <p>Inpaint anything using Segment Anything and Inpainting models</p>
+
+                                <a href="blog-details.html" class="read-more">
+                                    Read More <i class="las la-angle-double-right"></i>
                                 </a>
-                                <div class="blog-card-text">
-                                    <h3><a href="/share2"><%= r.Owner_id %><%= r.Name %></a></h3>
-                                    <ul>
-                                        <li>
-                                            <i class="las la-calendar"></i>
-                                            <%= r.Updated %>
-                                        </li>
-                                        <li>
-                                            <i class="las la-user-alt"></i>
-                                            <%= r.Views %>
-                                        </li>
-                                    </ul>
-    
-                                    <p>Inpaint anything using Segment Anything and Inpainting models</p>
-    
-                                    <a href="/share2" class="read-more">
-                                        Read More <i class="las la-angle-double-right"></i>
-                                    </a>
-                                </div>
                             </div>
                         </div>
-                    <% }) %>
-                    
+                    </div>
 
-                    <!-- <div class="col-lg-4 col-sm-6">
+                    <div class="col-lg-4 col-sm-6">
                         <div class="blog-card">
                             <a href="blog-details.html">
                             </a>
@@ -496,9 +397,37 @@
                                 <a href="blog-details.html" class="read-more">Read More <i class="las la-angle-double-right"></i></a>
                             </div>
                         </div>
-                    </div> -->
+                    </div>
                 </div>
                 <!-- 레파지토리 ejs -->
+                <!-- <div class="blog-area ptb-100">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-4 col-sm-6">
+                            <div class="blog-card">
+                                <a href="#">
+                                </a>
+                                <a href="<%= blog.detailsLink || '#' %>">
+                                </a>
+                                <div class="blog-card-text">
+                                    <h3><a href="<%= blog.detailsLink || 'blog-details.html' %>"><%= blog.title || 'Justice May For You If You Are Innocent' %></a></h3>
+                                    <ul>
+                                        <li>
+                                            <i class="las la-calendar"></i>
+                                            <%= blog.date || '27 Sep 2024' %>
+                                        </li>
+                                        <li>
+                                            <i class="las la-user-alt"></i>
+                                            <%= blog.author || 'Jack Jaxon' %>
+                                        </li>
+                                    </ul>
+                                    <p><%= blog.description || 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.' %></p>
+                                    <a href="<%= blog.detailsLink || 'blog-details.html' %>" class="read-more">
+                                        Read More <i class="las la-angle-double-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div> -->
                 
 
                 <!-- Pagination -->
