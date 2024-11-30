@@ -77,6 +77,7 @@ body {
 .main-container {
     display: flex;
     flex: 1;
+    background: #f9f9f9;
 }
 /* 메인 컨텐츠 스타일 */
 main.content {
@@ -227,7 +228,7 @@ main.content button:hover {
 /* 카드 제목 스타일 */
 .rss-card h3 {
     font-size: 1.2em;
-    color: #3498db;
+    color: #34dbb4;
     margin-bottom: 10px;
 }
 
@@ -296,4 +297,11 @@ h6 {
     font-size: 20px;
     margin-right: 10px;
     transition: all 0.3s ease-in-out;
+}
+.padding{
+    margin-top: 10%;
+}
+#description{
+    color: #007BFF;
+    font-weight: bold;
 }

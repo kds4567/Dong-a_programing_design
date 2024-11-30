@@ -1,86 +1,545 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>추천 저장소</title>
-    <link rel="stylesheet" href="/css/share.css">
-</head>
-<body>
-<div>
-    <!-- 상단 버튼 -->
-    <div class="navigation-buttons">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- bootstrap css -->
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
+        <!-- Line Awesome CSS -->
+        <link rel="stylesheet" href="/css/line-awesome.min.css">
+        <!-- Owl Carousel CSS -->
+        <link rel="stylesheet" href="/css/owl.carousel.min.css">
+        <!-- Stylesheet CSS -->
+        <link rel="stylesheet" href="/css/style.css">
+        <!-- Stylesheet Responsive CSS -->
+        <link rel="stylesheet" href="/css/responsive.css">
+        <!-- Title -->
+        <title>Dong-A Hub</title>
+    </head>
+    <body>
+        <!-- Preloder Area -->
+        <div class="preloader">
+            <div class="d-table">
+                <div class="d-table-cell">
+                    <div class="lds-hourglass"></div>
+                </div>
+            </div>
+        </div>
+        <!-- End Preloder Area -->
+        
+        <!-- Heder Area -->
         <% if (user == null) { %>
-            <a href="/search" class="btn">검색</a>
-            <a href="/guide" class="btn">가이드</a>
-            <a href="/login" class="btn">로그인</a>
-        <% } else { %>
-            <a href="/myrepo" class="btn">MyRepo</a>
-            <a href="/search" class="btn">검색</a>
-            <a href="/guide" class="btn">가이드</a>
-            <a href="/logout" class="btn">로그아웃</a>
-
-        <% } %>
-    </div>
+            <header class="header-area">
+                <div class="top-header">
+                    <div class="container">
+                        <div class="row align-items-center justify-content-center">
+                            <div class="col-lg-6 col-sm-6">
+                                <ul class="left-info">
+                                    <li>
+                                        <a href="mailto:hello@atorn.com">
+                                            <i class="las la-envelope"></i>
+                                            swdesign@donga.ac.kr
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="tel:+823-456-879">
+                                            <i class="las la-phone"></i>
+                                            +82 1234 5678
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
     
-    <h1>추천 저장소</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>저장소 이름</th>
-            </tr>
-        </thead>
-        <tbody>
-            <% if (data.length > 0) { %>
-                <% data.forEach(repo => { %>
-                    <tr>
-                        <td> 저장소 이름 </td>
-                        <td> 조회수 </td>
-                        <td> 마지막 업데이트</td>
-                    </tr>
-                    <tr>
-                        <td><a href="/repoDetail/<%= repo.Id %>"><%= repo.Name %></a></td>
-                        <td><%= repo.Views %></td>
-                        <td><%= new Date(repo.Updated).toLocaleDateString('ko-KR', {
-                            year: 'numeric',
-                            month: '2-digit',
-                            day: '2-digit',
-                            hour: '2-digit',
-                            minute: '2-digit',
-                            weekday: 'long',
-                            hour12: false
-                        }) %></td>
-                    </tr>
-                <% }) %>
-            <% } else { %>
-                <tr>
-                    <td>추천할 저장소가 없습니다.</td>
-                </tr>
-            <% } %>
-        </tbody>
-    </table>
-    <a href="/">홈으로 돌아가기</a>
-</div>
+                            <div class="col-lg-6 col-sm-6">
+                                <ul class="right-info">
+                                    
+                                    <li class="heder-btn">
+                                        <!--myrepository 생성 html 연결-->
+                                        <a href="/login">Login</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- Start Navbar Area -->
+                <div class="navbar-area">
+                    <div class="atorn-responsive-nav">
+                        <div class="container">
+                            <div class="atorn-responsive-menu">
+                                <div class="logo">
+                                        <img src="/images/Donga_logo1.png" class="logo1" alt="logo">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="atorn-nav">
+                        <div class="container">
+                            <nav class="navbar navbar-expand-md navbar-light">
+                                <a class="navbar-brand">
+                                    <img src="/images/Donga_logo1.png" class="logo1" alt="logo">
+                                </a>
+    
+                                <div class="collapse navbar-collapse mean-menu">
+                                    <ul class="navbar-nav ms-auto">
+                                        <!--<li class="nav-item">
+                                            <a href="" class="nav-link">
+                                                My Repository
+                                            </a>
+                                        </li>-->
+                                        <li class="nav-item">
+                                            <a href="#" class="nav-link">
+                                                FAQ <i class="las la-angle-down"></i>
+                                            </a>
+                                            <ul class="dropdown-menu">
+                                                <li class="nav-item">
+                                                    <!--FAQ html 연결-->
+                                                    <a href="" class="nav-link">FAQ 작성</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a href="" class="nav-link">자주 묻는 질문</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="nav-item">
+                                            <!--가이드 페이지 html 연결-->
+                                            <a href="/guid" class="nav-link">Guide Page</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="javascript:void(0)" class="nav-link search-box">
+                                                <i class="las la-search"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Navbar Area -->
+            </header>
+        <% } else { %>
+            <header class="header-area">
+                <div class="top-header">
+                    <div class="container">
+                        <div class="row align-items-center justify-content-center">
+                            <div class="col-lg-6 col-sm-6">
+                                <ul class="left-info">
+                                    <li>
+                                        <a href="mailto:hello@atorn.com">
+                                            <i class="las la-envelope"></i>
+                                            swdesign@donga.ac.kr
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="tel:+823-456-879">
+                                            <i class="las la-phone"></i>
+                                            +82 1234 5678
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+    
+                            <div class="col-lg-6 col-sm-6">
+                                <ul class="right-info">
+                                    <li>
+                                        <a href="https://www.facebook.com/login/" target="_blank">
+                                            <i class="lab la-facebook-f"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="https://twitter.com/i/flow/login" target="_blank">
+                                            <i class="lab la-twitter"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="https://www.instagram.com/" target="_blank">
+                                            <i class="lab la-instagram"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                         <a href="https://www.google.co.uk/" target="_blank">
+                                            <i class="lab la-google-plus"></i>
+                                        </a>
+                                    </li>
+                                    
+                                    <li class="heder-btn">
+                                        <!--myrepository 생성 html 연결-->
+                                        <a href="/logout">Logout</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- Start Navbar Area -->
+                <div class="navbar-area">
+    
+                    <div class="atorn-nav">
+                        <div class="container">
+                            <nav class="navbar navbar-expand-md navbar-light">
+                                <a class="navbar-brand">
+                                    <img src="/images/Donga_logo1.png" class="logo1" alt="logo">
+                                </a>
+    
+                                <div class="collapse navbar-collapse mean-menu">
+                                    <ul class="navbar-nav ms-auto">
+                                        <li class="nav-item">
+                                            <!--내 레파지토리 html 연결-->
+                                           <a href="/myrepo" class="nav-link">
+                                               My Repository
+                                           </a>
+                                       </li>
+                                        <li class="nav-item">
+                                            <!--가이드 페이지 html 연결-->
+                                            <a href="#ct-real" class="nav-link" id="shareRepoButton">Share Repo</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="#" class="nav-link">
+                                                FAQ <i class="las la-angle-down"></i>
+                                            </a>
+                                            <ul class="dropdown-menu">
+                                                <li class="nav-item">
+                                                    <!--FAQ html 연결-->
+                                                    <a href="" class="nav-link">FAQ 작성</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a href="" class="nav-link">자주 묻는 질문</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="nav-item">
+                                            <!--가이드 페이지 html 연결-->
+                                            <a href="" class="nav-link">Guide Page</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="javascript:void(0)" class="nav-link search-box">
+                                                <i class="las la-search"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Navbar Area -->
+            </header>
+        <% } %>
+        <!-- End Heder Area -->
 
-<!-- 스타일 -->
-<style>
-    .navigation-buttons {
-        display: flex;
-        justify-content: center;
-        margin-bottom: 20px;
-        gap: 10px;
-    }
-    .btn {
-        padding: 10px 20px;
-        text-decoration: none;
-        color: white;
-        background-color: #007BFF;
-        border-radius: 5px;
-        font-size: 16px;
-        text-align: center;
-    }
-    .btn:hover {
-        background-color: #0056b3;
-    }
-</style>
-</body>
+        <!-- Search Overlay -->
+        <div class="search-overlay">
+            <div class="d-table">
+                <div class="d-table-cell">
+                    <div class="search-overlay-layer"></div>
+                    <div class="search-overlay-layer"></div>
+                    <div class="search-overlay-layer"></div>
+                    
+                    <div class="search-overlay-close">
+                        <span class="search-overlay-close-line"></span>
+                        <span class="search-overlay-close-line"></span>
+                    </div>
+
+                    <div class="search-overlay-form">
+                        <form>
+                            <input type="text" class="input-search" placeholder="Search here...">
+                            <button type="submit"><i class='las la-search'></i></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Search Overlay -->
+        <!-- Hero Slider Area -->
+        <div class="hero-slider hero-slider-two owl-carousel owl-theme">
+            <div class="hero-slider-item item-bg4">
+                <div class="d-table">
+                    <div class="d-table-cell">
+                        <div class="container">
+                            <div class="slider-content">
+                                <div class="row justify-content-center">
+                                    <div class="col-lg-6">
+                                        <span>Welcome..</span>
+                                        <h1>Dong-A HUB Page</h1>
+                                        <p>This is Dong-A HUB for software engineering's Dong-A design code. Please refer to the guide page for more information.</p>
+                                        <div class="slider-btn">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <!-- <div class="slider-image">
+                                            <img src="./assets/img/hero-slider/570x800.mp4" alt="Image">
+                                        </div> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Hero Slider Area -->
+
+        <!-- Low Card Area -->
+        <div class="low-card-area-two">
+            <div class="container">
+                <div class="low-card-contant">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-4 col-sm-6">
+                            <div class="low-card-two">
+                                <i class="lab la-gitkraken"></i>
+                                <h3>Create Dong-A Design Code</h3>
+                                <div class="low-shape">
+                                    <img src="/images/shape1.png" alt="Shape">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-sm-6">
+                            <div class="low-card-two">
+                                <i class="las la-user-tie"></i>
+                                <h3>AI-Based Demand Analysis Feedback</h3>
+                                <div class="low-shape">
+                                    <img src="/images/shape1.png" alt="Shape">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-sm-6  ">
+                            <div class="low-card-two">
+                                <i class="las la-screwdriver"></i>
+                                <h3>Repository Hub</h3>
+                                <div class="low-shape">
+                                    <img src="/images/shape1.png" alt="Shape">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Low Card Area -->
+        <!-- News & Blog Area -->
+        <div class="blog-area ptb-100" id="ct-real">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <% data.forEach(r => { %>
+                        <div class="col-lg-4 col-sm-6">
+                            <div class="blog-card">
+                                <a href="/share2">
+                                </a>
+                                <div class="blog-card-text">
+                                    <h3><a href="/share2"><%= r.Owner_id %><%= r.Name %></a></h3>
+                                    <ul>
+                                        <li>
+                                            <i class="las la-calendar"></i>
+                                            <%= r.Updated %>
+                                        </li>
+                                        <li>
+                                            <i class="las la-user-alt"></i>
+                                            <%= r.Views %>
+                                        </li>
+                                    </ul>
+    
+                                    <p>Inpaint anything using Segment Anything and Inpainting models</p>
+    
+                                    <a href="/share2" class="read-more">
+                                        Read More <i class="las la-angle-double-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    <% }) %>
+                </div>
+
+                <!-- Pagination -->
+                <div class="col-lg-12 col-md-12">
+                    <ul class="pagination">
+                        <li class="page-item">
+                            <a class="page-link" href="home.html" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item active"><a class="page-link" href="home.html">1</a></li>
+                        <li class="page-item"><a class="page-link" href="home.html">2</a></li>
+                        <li class="page-item"><a class="page-link" href="home.html">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="home.html" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- End News & Blog Area -->
+        
+        <!-- Footer Area-->
+        <footer class="footer-area pt-100 pb-70">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-5 col-sm-6">
+                        <div class="footer-widget">
+                            <div class="logo">
+                                <img src="/images/Donga_logo2.png" alt="logo">
+                            </div>
+                            <p>You can design better software through Dong-A University design code, and get better design code ideas through the sharing page.</p>
+        
+                            <ul class="footer-socials">
+                                <li>
+                                    <a href="https://www.facebook.com/login/" target="_blank">
+                                        <i class="lab la-facebook-f"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://twitter.com/i/flow/login" target="_blank">
+                                        <i class="lab la-twitter"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.instagram.com/" target="_blank">
+                                        <i class="lab la-instagram"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                     <a href="https://www.google.co.uk/" target="_blank">
+                                        <i class="lab la-google-plus"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+        
+                    <div class="col-lg-2 col-sm-6">
+                        <div class="footer-widget">
+                            <h3>PM</h3>
+                    
+                            <ul class="footer-text">
+                                <li>
+                                    <a href="">
+                                        <i class="las la-star"></i>
+                                        Juseok Son
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/myrepo">
+                                        <i class="las la-star"></i>
+                                        Daeseong Kim
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-2 col-sm-6">
+                        <div class="footer-widget pl-50">
+                            <h3>Font-end</h3>
+        
+                            <ul class="footer-text">
+                                <li>
+                                    <a href="">
+                                        <i class="las la-star"></i>
+                                        Jaeung Lee
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="">
+                                        <i class="las la-star"></i>
+                                        Subin Choi
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="">
+                                        <i class="las la-star"></i>
+                                        Yeonghun Jeong
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+        
+                    <div class="col-lg-3 col-sm-6">
+                        <div class="footer-widget pl-50">
+                            <h3>Back-end</h3>
+        
+                            <ul class="footer-text">
+                                <li>
+                                    <a href="">
+                                        <i class="las la-star"></i>
+                                        Heewoong Jang
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="">
+                                        <i class="las la-star"></i>
+                                        Minsu Kim
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="">
+                                        <i class="las la-star"></i>
+                                        Sehyeon Kim
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="">
+                                        <i class="las la-star"></i>
+                                        Seongmin Im
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- End Footer Area -->
+
+        <!-- Footer bottom Area -->
+        <div class="footer-bottom">
+            <div class="container">
+                <p>© Dong-A University</p>
+            </div>
+        </div>
+        <!-- End Footer bottom Area -->
+
+        <!-- Go Top -->
+        <div class="go-top">
+            <i class="las la-hand-point-up"></i>
+        </div>
+        <!-- End Go Top -->
+    </body>
+    <script>
+        document.getElementById("shareRepoButton").addEventListener("click", function() {
+            const container = document.getElementById("ct-real");
+            if (container) {
+                container.scrollIntoView({ behavior: "smooth" });
+            }
+        });
+    </script>
+    <!-- jQuery first, then Bootstrap JS -->
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <!-- Meanmenu JS -->
+    <script src="/js/meanmenu.min.js"></script>
+    <!-- Magnific JS -->
+    <script src="/js/jquery.magnific-popup.min.js"></script>
+    <!-- Owl Carousel JS -->
+    <script src="/js/owl.carousel.min.js"></script>
+    <!-- Odometer JS -->
+    <script src="/js/odometer.min.js"></script>
+    <!-- Appear JS -->
+    <script src="/js/jquery.appear.js"></script>
+    <!-- Form Validator JS -->
+    <script src="/js/form-validator.min.js"></script>
+    <!-- Contact JS -->
+    <script src="/js/contact-form-script.js"></script>
+    <!-- Ajaxchimp JS -->
+    <script src="/js/jquery.ajaxchimp.min.js"></script>
+    <!-- Custom JS -->
+    <script src="/js/custom2.js"></script>
 </html>
