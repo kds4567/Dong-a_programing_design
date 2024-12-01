@@ -115,7 +115,7 @@
             background-color: #ccc;
         }
 
-        /* create 버튼 및 upload 버튼*/
+        /* create 버튼 및 upload 버튼 */
         .dropdown {
             position: relative;
             z-index: 10; /* z-index를 높여서 버튼이 앞에 나오게 함 */
@@ -221,6 +221,7 @@
         .footer-area {
             margin-top: auto;
         }
+
         /* 메인 콘텐츠 영역 */
         .content {
             display: flex;
@@ -285,7 +286,68 @@
             cursor: pointer;
         }
 
+        .popup {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            padding: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            margin-top: 10px;
+            z-index: 1000;
+            width: 40%;
+            height: 40%;
+            overflow: initial;
+        }
 
+        .popup textarea {
+            display: flex;
+            flex-grow: 1;
+            width: 100%;
+            height: 82%;
+            margin-bottom: 20px;
+            padding: 10px;
+            font-family: monospace;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+
+        .resize-handle {
+            width: 10px;
+            height: 10px;
+            position: absolute;
+            bottom:
+                    0;
+            right: 0;
+            cursor: se-resize;
+        }
+        .resize-handle.top-left {
+            top: -5px;
+            left: -5px;
+            cursor: nw-resize;
+        }
+        #tooltip {
+            position: fixed;
+            width: 40%;
+            height: 40%;
+            background-color: #555;
+            color: initial;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 15px;
+            overflow: auto;
+            border-radius: 5px;
+            z-index: 1001;
+            display: none;
+            visibility: visible;
+        }
+        .tooltip-content {
+            color: #fff;
+        }
     </style>
     <!--top bar css-->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -320,7 +382,6 @@
 
                 <div class="col-lg-6 col-sm-6">
                     <ul class="right-info">
-                        
                         <li class="heder-btn">
                             <!--myrepository 생성 html 연결-->
                             <a href="/logout">Logout</a>
@@ -337,8 +398,7 @@
             <div class="container">
                 <div class="atorn-responsive-menu">
                     <div class="logo">
-                            <img src="/images/Donga_logo1.png" class="logo1" alt="logo">
-                        </a>
+                        <img src="/images/Donga_logo1.png" class="logo1" alt="logo">
                     </div>
                 </div>
             </div>
@@ -353,17 +413,10 @@
 
                     <div class="collapse navbar-collapse mean-menu">
                         <ul class="navbar-nav ms-auto">
-                            <!--<li class="nav-item">
-                                <a href="" class="nav-link">
-                                    My Repository
-                                </a>
-                            </li>-->
                             <li class="nav-item">
-                                <!--가이드 페이지 html 연결-->
                                 <a href="/" class="nav-link">Home</a>
                             </li>
                             <li class="nav-item">
-                                <!--가이드 페이지 html 연결-->
                                 <a href="/#ct-real" class="nav-link">Share Repo</a>
                             </li>
                             <li class="nav-item">
@@ -372,7 +425,6 @@
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li class="nav-item">
-                                        <!--FAQ html 연결-->
                                         <a href="" class="nav-link">FAQ 작성</a>
                                     </li>
                                     <li class="nav-item">
@@ -381,7 +433,6 @@
                                 </ul>
                             </li>
                             <li class="nav-item">
-                                <!--가이드 페이지 html 연결-->
                                 <a href="" class="nav-link">Guide Page</a>
                             </li>
                             <li class="nav-item">
@@ -396,12 +447,9 @@
         </div>
     </div>
     <!-- End Navbar Area -->
-   
 </header>
 
-    
 <main class="content">
-    
     <div class="sidebar">
         <!-- Sidebar 내용 -->
         <div class="editor-header">
@@ -424,17 +472,17 @@
 
         <div class="file-list">
             <% files.forEach(file => { %>
-            <div>
-                <% if (file.isFolder) { %>
-                    📁 <%= file.File_name %>
-                <% } else { %>
-                    📄
-                    <a href="#" onclick="loadFile('<%= file.Path %>')"><%= file.File_name %></a>
-                    <% if (isOwner) { %>
-                        <button onclick="deleteFile('<%= file.Path %>', '<%= repoId %>')">Delete</button>
+                <div>
+                    <% if (file.isFolder) { %>
+                        📁 <%= file.File_name %>
+                    <% } else { %>
+                        📄
+                        <a href="#" onclick="loadFile('<%= file.Path %>')"><%= file.File_name %></a>
+                        <% if (isOwner) { %>
+                            <button onclick="deleteFile('<%= file.Path %>', '<%= repoId %>')">Delete</button>
+                        <% } %>
                     <% } %>
-                <% } %>
-            </div>
+                </div>
             <% }); %>
         </div>
     </div>
@@ -444,6 +492,11 @@
             <h1>File Viewer</h1>
             <div class="button-container">
                 <div class="save-file">
+                    <% if (isOwner) { %>
+                        <button onclick="requirementsText()">요구 분석</button>
+                    <% } else { %>
+                        <button disabled>요구 분석</button>
+                    <% } %>
                     <% if (isOwner) { %>
                         <button onclick="saveFile()">Save File</button>
                     <% } else { %>
@@ -465,324 +518,468 @@
     </div>
 </main>
 
+<div id="tooltip">
+    <span class="tooltip-content"></span>
+    <button onclick="closeTooltip()" style="position: absolute;">닫기</button>
+</div>
 
-
-
-    <footer class="footer-area pt-100 pb-70">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-5 col-sm-6">
-                    <div class="footer-widget">
-                        <div class="logo">
-                            <img src="/images/Donga_logo2.png" alt="logo">
-                        </div>
-                        <p>You can design better software through Dong-A University design code, and get better design code ideas through the sharing page.</p>
-
-                        <ul class="footer-socials">
-                            <li>
-                                <a href="https://www.facebook.com/login/" target="_blank">
-                                    <i class="lab la-facebook-f"></i>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="https://twitter.com/i/flow/login" target="_blank">
-                                    <i class="lab la-twitter"></i>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="https://www.instagram.com/" target="_blank">
-                                    <i class="lab la-instagram"></i>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="https://www.google.co.uk/" target="_blank">
-                                    <i class="lab la-google-plus"></i>
-                                </a>
-                            </li>
-                        </ul>
+<footer class="footer-area pt-100 pb-70">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-5 col-sm-6">
+                <div class="footer-widget">
+                    <div class="logo">
+                        <img src="/images/Donga_logo2.png" alt="logo">
                     </div>
+                    <p>You can design better software through Dong-A University design code, and get better design code ideas through the sharing page.</p>
+
+                    <ul class="footer-socials">
+                        <li>
+                            <a href="https://www.facebook.com/login/" target="_blank">
+                                <i class="lab la-facebook-f"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://twitter.com/i/flow/login" target="_blank">
+                                <i class="lab la-twitter"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.instagram.com/" target="_blank">
+                                <i class="lab la-instagram"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.google.co.uk/" target="_blank">
+                                <i class="lab la-google-plus"></i>
+                            </a>
+                        </li>
+                    </ul>
                 </div>
+            </div>
 
-                <div class="col-lg-2 col-sm-6">
-                    <div class="footer-widget">
-                        <h3>PM</h3>
-                
-                        <ul class="footer-text">
-                            <li>
-                                <a href="">
-                                    <i class="las la-star"></i>
-                                    Juseok Son
-                                </a>
-                            </li>
-                            <li>
-                                <a href="/myrepo">
-                                    <i class="las la-star"></i>
-                                    Daeseong Kim
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+            <div class="col-lg-2 col-sm-6">
+                <div class="footer-widget">
+                    <h3>PM</h3>
+
+                    <ul class="footer-text">
+                        <li>
+                            <a href="">
+                                <i class="las la-star"></i>
+                                Juseok Son
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/myrepo">
+                                <i class="las la-star"></i>
+                                Daeseong Kim
+                            </a>
+                        </li>
+                    </ul>
                 </div>
-                
-                <div class="col-lg-2 col-sm-6">
-                    <div class="footer-widget pl-50">
-                        <h3>Front-end</h3>
+            </div>
 
-                        <ul class="footer-text">
-                            <li>
-                                <a href="">
-                                    <i class="las la-star"></i>
-                                    Jaeung Lee
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    <i class="las la-star"></i>
-                                    Subin Choi
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    <i class="las la-star"></i>
-                                    Yeonghun Jeong
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+            <div class="col-lg-2 col-sm-6">
+                <div class="footer-widget pl-50">
+                    <h3>Font-end</h3>
+
+                    <ul class="footer-text">
+                        <li>
+                            <a href="">
+                                <i class="las la-star"></i>
+                                Jaeung Lee
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <i class="las la-star"></i>
+                                Subin Choi
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <i class="las la-star"></i>
+                                Yeonghun Jeong
+                            </a>
+                        </li>
+                    </ul>
                 </div>
+            </div>
 
-                <div class="col-lg-3 col-sm-6">
-                    <div class="footer-widget pl-50">
-                        <h3>Back-end</h3>
+            <div class="col-lg-3 col-sm-6">
+                <div class="footer-widget pl-50">
+                    <h3>Back-end</h3>
 
-                        <ul class="footer-text">
-                            <li>
-                                <a href="">
-                                    <i class="las la-star"></i>
-                                    Heewoong Jang
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    <i class="las la-star"></i>
-                                    Minsu Kim
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    <i class="las la-star"></i>
-                                    Sehyeon Kim
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    <i class="las la-star"></i>
-                                    Seongmin Im
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+                    <ul class="footer-text">
+                        <li>
+                            <a href="">
+                                <i class="las la-star"></i>
+                                Heewoong Jang
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <i class="las la-star"></i>
+                                Minsu Kim
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <i class="las la-star"></i>
+                                Sehyeon Kim
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <i class="las la-star"></i>
+                                Seongmin Im
+                            </a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
-    </footer>
+    </div>
+</footer>
 
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-        <script>
-            let currentFilePath = '<%= initialFilePath %>';
-            let currentRepoId = '<%= repoId %>';
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script>
+    let start = '<%= initialFilePath %>';
+    if (start){
+        console.log('initialFilePath : ', start);
+        loadFile(start);
+    }
+    let currentFilePath = start;
+    let currentRepoId = '<%= repoId %>';
 
-            /* 원래 레포 들어가면 바로 README.md파일 load하는 조건문*/
-            /* 잠시 보류 */
-            /*
-            if(currentFilePath !== ''){
-                loadFile(currentFilePath);
-            }
-            */
+    async function requirementsText(filecontent = '') {
+        // 이미 팝업이 있으면 새로 만들지 않음
+        if (document.querySelector('.popup')) {
+            return;
+        }
+        const popup = document.createElement('div');
+        popup.className = 'popup';
 
-            async function loadFile(filePath) {
-                try {
-                    const response = await fetch(`/repoDetail/file-content?path=${encodeURIComponent(filePath)}`);
-                    currentFilePath = filePath;
-                    console.log('loadFile() 경로: ', currentFilePath);
-                    if (!response.ok) throw new Error('파일을 불러올 수 없습니다.');
-                    const content = await response.text();
-                    document.getElementById('file-content').textContent = content;
-                    document.getElementById('editor').value = content;
-                } catch (err) {
-                    alert('오류 발생: ' + err.message);
-                }
-            }
+        popup.innerHTML = `
+                <textarea id="requirements" placeholder="요구 사항을 입력하세요...">${filecontent}</textarea>
+                <button id="inspect" onclick="checkRequirements(this)" style="align-items: end">검사</button>
+                <button id="close" onclick="closePopup(this)" style="align-items:   end">닫기</button>
+                <div class="resize-handle top-left"></div>
+            `;
 
-            async function saveFile() {
-                const content = document.getElementById('editor').value;
-                if (!currentFilePath) {
-                    alert('저장할 파일이 선택되지 않았습니다.');
-                    return;
-                }
+        // 팝업을 body에 추가
+        document.body.appendChild(popup);
 
-                console.log('saveFile() 경로:', currentFilePath);
-                console.log('savdFile() 내용:', content);
+        // 팝업을 크기 조정 가능하게 설정
+        makeResizable(popup);
 
-                try {
-                    const response = await fetch('/repoDetail/edit-file', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({ filePath: currentFilePath, content }),
-                    });
-                    if (!response.ok) throw new Error('파일 저장 실패');
-                    alert(await response.text());
-                    await loadFile(currentFilePath);
-                } catch (err) {
-                    alert('오류 발생: ' + err.message);
-                }
-            }
+        // 팝업 표시
+        popup.style.display = 'block';
+    }
 
-            async function deleteFile(filePath, repoId) {
-                if (!filePath) {
-                    alert('삭제할 파일 경로가 없습니다.');
-                    return;
-                }
-                console.log('deleteFile() 경로 : ', filePath);
-                console.log('deleteFile() repoID : ', repoId);
+    async function checkRequirements(button) {
+        const content = button.parentElement.querySelector('#requirements').value;
+        const tooltip = document.getElementById('tooltip');
+        let tooltipContent = '';
 
-                const confirmDelete = confirm('정말로 이 파일을 삭제하시겠습니까?');
-                if (!confirmDelete) return;
+        //const tooltip = document.querySelector('.tooltip');
 
-                try {
-                    const response = await fetch('/repoDetail/delete-file', {
-                        method: 'DELETE',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            filePath: filePath,
-                            repoId: repoId  // 서버에서 전달받은 repoId
-                        }),
-                    });
-                    if (!response.ok) throw new Error('파일 삭제 실패');
-                    alert(await response.text());
-                    location.reload();  // 삭제 후 페이지 새로 고침
-                } catch (err) {
-                    alert('오류 발생: ' + err.message);
-                }
-            }
-
-            async function deleteRepo(repoId) {
-                const confirmDelete = confirm('정말로 이 레포지토리를 삭제하시겠습니까?');
-                if (!confirmDelete) return;
-
-                try {
-                    const response = await fetch('/repoDetail/delete-repo', {
-                        method: 'DELETE',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            repoId: repoId
-                        }),
-                    });
-                    if (!response.ok) throw new Error('레포지토리 삭제 실패');
-                    alert(await response.text());
-                    window.location.href = '/';  // 레포지토리 삭제 후 메인 페이지로 이동
-                } catch (err) {
-                    alert('오류 발생: ' + err.message);
-                }
-            }
-
-            async function uploadFile() {
-                const fileInput = document.getElementById('file-upload');
-                const repoId = document.querySelector('input[name="repoId"]').value;
-                const file = fileInput.files[0];
-
-                if (!file) {
-                    alert('업로드할 파일을 선택해주세요.');
-                    return;
-                }
-
-                const formData = new FormData();
-                formData.append('file', file);
-                formData.append('repoId', repoId);
-
-                try {
-                    const response = await fetch('/repoDetail/upload-file', {
-                        method: 'POST',
-                        body: formData,
-                    });
-                    if (!response.ok) throw new Error('파일 업로드 실패');
-                    alert(await response.text());
-                    location.reload();  // 업로드 후 페이지 새로 고침
-                } catch (err) {
-                    alert('오류 발생: ' + err.message);
-                }
-            }
-
-            // 파일 생성 함수
-            async function createFile(repoId) {
-                const fileName = prompt('새 파일 이름을 입력하세요:');
-                if (!fileName) {
-                    alert('파일 이름을 입력해주세요.');
-                    return;
-                }
-                const filePath = currentFilePath;
-
-                try {
-                    const response = await fetch('/repoDetail/create-file', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({ repoId, fileName, filePath}),
-                    });
-
-                    if (!response.ok) throw new Error('파일 생성 실패');
-                    alert(await response.text());
-                    location.reload();  // 파일 생성 후 페이지 새로 고침
-                } catch (err) {
-                    alert('오류 발생: ' + err.message);
-                }
-            }
-        </script>
-        <script>
-            function toggleDropdown() {
-                const dropdown = document.querySelector('.dropdown');
-                dropdown.classList.toggle('show');
-            }
-
-            // Open upload modal
-            function openUploadModal() {
-                document.getElementById('upload-modal').style.display = 'block';
-                document.getElementById('modal-overlay').style.display = 'block';
-            }
-
-            // Close upload modal
-            function closeUploadModal() {
-                document.getElementById('upload-modal').style.display = 'none';
-                document.getElementById('modal-overlay').style.display = 'none';
-            }
-
-            // function createFile() {
-            //     alert('Create new file clicked!');
-            // }
-
-            // function uploadFiles() {
-            //     alert('Upload files clicked!');
-            // }
-
-            // Close dropdown if clicked outside
-            window.addEventListener('click', (e) => {
-                const dropdown = document.querySelector('.dropdown');
-                if (!dropdown.contains(e.target)) {
-                    dropdown.classList.remove('show');
-                }
+        try {
+            const response = await fetch('/repoDetail/requirements', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ content }),
             });
 
-            // Close modal when clicking overlay
-            document.getElementById('modal-overlay').addEventListener('click', closeUploadModal);
-        </script>
-    </body>
-</html>
+            if (!response.ok) throw new Error('분석 실패');
+
+            const data = await response.json();
+
+            if (data.status === "문제 없음") {
+                tooltipContent = '문제없음';
+            } else {
+                tooltipContent = `
+                        ${data.status}
+                        <br>${data.answer
+                    .split('\n')
+                    .map(line => line.trim())
+                    .filter(line => line)
+                    .join('<br>')
+                }</br>
+                    `;
+            }
+
+            // 말풍선 내용 설정
+            tooltip.innerHTML = `
+                    <div class = "tooltip-content;" style="position: relative; color: white!important;">
+                        ${tooltipContent}
+                    </div>
+                    <button onclick="closeTooltip()" style =" bottom:5px; right:5px; position: absolute;">닫기</button>
+                `;
+
+            console.log('tooltip:', tooltip);
+            tooltip.style.display = 'block';
+            tooltip.style.position = 'absolute';
+            tooltip.style.top = `${-button.offsetTop + 390}px`;
+            tooltip.style.left = `${button.offsetLeft + 825}px`;
+            tooltip.style.zIndex = 1001;
+            tooltip.style.background = "#333";
+        } catch (err) {
+            tooltip.textContent = '오류 발생: ' + err.message;
+            tooltip.style.display = 'block';
+        }
+    }
+
+    async function makeResizable(popup) {
+        const handles = popup.querySelectorAll('.resize-handle');
+        let isResizing = false;
+        let startX, startY, startWidth, startHeight, startLeft, startTop;
+        let currentHandle;
+
+        handles.forEach(handle => {
+            handle.addEventListener('mousedown', (e) => {
+                isResizing = true;
+                currentHandle = handle;
+                startX = e.clientX;
+                startY = e.clientY;
+
+                const rect = popup.getBoundingClientRect();
+                startWidth = rect.width;
+                startHeight = rect.height;
+                startLeft = rect.left;
+                startTop = rect.top;
+
+                e.preventDefault(); // 기본 이벤트 방지
+            });
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (!isResizing) return;
+
+            const dx = e.clientX - startX;
+            const dy = e.clientY - startY;
+
+            if (currentHandle.classList.contains('top-left')) {
+                const newWidth = startWidth - dx;
+                const newHeight = startHeight - dy;
+
+                if (newWidth > 150 && newHeight > 100) { // 최소 크기 제한
+                    popup.style.width = `${newWidth}px`;
+                    popup.style.height = `${newHeight}px`;
+                    popup.style.left = `${startLeft + dx}px`;
+                    popup.style.top = `${startTop + dy}px`;
+                }
+            }
+        });
+
+        document.addEventListener('mouseup', () => {
+            isResizing = false;
+            currentHandle = null; // 현재 핸들 초기화
+        });
+
+    }
+
+    async function closePopup(button) {
+        const popup = document.querySelector('.popup');
+        if (popup) {
+            popup.remove(); // 팝업을 DOM에서 제거
+        }
+        await closeTooltip();
+    }
+
+    async function closeTooltip() {
+        const tooltip = document.getElementById('tooltip');
+        tooltip.classList.remove('show'); // 숨김
+        tooltip.style.display = 'none';
+    }
+
+    async function loadFile(filePath) {
+        try {
+            const response = await fetch(`/repoDetail/file-content?path=${encodeURIComponent(filePath)}`);
+            currentFilePath = filePath;
+            console.log('loadFile() 경로: ', currentFilePath);
+            if (!response.ok) throw new Error('파일을 불러올 수 없습니다.');
+            const content = await response.text();
+            document.getElementById('file-content').textContent = content;
+            document.getElementById('editor').value = content;
+
+            closePopup(document.querySelector('.div popup'));
+            await requirementsText(content);
+        } catch (err) {
+            alert('오류 발생: ' + err.message);
+        }
+    }
+
+    async function saveFile() {
+        const content = document.getElementById('editor').value;
+        if (!currentFilePath) {
+            alert('저장할 파일이 선택되지 않았습니다.');
+            return;
+        }
+
+        console.log('saveFile() 경로:', currentFilePath);
+        console.log('savdFile() 내용:', content);
+
+        try {
+            const response = await fetch('/repoDetail/edit-file', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ filePath: currentFilePath, content }),
+            });
+            if (!response.ok) throw new Error('파일 저장 실패');
+            alert(await response.text());
+            await loadFile(currentFilePath);
+        } catch (err) {
+            alert('오류 발생: ' + err.message);
+        }
+    }
+
+    async function deleteFile(filePath, repoId) {
+        if (!filePath) {
+            alert('삭제할 파일 경로가 없습니다.');
+            return;
+        }
+        console.log('deleteFile() 경로 : ', filePath);
+        console.log('deleteFile() repoID : ', repoId);
+
+        const confirmDelete = confirm('정말로 이 파일을 삭제하시겠습니까?');
+        if (!confirmDelete) return;
+
+        try {
+            const response = await fetch('/repoDetail/delete-file', {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    filePath: filePath,
+                    repoId: repoId  // 서버에서 전달받은 repoId
+                }),
+            });
+            if (!response.ok) throw new Error('파일 삭제 실패');
+            alert(await response.text());
+            location.reload();  // 삭제 후 페이지 새로 고침
+        } catch (err) {
+            alert('오류 발생: ' + err.message);
+        }
+    }
+
+    async function deleteRepo(repoId) {
+        const confirmDelete = confirm('정말로 이 레포지토리를 삭제하시겠습니까?');
+        if (!confirmDelete) return;
+
+        try {
+            const response = await fetch('/repoDetail/delete-repo', {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    repoId: repoId
+                }),
+            });
+            if (!response.ok) throw new Error('레포지토리 삭제 실패');
+            alert(await response.text());
+            window.location.href = '/';  // 레포지토리 삭제 후 메인 페이지로 이동
+        } catch (err) {
+            alert('오류 발생: ' + err.message);
+        }
+    }
+
+    async function uploadFile() {
+        const fileInput = document.getElementById('file-upload');
+        const repoId = document.querySelector('input[name="repoId"]').value;
+        const file = fileInput.files[0];
+
+        if (!file) {
+            alert('업로드할 파일을 선택해주세요.');
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('repoId', repoId);
+
+        try {
+            const response = await fetch('/repoDetail/upload-file', {
+                method: 'POST',
+                body: formData,
+            });
+            if (!response.ok) throw new Error('파일 업로드 실패');
+            alert(await response.text());
+            location.reload();  // 업로드 후 페이지 새로 고침
+        } catch (err) {
+            alert('오류 발생: ' + err.message);
+        }
+    }
+
+    // 파일 생성 함수
+    async function createFile(repoId) {
+        const fileName = prompt('새 파일 이름을 입력하세요:');
+        if (!fileName) {
+            alert('파일 이름을 입력해주세요.');
+            return;
+        }
+        const filePath = currentFilePath;
+
+        try {
+            const response = await fetch('/repoDetail/create-file', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ repoId, fileName, filePath}),
+            });
+
+            if (!response.ok) throw new Error('파일 생성 실패');
+            alert(await response.text());
+            location.reload();  // 파일 생성 후 페이지 새로 고침
+        } catch (err) {
+            alert('오류 발생: ' + err.message);
+        }
+    }
+</script>
+<script>
+    function toggleDropdown() {
+        const dropdown = document.querySelector('.dropdown');
+        dropdown.classList.toggle('show');
+    }
+
+    // Open upload modal
+    function openUploadModal() {
+        document.getElementById('upload-modal').style.display = 'block';
+        document.getElementById('modal-overlay').style.display = 'block';
+    }
+
+    // Close upload modal
+    function closeUploadModal() {
+        document.getElementById('upload-modal').style.display = 'none';
+        document.getElementById('modal-overlay').style.display = 'none';
+    }
+
+    // function createFile() {
+    //     alert('Create new file clicked!');
+    // }
+
+    // function uploadFiles() {
+    //     alert('Upload files clicked!');
+    // }
+
+    // Close dropdown if clicked outside
+    window.addEventListener('click', (e) => {
+        const dropdown = document.querySelector('.dropdown');
+        if (!dropdown.contains(e.target)) {
+            dropdown.classList.remove('show');
+        }
+    });
+
+    // Close modal when clicking overlay
+    document.getElementById('modal-overlay').addEventListener('click', closeUploadModal);
+</script>
+</body>

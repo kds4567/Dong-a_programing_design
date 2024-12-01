@@ -6,6 +6,51 @@ const multer = require('multer');
 
 let currentFilePath = '';
 
+// 요구 사항 분석
+router.post('/requirements', (req, res) => {
+    const content = req.body.content; // 명령어 내용 받기
+    const lines = content.split('\n'); // 줄 단위로 분리
+    let result = [];
+
+    const requiredConditions = {
+        "A": ["s(0) = 0", "s(1) = 1", "fact(x) = s(x)"],
+        "B": ["wirte(x)", "fact(x+1) = (x+1) * fact(x)", "call(A)"],
+        "user": ["wirte(x)", "fact(5, x)", "Call(B)"]
+    };
+
+    // 분석 함수
+    const analyzeLine = (line) => {
+        const [key, value] = line.split('=').map((part) => part.trim());
+
+        if (!requiredConditions[key]) {
+            return `정의되지 않은 변수 "${key}"`;
+        }
+
+        const conditions = requiredConditions[key];
+        if (!conditions.includes(value)) {
+            return `변수 "${key}"에서 조건 "${value}"이(가) 필요 조건에 맞지 않음`;
+        }
+        return null; // 문제가 없으면 null 반환
+    };
+
+    // 각 줄 분석
+    lines.forEach((line, index) => {
+        if (!line.trim()) return; // 빈 줄은 스킵
+        const error = analyzeLine(line);
+        if (error) {
+            result.push(`줄 ${index + 1}: ${error} `);
+        }
+    });
+    result = result.join('\n');
+
+    // 결과 반환
+    if (result.length === 0) {
+        res.send({ status: "문제 없음", answer: null });
+    } else {
+        res.send({ status: "문제 있음\n", answer: result });
+    }
+});
+
 // 파일 내용 반환 라우터 (보안 강화 및 경로 확인 추가)
 router.get('/file-content', (req, res) => {
     console.log("파일 선택함");
