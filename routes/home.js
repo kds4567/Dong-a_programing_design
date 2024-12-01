@@ -15,16 +15,35 @@ router.get('/', (req, res) => {
     const message = req.session.message;
     delete req.session.message; // 메시지 사용 후 삭제
     const ownerId = req.session.user ? req.session.user.Id : null;
-    const query1 = 'SELECT Id, Name FROM repo WHERE Owner_id = ?';
+    const query1 = 'SELECT Id, Description, Name, Updated FROM repo WHERE Owner_id = ?';
+    const query2 = 'SELECT Name, Views, Updated FROM repo WHERE Owner_id = ? ORDER BY views DESC LIMIT 1';
+    const query3 = 'SELECT Id, Name, Views, viewed_at FROM recent_view INNER JOIN repo ON repo.ID = recent_view.post_id WHERE user_id = ? AND viewed_at = ( SELECT MAX(viewed_at) FROM recent_view WHERE user_id = ?)';
 
-    // 아래 처럼 db쿼리 사용 가능(req.db)
-    req.db.query(query1, [ownerId], (err, results) => {
-        if (err) {
-            console.error('Error executing query:', err.stack);
-            return res.status(500).send('Error executing query');
-        }
-        res.render('home', { data: results, user: req.session.user, message });
+    const query1Promise = new Promise((resolve, reject) => {
+        req.db.query(query1,[ownerId], (err, results) => {
+            if (err) reject(err);
+            else resolve(results);
+            });
     });
+    const query2Promise = new Promise((resolve, reject) => {
+        req.db.query(query2,[ownerId], (err, results2) => {
+            if (err) reject(err);
+            else resolve(results2);
+            });
+    });
+    const query3Promise = new Promise((resolve, reject) => {
+        req.db.query(query3,[ownerId, ownerId], (err, results3) => {
+            if (err) reject(err);
+            else resolve(results3);
+            });
+    });
+    Promise.all([query1Promise, query2Promise, query3Promise]).then(([results, results2, results3]) => {
+        res.render('home',{ data: results, data2: results2, data3: results3, user:  req.session.user, message});
+    })
+        .catch(err => {
+            console.error('Error executing query:', err.stack);
+            res.status(500).send('Error executing query');
+        });
 });
 
 // 레포지토리 생성 처리
