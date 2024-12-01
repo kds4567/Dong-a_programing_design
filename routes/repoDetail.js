@@ -12,7 +12,6 @@ router.get('/file-content', (req, res) => {
 
     // query로 받은 경로를 안전하게 처리 (절대 경로로 변환)
     const filePath = req.query.path;
-    currentFilePath = path.join(filePath, '..');
 
     // 파일 존재 여부 확인
     fs.exists(filePath, (exists) => {
@@ -94,8 +93,9 @@ router.get('/:id', async (req, res) => {
             console.error('파일 목록이 비어 있습니다.');
             return res.status(404).send('해당 레포지토리에 파일이 없습니다.');
         }
-
-        currentFilePath = files[0].Path;
+        if(files[0] != null){
+            currentFilePath = files[0].Path;
+        }
         console.log(currentFilePath);
         const readmeFile = files.find(file => file.File_name === 'README.md');
         const initialFilePath = readmeFile ? readmeFile.Path : null;
@@ -122,7 +122,7 @@ router.get('/:id', async (req, res) => {
             })),
             isOwner: isOwner,  // 주인 여부를 클라이언트로 전달
             repoId: repoId,
-            initialFilePath: currentFilePath
+            initialFilePath: initialFilePath
         });
     } catch (err) {
         console.error(err);
