@@ -330,10 +330,10 @@
                     <% data.forEach(r => { %>
                         <div class="col-lg-4 col-sm-6">
                             <div class="blog-card">
-                                <a href="/share2">
+                                <a href="/repoDetail/<%= r.Id %>">
                                 </a>
                                 <div class="blog-card-text">
-                                    <h3><a href="/share2"><%= r.Owner_id %><%= r.Name %></a></h3>
+                                    <h3><a href="/repoDetail/<%= r.Id %>"><%= r.Owner_id %><%= r.Name %></a></h3>
                                     <ul>
                                         <li>
                                             <i class="las la-calendar"></i>
