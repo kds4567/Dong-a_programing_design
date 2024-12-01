@@ -76,8 +76,8 @@ router.get('/:id', async (req, res) => {
         });
 
         // 세션에서 현재 사용자 ID와 이름 가져오기
-        const currentUserId = req.session.user.Id; // 사용자 ID
-        const currentUsername = req.session.user.Name;
+        const currentUserId = req.session.user ? req.session.user.Id : null; // 사용자 ID
+        const currentUsername = req.session.user ? req.session.user.Name : 'Guest'; // 기본값 설정
         console.log(currentUsername);
 
         // 레포지토리의 주인과 비교
@@ -90,18 +90,25 @@ router.get('/:id', async (req, res) => {
             });
         });
 
+        if (files.length === 0) {
+            console.error('파일 목록이 비어 있습니다.');
+            return res.status(404).send('해당 레포지토리에 파일이 없습니다.');
+        }
+
         currentFilePath = files[0].Path;
         console.log(currentFilePath);
         const readmeFile = files.find(file => file.File_name === 'README.md');
         const initialFilePath = readmeFile ? readmeFile.Path : null;
 
         // 현재 사용자와 레포지토리 ID를 사용하여 recent_views에 삽입
-        await new Promise((resolve, reject) => {
-            req.db.query(currentview, [currentUserId, repoId], (err, result) => {
-                if (err) reject(err);
-                else resolve(result);
+        if (currentUserId) {
+            await new Promise((resolve, reject) => {
+                req.db.query(currentview, [currentUserId, repoId], (err, result) => {
+                    if (err) reject(err);
+                    else resolve(result);
+                });
             });
-        });
+        }
 
         res.render('repoDetail', {
             repoName: repoInfo.Name,
