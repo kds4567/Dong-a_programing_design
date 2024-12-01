@@ -526,7 +526,7 @@
                 
                 <div class="col-lg-2 col-sm-6">
                     <div class="footer-widget pl-50">
-                        <h3>Font-end</h3>
+                        <h3>Front-end</h3>
 
                         <ul class="footer-text">
                             <li>
@@ -591,13 +591,16 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
         <script>
-            let start = '<%= initialFilePath %>';
-            if (start != null){
-                console.log('initialFilePath : ', start);
-                loadFile(start);
-            }
-            let currentFilePath = start;
+            let currentFilePath = '<%= initialFilePath %>';
             let currentRepoId = '<%= repoId %>';
+
+            /* 원래 레포 들어가면 바로 README.md파일 load하는 조건문*/
+            /* 잠시 보류 */
+            /*
+            if(currentFilePath !== ''){
+                loadFile(currentFilePath);
+            }
+            */
 
             async function loadFile(filePath) {
                 try {
