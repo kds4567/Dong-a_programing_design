@@ -592,7 +592,7 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
         <script>
             let start = '<%= initialFilePath %>';
-            if (start){
+            if (start != null){
                 console.log('initialFilePath : ', start);
                 loadFile(start);
             }
