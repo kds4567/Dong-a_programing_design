@@ -5,26 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= repoName %> - Repository</title>
     <style>
-        body {
-            display: flex;
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-        .sidebar {
-            width: 300px;
-            background-color: #f4f4f4;
-            border-right: 1px solid #ddd;
-            padding: 20px;
-            overflow-y: auto;
-            box-sizing: border-box;
-        }
-        .content {
-            flex-grow: 1;
-            padding: 20px;
-            overflow-y: auto;
-            box-sizing: border-box;
-        }
         .file-content {
             white-space: pre-wrap;
             background: #f9f9f9;
@@ -45,11 +25,19 @@
             border: 1px solid #ddd;
             box-sizing: border-box;
         }
+        /* 버튼을 감싸는 컨테이너 스타일 */
+        .button-container {
+            display: flex; /* Flexbox 사용 */
+            gap: 1px; /* 버튼 간 간격 */
+            /* margin-bottom: 20px; */
+        }
         .repo-actions {
             text-align: right;
             margin-bottom: 20px;
         }
         .repo-actions button {
+            width: 130px;
+            margin-right: 20px;
             padding: 10px;
             background-color: #f44336;
             color: white;
@@ -102,16 +90,340 @@
             border-radius: 5px;
             cursor: pointer;
         }
+        .editor-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .save-file button {
+            width: 130px;
+            /* margin-left: 10px; */
+            margin-right: 20px;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .save-file button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
         .upload-section button:disabled {
             background-color: #ccc;
         }
+
+        /* create 버튼 및 upload 버튼*/
+        .dropdown {
+            position: relative;
+            z-index: 10; /* z-index를 높여서 버튼이 앞에 나오게 함 */
+            background-color: white; /* 배경색 추가로 더 잘 보이도록 */
+            display: inline-block;
+        }
+
+        .dropdown-button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: white;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            z-index: 10;
+            overflow: hidden;
+        }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 10px 20px;
+            text-decoration: none;
+            color: black;
+            font-size: 14px;
+        }
+
+        .dropdown-menu a:hover {
+            background-color: #f0f0f0;
+        }
+
+        .dropdown.show .dropdown-menu {
+            display: block;
+        }
+
+        /* Upload Modal Styling */
+        .upload-modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 400px;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            padding: 20px;
+            z-index: 1000;
+        }
+
+        .upload-modal h2 {
+            margin-bottom: 20px;
+            font-size: 22px;
+        }
+
+        .upload-modal label {
+            margin-right: 10px;
+        }
+
+        .upload-modal button {
+            margin-top: 20px;
+            background-color: #28a745;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .upload-modal button:hover {
+            background-color: #218838;
+        }
+
+        /* Modal background overlay */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .footer-area {
+            margin-top: auto;
+        }
+        /* 메인 콘텐츠 영역 */
+        .content {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 160px 20px 10px; /* 상단바 높이만큼 padding 추가 */
+        }
+
+        .sidebar {
+            width: 25%; /* 사이드바 크기 */
+            background-color: #f4f4f4;
+            padding: 20px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .main-content {
+            width: 70%;
+            padding: 20px;
+            background-color: #fff;
+        }
+
+        .editor-header, .file-list, .file-content, .editor {
+            margin-bottom: 20px;
+        }
+
+        .editor {
+            width: 100%;
+            height: 300px;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+
+        /* 상단바 스타일 */
+        .header {
+            background-color: #333;
+            color: white;
+            padding: 15px 20px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-links a {
+            color: white;
+            margin: 0 10px;
+            text-decoration: none;
+        }
+
+        .header-actions .logout {
+            background-color: #ff6b6b;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+        }
+
+
     </style>
+    <!--top bar css-->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/line-awesome.min.css">
+    <link rel="stylesheet" href="/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/responsive.css">
 </head>
+
 <body>
-<div class="sidebar">
-    <h3>Directories</h3>
-    <div class="file-list">
-        <% files.forEach(file => { %>
+<!--top bar-->
+<header class="header-area">
+    <div class="top-header">
+        <div class="container">
+            <div class="row align-items-center justify-content-center">
+                <div class="col-lg-6 col-sm-6">
+                    <ul class="left-info">
+                        <li>
+                            <a href="mailto:hello@atorn.com">
+                                <i class="las la-envelope"></i>
+                                swdesign@donga.ac.kr
+                            </a>
+                        </li>
+                        <li>
+                            <a href="tel:+823-456-879">
+                                <i class="las la-phone"></i>
+                                +82 1234 5678
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-6 col-sm-6">
+                    <ul class="right-info">
+                        
+                        <li class="heder-btn">
+                            <!--myrepository 생성 html 연결-->
+                            <a href="/logout">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Start Navbar Area -->
+    <div class="navbar-area">
+        <div class="atorn-responsive-nav">
+            <div class="container">
+                <div class="atorn-responsive-menu">
+                    <div class="logo">
+                            <img src="/images/Donga_logo1.png" class="logo1" alt="logo">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="atorn-nav">
+            <div class="container">
+                <nav class="navbar navbar-expand-md navbar-light">
+                    <a class="navbar-brand">
+                        <img src="/images/Donga_logo1.png" class="logo1" alt="logo">
+                    </a>
+
+                    <div class="collapse navbar-collapse mean-menu">
+                        <ul class="navbar-nav ms-auto">
+                            <!--<li class="nav-item">
+                                <a href="" class="nav-link">
+                                    My Repository
+                                </a>
+                            </li>-->
+                            <li class="nav-item">
+                                <!--가이드 페이지 html 연결-->
+                                <a href="/" class="nav-link">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <!--가이드 페이지 html 연결-->
+                                <a href="/#ct-real" class="nav-link">Share Repo</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    FAQ <i class="las la-angle-down"></i>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li class="nav-item">
+                                        <!--FAQ html 연결-->
+                                        <a href="" class="nav-link">FAQ 작성</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="" class="nav-link">자주 묻는 질문</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <!--가이드 페이지 html 연결-->
+                                <a href="" class="nav-link">Guide Page</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="javascript:void(0)" class="nav-link search-box">
+                                    <i class="las la-search"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <!-- End Navbar Area -->
+   
+</header>
+
+    
+<main class="content">
+    
+    <div class="sidebar">
+        <!-- Sidebar 내용 -->
+        <div class="editor-header">
+            <h2>Files</h2>
+            <div class="dropdown">
+                <button class="dropdown-button" onclick="toggleDropdown()">+</button>
+                <div class="dropdown-menu">
+                    <a href="#" onclick="createFile('<%= repoId %>')">Create file</a>
+                    <a href="#" onclick="openUploadModal()">Upload file</a>
+                </div>
+            </div>
+            <div class="modal-overlay" id="modal-overlay"></div>
+            <div class="upload-modal" id="upload-modal">
+                <label for="file-upload">파일 업로드:</label>
+                <input type="file" id="file-upload" name="file">
+                <input type="hidden" name="repoId" value="<%= repoId %>">
+                <button onclick="uploadFile()">Upload</button>
+            </div>
+        </div>
+
+        <div class="file-list">
+            <% files.forEach(file => { %>
             <div>
                 <% if (file.isFolder) { %>
                     📁 <%= file.File_name %>
@@ -123,194 +435,351 @@
                     <% } %>
                 <% } %>
             </div>
-        <% }); %>
-    </div>
-    <% if (isOwner) { %>
-        <button onclick="createFile('<%= repoId %>')">Create File</button>
-    <% } %>
-</div>
-
-<div class="content">
-    <div class="repo-actions">
-        <% if (isOwner) { %>
-            <button onclick="deleteRepo('<%= repoId %>')">Delete Repository</button>
-        <% } %>
-    </div>
-
-    <h1>File Viewer & Editor</h1>
-    <div id="file-content" class="file-content">파일을 선택해주세요.</div>
-    <textarea id="editor" class="editor" placeholder="파일 내용을 편집하세요."></textarea>
-
-    <% if (isOwner) { %>
-        <button onclick="saveFile()">Save File</button>
-    <% } else { %>
-        <button disabled>Save File</button>
-    <% } %>
-
-    <!-- 파일 업로드 섹션 -->
-    <% if (isOwner) { %>
-        <div class="upload-section">
-            <label for="file-upload">파일 업로드:</label>
-            <input type="file" id="file-upload" name="file">
-            <input type="hidden" name="repoId" value="<%= repoId %>">
-            <button onclick="uploadFile()">Upload</button>
+            <% }); %>
         </div>
-    <% } %>
-</div>
+    </div>
 
-<script>
-    let start = '<%= initialFilePath %>';
-    if (start){
-        console.log('initialFilePath : ', start);
-        loadFile(start);
-    }
-    let currentFilePath = start;
-    let currentRepoId = '<%= repoId %>';
+    <div class="main-content">
+        <div class="editor-header">
+            <h1>File Viewer</h1>
+            <div class="button-container">
+                <div class="save-file">
+                    <% if (isOwner) { %>
+                        <button onclick="saveFile()">Save File</button>
+                    <% } else { %>
+                        <button disabled>Save File</button>
+                    <% } %>
+                </div>
+                <div class="repo-actions">
+                    <% if (isOwner) { %>
+                        <button onclick="deleteRepo('<%= repoId %>')">Delete Repo</button>
+                    <% } %>
+                </div>
+            </div>
+        </div>
 
-    async function loadFile(filePath) {
-        try {
-            const response = await fetch(`/repoDetail/file-content?path=${encodeURIComponent(filePath)}`);
-            currentFilePath = filePath;
-            console.log('loadFile() 경로: ', currentFilePath);
-            if (!response.ok) throw new Error('파일을 불러올 수 없습니다.');
-            const content = await response.text();
-            document.getElementById('file-content').textContent = content;
-            document.getElementById('editor').value = content;
-        } catch (err) {
-            alert('오류 발생: ' + err.message);
-        }
-    }
+        <div id="file-content" class="file-content">파일을 선택해주세요.</div>
 
-    async function saveFile() {
-        const content = document.getElementById('editor').value;
-        if (!currentFilePath) {
-            alert('저장할 파일이 선택되지 않았습니다.');
-            return;
-        }
+        <h1>Editor</h1>
+        <textarea id="editor" class="editor" placeholder="파일 내용을 편집하세요."></textarea>
+    </div>
+</main>
 
-        console.log('saveFile() 경로:', currentFilePath);
-        console.log('savdFile() 내용:', content);
 
-        try {
-            const response = await fetch('/repoDetail/edit-file', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ filePath: currentFilePath, content }),
+
+
+    <footer class="footer-area pt-100 pb-70">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-5 col-sm-6">
+                    <div class="footer-widget">
+                        <div class="logo">
+                            <img src="/images/Donga_logo2.png" alt="logo">
+                        </div>
+                        <p>You can design better software through Dong-A University design code, and get better design code ideas through the sharing page.</p>
+
+                        <ul class="footer-socials">
+                            <li>
+                                <a href="https://www.facebook.com/login/" target="_blank">
+                                    <i class="lab la-facebook-f"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://twitter.com/i/flow/login" target="_blank">
+                                    <i class="lab la-twitter"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://www.instagram.com/" target="_blank">
+                                    <i class="lab la-instagram"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://www.google.co.uk/" target="_blank">
+                                    <i class="lab la-google-plus"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-sm-6">
+                    <div class="footer-widget">
+                        <h3>PM</h3>
+                
+                        <ul class="footer-text">
+                            <li>
+                                <a href="">
+                                    <i class="las la-star"></i>
+                                    Juseok Son
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/myrepo">
+                                    <i class="las la-star"></i>
+                                    Daeseong Kim
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="col-lg-2 col-sm-6">
+                    <div class="footer-widget pl-50">
+                        <h3>Font-end</h3>
+
+                        <ul class="footer-text">
+                            <li>
+                                <a href="">
+                                    <i class="las la-star"></i>
+                                    Jaeung Lee
+                                </a>
+                            </li>
+                            <li>
+                                <a href="">
+                                    <i class="las la-star"></i>
+                                    Subin Choi
+                                </a>
+                            </li>
+                            <li>
+                                <a href="">
+                                    <i class="las la-star"></i>
+                                    Yeonghun Jeong
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-sm-6">
+                    <div class="footer-widget pl-50">
+                        <h3>Back-end</h3>
+
+                        <ul class="footer-text">
+                            <li>
+                                <a href="">
+                                    <i class="las la-star"></i>
+                                    Heewoong Jang
+                                </a>
+                            </li>
+                            <li>
+                                <a href="">
+                                    <i class="las la-star"></i>
+                                    Minsu Kim
+                                </a>
+                            </li>
+                            <li>
+                                <a href="">
+                                    <i class="las la-star"></i>
+                                    Sehyeon Kim
+                                </a>
+                            </li>
+                            <li>
+                                <a href="">
+                                    <i class="las la-star"></i>
+                                    Seongmin Im
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        <script>
+            let start = '<%= initialFilePath %>';
+            if (start){
+                console.log('initialFilePath : ', start);
+                loadFile(start);
+            }
+            let currentFilePath = start;
+            let currentRepoId = '<%= repoId %>';
+
+            async function loadFile(filePath) {
+                try {
+                    const response = await fetch(`/repoDetail/file-content?path=${encodeURIComponent(filePath)}`);
+                    currentFilePath = filePath;
+                    console.log('loadFile() 경로: ', currentFilePath);
+                    if (!response.ok) throw new Error('파일을 불러올 수 없습니다.');
+                    const content = await response.text();
+                    document.getElementById('file-content').textContent = content;
+                    document.getElementById('editor').value = content;
+                } catch (err) {
+                    alert('오류 발생: ' + err.message);
+                }
+            }
+
+            async function saveFile() {
+                const content = document.getElementById('editor').value;
+                if (!currentFilePath) {
+                    alert('저장할 파일이 선택되지 않았습니다.');
+                    return;
+                }
+
+                console.log('saveFile() 경로:', currentFilePath);
+                console.log('savdFile() 내용:', content);
+
+                try {
+                    const response = await fetch('/repoDetail/edit-file', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ filePath: currentFilePath, content }),
+                    });
+                    if (!response.ok) throw new Error('파일 저장 실패');
+                    alert(await response.text());
+                    await loadFile(currentFilePath);
+                } catch (err) {
+                    alert('오류 발생: ' + err.message);
+                }
+            }
+
+            async function deleteFile(filePath, repoId) {
+                if (!filePath) {
+                    alert('삭제할 파일 경로가 없습니다.');
+                    return;
+                }
+                console.log('deleteFile() 경로 : ', filePath);
+                console.log('deleteFile() repoID : ', repoId);
+
+                const confirmDelete = confirm('정말로 이 파일을 삭제하시겠습니까?');
+                if (!confirmDelete) return;
+
+                try {
+                    const response = await fetch('/repoDetail/delete-file', {
+                        method: 'DELETE',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            filePath: filePath,
+                            repoId: repoId  // 서버에서 전달받은 repoId
+                        }),
+                    });
+                    if (!response.ok) throw new Error('파일 삭제 실패');
+                    alert(await response.text());
+                    location.reload();  // 삭제 후 페이지 새로 고침
+                } catch (err) {
+                    alert('오류 발생: ' + err.message);
+                }
+            }
+
+            async function deleteRepo(repoId) {
+                const confirmDelete = confirm('정말로 이 레포지토리를 삭제하시겠습니까?');
+                if (!confirmDelete) return;
+
+                try {
+                    const response = await fetch('/repoDetail/delete-repo', {
+                        method: 'DELETE',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            repoId: repoId
+                        }),
+                    });
+                    if (!response.ok) throw new Error('레포지토리 삭제 실패');
+                    alert(await response.text());
+                    window.location.href = '/';  // 레포지토리 삭제 후 메인 페이지로 이동
+                } catch (err) {
+                    alert('오류 발생: ' + err.message);
+                }
+            }
+
+            async function uploadFile() {
+                const fileInput = document.getElementById('file-upload');
+                const repoId = document.querySelector('input[name="repoId"]').value;
+                const file = fileInput.files[0];
+
+                if (!file) {
+                    alert('업로드할 파일을 선택해주세요.');
+                    return;
+                }
+
+                const formData = new FormData();
+                formData.append('file', file);
+                formData.append('repoId', repoId);
+
+                try {
+                    const response = await fetch('/repoDetail/upload-file', {
+                        method: 'POST',
+                        body: formData,
+                    });
+                    if (!response.ok) throw new Error('파일 업로드 실패');
+                    alert(await response.text());
+                    location.reload();  // 업로드 후 페이지 새로 고침
+                } catch (err) {
+                    alert('오류 발생: ' + err.message);
+                }
+            }
+
+            // 파일 생성 함수
+            async function createFile(repoId) {
+                const fileName = prompt('새 파일 이름을 입력하세요:');
+                if (!fileName) {
+                    alert('파일 이름을 입력해주세요.');
+                    return;
+                }
+                const filePath = currentFilePath;
+
+                try {
+                    const response = await fetch('/repoDetail/create-file', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ repoId, fileName, filePath}),
+                    });
+
+                    if (!response.ok) throw new Error('파일 생성 실패');
+                    alert(await response.text());
+                    location.reload();  // 파일 생성 후 페이지 새로 고침
+                } catch (err) {
+                    alert('오류 발생: ' + err.message);
+                }
+            }
+        </script>
+        <script>
+            function toggleDropdown() {
+                const dropdown = document.querySelector('.dropdown');
+                dropdown.classList.toggle('show');
+            }
+
+            // Open upload modal
+            function openUploadModal() {
+                document.getElementById('upload-modal').style.display = 'block';
+                document.getElementById('modal-overlay').style.display = 'block';
+            }
+
+            // Close upload modal
+            function closeUploadModal() {
+                document.getElementById('upload-modal').style.display = 'none';
+                document.getElementById('modal-overlay').style.display = 'none';
+            }
+
+            // function createFile() {
+            //     alert('Create new file clicked!');
+            // }
+
+            // function uploadFiles() {
+            //     alert('Upload files clicked!');
+            // }
+
+            // Close dropdown if clicked outside
+            window.addEventListener('click', (e) => {
+                const dropdown = document.querySelector('.dropdown');
+                if (!dropdown.contains(e.target)) {
+                    dropdown.classList.remove('show');
+                }
             });
-            if (!response.ok) throw new Error('파일 저장 실패');
-            alert(await response.text());
-            await loadFile(currentFilePath);
-        } catch (err) {
-            alert('오류 발생: ' + err.message);
-        }
-    }
 
-    async function deleteFile(filePath, repoId) {
-        if (!filePath) {
-            alert('삭제할 파일 경로가 없습니다.');
-            return;
-        }
-        console.log('deleteFile() 경로 : ', filePath);
-        console.log('deleteFile() repoID : ', repoId);
-
-        const confirmDelete = confirm('정말로 이 파일을 삭제하시겠습니까?');
-        if (!confirmDelete) return;
-
-        try {
-            const response = await fetch('/repoDetail/delete-file', {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    filePath: filePath,
-                    repoId: repoId  // 서버에서 전달받은 repoId
-                }),
-            });
-            if (!response.ok) throw new Error('파일 삭제 실패');
-            alert(await response.text());
-            location.reload();  // 삭제 후 페이지 새로 고침
-        } catch (err) {
-            alert('오류 발생: ' + err.message);
-        }
-    }
-
-    async function deleteRepo(repoId) {
-        const confirmDelete = confirm('정말로 이 레포지토리를 삭제하시겠습니까?');
-        if (!confirmDelete) return;
-
-        try {
-            const response = await fetch('/repoDetail/delete-repo', {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    repoId: repoId
-                }),
-            });
-            if (!response.ok) throw new Error('레포지토리 삭제 실패');
-            alert(await response.text());
-            window.location.href = '/';  // 레포지토리 삭제 후 메인 페이지로 이동
-        } catch (err) {
-            alert('오류 발생: ' + err.message);
-        }
-    }
-
-    async function uploadFile() {
-        const fileInput = document.getElementById('file-upload');
-        const repoId = document.querySelector('input[name="repoId"]').value;
-        const file = fileInput.files[0];
-
-        if (!file) {
-            alert('업로드할 파일을 선택해주세요.');
-            return;
-        }
-
-        const formData = new FormData();
-        formData.append('file', file);
-        formData.append('repoId', repoId);
-
-        try {
-            const response = await fetch('/repoDetail/upload-file', {
-                method: 'POST',
-                body: formData,
-            });
-            if (!response.ok) throw new Error('파일 업로드 실패');
-            alert(await response.text());
-            location.reload();  // 업로드 후 페이지 새로 고침
-        } catch (err) {
-            alert('오류 발생: ' + err.message);
-        }
-    }
-
-    // 파일 생성 함수
-    async function createFile(repoId) {
-        const fileName = prompt('새 파일 이름을 입력하세요:');
-        if (!fileName) {
-            alert('파일 이름을 입력해주세요.');
-            return;
-        }
-        const filePath = currentFilePath;
-
-        try {
-            const response = await fetch('/repoDetail/create-file', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ repoId, fileName, filePath}),
-            });
-
-            if (!response.ok) throw new Error('파일 생성 실패');
-            alert(await response.text());
-            location.reload();  // 파일 생성 후 페이지 새로 고침
-        } catch (err) {
-            alert('오류 발생: ' + err.message);
-        }
-    }
-</script>
-</body>
+            // Close modal when clicking overlay
+            document.getElementById('modal-overlay').addEventListener('click', closeUploadModal);
+        </script>
+    </body>
 </html>

@@ -4,24 +4,120 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>소프트웨어공학</title>
-    <link rel="stylesheet" href="/css/home.css"> <!-- 기존 CSS -->
+    <link rel="stylesheet" href="/css/home.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/3.6.95/css/materialdesignicons.css">
+    
+    <!--top bar css-->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/line-awesome.min.css">
+    <link rel="stylesheet" href="/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/responsive.css">
 </head>
 <body>
-<div class="top-bar">
-    <img src="/images/donga.png" alt="Donga Icon" class="icon">
-    <nav>
-        <div class="nav-links">
-            <input type="text" placeholder="Search Repository">
-            <a href="/search"><i class="fa fa-search"></i></a>
-            <a href="/">Home</a>
-            <a href="/guide">Guide</a>
-            <a href="/logout">Logout</a>
+<!--top bar-->
+<header class="header-area">
+    <div class="top-header">
+        <div class="container">
+            <div class="row align-items-center justify-content-center">
+                <div class="col-lg-6 col-sm-6">
+                    <ul class="left-info">
+                        <li>
+                            <a href="mailto:hello@atorn.com">
+                                <i class="las la-envelope"></i>
+                                swdesign@donga.ac.kr
+                            </a>
+                        </li>
+                        <li>
+                            <a href="tel:+823-456-879">
+                                <i class="las la-phone"></i>
+                                +82 1234 5678
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-6 col-sm-6">
+                    <ul class="right-info">
+                        
+                        <li class="heder-btn">
+                            <!--myrepository 생성 html 연결-->
+                            <a href="/logout">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
-    </nav>
-</div>
+    </div>
+
+    <!-- Start Navbar Area -->
+    <div class="navbar-area">
+        <div class="atorn-responsive-nav">
+            <div class="container">
+                <div class="atorn-responsive-menu">
+                    <div class="logo">
+                            <img src="/images/Donga_logo1.png" class="logo1" alt="logo">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="atorn-nav">
+            <div class="container">
+                <nav class="navbar navbar-expand-md navbar-light">
+                    <a class="navbar-brand">
+                        <img src="/images/Donga_logo1.png" class="logo1" alt="logo">
+                    </a>
+
+                    <div class="collapse navbar-collapse mean-menu">
+                        <ul class="navbar-nav ms-auto">
+                            <!--<li class="nav-item">
+                                <a href="" class="nav-link">
+                                    My Repository
+                                </a>
+                            </li>-->
+                            <li class="nav-item">
+                                <!--가이드 페이지 html 연결-->
+                                <a href="/" class="nav-link">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <!--가이드 페이지 html 연결-->
+                                <a href="/#ct-real" class="nav-link">Share Repo</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    FAQ <i class="las la-angle-down"></i>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li class="nav-item">
+                                        <!--FAQ html 연결-->
+                                        <a href="" class="nav-link">FAQ 작성</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="" class="nav-link">자주 묻는 질문</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <!--가이드 페이지 html 연결-->
+                                <a href="" class="nav-link">Guide Page</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="javascript:void(0)" class="nav-link search-box">
+                                    <i class="las la-search"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <!-- End Navbar Area -->
+</header>
 
 <div class="main-container">
     <main class="content">
@@ -41,7 +137,7 @@
                                                 <div class="m-b-25">
                                                     <img src="https://img.icons8.com/bubbles/100/000000/user.png" class="img-radius" alt="User-Profile-Image">
                                                 </div>
-                                                <h6 class="f-w-600"><%= user.Name %></h6>
+                                                <span id="namespace"><h6 class="f-w-800"><%= user.Name %></h6></span>
                                                 <p>SW Engineer</p>
                                                 <i class="mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
                                             </div>
@@ -59,7 +155,7 @@
                                                         <h6 class="text-muted f-w-400"><%= user.Phone || "No Phone Provided" %></h6>
                                                     </div>
                                                 </div>
-                                                <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Projects</h6>
+                                                <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Most View</h6>
                                                 <div class="row">
                                                     <div class="col-sm-6">
                                                         <p class="m-b-10 f-w-600">Recent</p>
@@ -155,6 +251,124 @@
         <% } %>
     </main>
 </div>
+<footer class="footer-area pt-100 pb-70">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-5 col-sm-6">
+                <div class="footer-widget">
+                    <div class="logo">
+                        <img src="/images/Donga_logo2.png" alt="logo">
+                    </div>
+                    <p>You can design better software through Dong-A University design code, and get better design code ideas through the sharing page.</p>
+
+                    <ul class="footer-socials">
+                        <li>
+                            <a href="https://www.facebook.com/login/" target="_blank">
+                                <i class="lab la-facebook-f"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://twitter.com/i/flow/login" target="_blank">
+                                <i class="lab la-twitter"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.instagram.com/" target="_blank">
+                                <i class="lab la-instagram"></i>
+                            </a>
+                        </li>
+                        <li>
+                             <a href="https://www.google.co.uk/" target="_blank">
+                                <i class="lab la-google-plus"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-lg-2 col-sm-6">
+                <div class="footer-widget">
+                    <h3>PM</h3>
+            
+                    <ul class="footer-text">
+                        <li>
+                            <a href="">
+                                <i class="las la-star"></i>
+                                Juseok Son
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/myrepo">
+                                <i class="las la-star"></i>
+                                Daeseong Kim
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="col-lg-2 col-sm-6">
+                <div class="footer-widget pl-50">
+                    <h3>Font-end</h3>
+
+                    <ul class="footer-text">
+                        <li>
+                            <a href="">
+                                <i class="las la-star"></i>
+                                Jaeung Lee
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <i class="las la-star"></i>
+                                Subin Choi
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <i class="las la-star"></i>
+                                Yeonghun Jeong
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-sm-6">
+                <div class="footer-widget pl-50">
+                    <h3>Back-end</h3>
+
+                    <ul class="footer-text">
+                        <li>
+                            <a href="">
+                                <i class="las la-star"></i>
+                                Heewoong Jang
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <i class="las la-star"></i>
+                                Minsu Kim
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <i class="las la-star"></i>
+                                Sehyeon Kim
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <i class="las la-star"></i>
+                                Seongmin Im
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
