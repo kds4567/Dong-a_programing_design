@@ -54,6 +54,8 @@ router.get('/:id', async (req, res) => {
         SET Views = Views + 1 
         WHERE Id = ?`;
 
+    const currentview = 'INSERT INTO recent_view (user_id, post_id) VALUES (?, ?) ON DUPLICATE KEY UPDATE viewed_at = CURRENT_TIMESTAMP';
+
     try {
         console.log('요청된 레퍼지토리 ID :', repoId);
 
@@ -73,7 +75,8 @@ router.get('/:id', async (req, res) => {
             });
         });
 
-        // 세션에서 현재 사용자 이름 가져오기
+        // 세션에서 현재 사용자 ID와 이름 가져오기
+        const currentUserId = req.session.user.Id; // 사용자 ID
         const currentUsername = req.session.user.Name;
         console.log(currentUsername);
 
@@ -91,6 +94,14 @@ router.get('/:id', async (req, res) => {
         console.log(currentFilePath);
         const readmeFile = files.find(file => file.File_name === 'README.md');
         const initialFilePath = readmeFile ? readmeFile.Path : null;
+
+        // 현재 사용자와 레포지토리 ID를 사용하여 recent_views에 삽입
+        await new Promise((resolve, reject) => {
+            req.db.query(currentview, [currentUserId, repoId], (err, result) => {
+                if (err) reject(err);
+                else resolve(result);
+            });
+        });
 
         res.render('repoDetail', {
             repoName: repoInfo.Name,
@@ -111,6 +122,7 @@ router.get('/:id', async (req, res) => {
         res.status(500).send('오류 발생');
     }
 });
+
 
 
 

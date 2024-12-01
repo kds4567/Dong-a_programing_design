@@ -11,12 +11,12 @@ router.get('/', (req, res) => {
 
 // 회원가입 처리
 router.post('/', (req, res) => {
-    const { username, password, name } = req.body;
+    const { username, password, name, email, phone } = req.body;
     const currentDate = new Date();
 
     req.db.query(
-        'INSERT INTO user (Username, Password, Name, created) VALUES (?, ?, ?, ?)',
-        [username, password, name, currentDate],
+        'INSERT INTO user (Username, Password, Name, Created, Email, Phone) VALUES (?, ?, ?, ?, ?, ?)',
+        [username, password, name, currentDate, email, phone],
         (err, results) => {
             if (err) {
                 console.error(err);
