@@ -189,7 +189,7 @@
                     <% data.forEach(row => { %>
                         <div class="rss-card">
                             <a href="/repoDetail/<%= row.Id %>">
-                                <h3><%= row.Name %></h3>
+                                <p><h3 style="display: inline;">Name: </h3> <%= row.Name || "No name" %></p>
                             </a>
                             <p><span id="description" >Description: </span><%= row.Description || "No Description" %></p>
                             <!--수정 예정-->
