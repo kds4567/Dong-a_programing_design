@@ -8,46 +8,84 @@ let currentFilePath = '';
 
 // 요구 사항 분석
 router.post('/requirements', (req, res) => {
-    const content = req.body.content; // 명령어 내용 받기
+    const content = req.body.content; // 입력받은 설계 코드
     const lines = content.split('\n'); // 줄 단위로 분리
-    let result = [];
+    let errors = []; // 에러 목록
 
-    const requiredConditions = {
-        "A": ["s(0) = 0", "s(1) = 1", "fact(x) = s(x)"],
-        "B": ["wirte(x)", "fact(x+1) = (x+1) * fact(x)", "call(A)"],
-        "user": ["wirte(x)", "fact(5, x)", "Call(B)"]
+    // 동적으로 의존성을 저장할 객체
+    const correctDependencies = {};
+
+    // 정의된 컴포넌트를 추적
+    const definedComponents = new Set();
+
+    // 첫 번째 줄을 읽고 분류
+    const requirename = lines.shift().trim();
+    let DependencyPattern;
+
+    // Fibonacci 관련 패턴
+    if (requirename.includes('fibonacci')) {
+        DependencyPattern = /^(컴\d+|user)\s*:\s*.+?(?:\^\(([^)]+)\))?$/;
+    }// Factorial 관련 패턴
+    else if (requirename.includes('factorial')) {
+        DependencyPattern = /^(컴\d+|user)\s*:\s*.+?(?:\^\(([^)]+)\))?$/;
+    }
+    else {
+        errors.push(`첫 번째 줄에서 유효한 분류를 찾을 수 없습니다: "${requirename}"`);
+        return res.send({ status: "문제 있음", answer: errors.join('\n') });
+    }
+
+    // 컴포넌트 분석 함수
+    const parseLine = (line) => {
+        const match = line.match(DependencyPattern); // 동적으로 패턴 적용
+        if (!match) {
+            return { error: `잘못된 형식: "${line}"` };
+        }
+        const [, name, dependencies] = match;
+        const dependenciesList = dependencies ? dependencies.split(',').map(dep => dep.trim()) : [];
+        return { name, dependencies: dependenciesList };
     };
 
-    // 분석 함수
-    const analyzeLine = (line) => {
-        const [key, value] = line.split('=').map((part) => part.trim());
-
-        if (!requiredConditions[key]) {
-            return `정의되지 않은 변수 "${key}"`;
-        }
-
-        const conditions = requiredConditions[key];
-        if (!conditions.includes(value)) {
-            return `변수 "${key}"에서 조건 "${value}"이(가) 필요 조건에 맞지 않음`;
-        }
-        return null; // 문제가 없으면 null 반환
-    };
-
-    // 각 줄 분석
+    // 입력 분석 및 검증
     lines.forEach((line, index) => {
-        if (!line.trim()) return; // 빈 줄은 스킵
-        const error = analyzeLine(line);
-        if (error) {
-            result.push(`줄 ${index + 1}: ${error} `);
+        line = line.trim();
+        if (!line) return; // 빈 줄 스킵
+
+        const parsed = parseLine(line);
+        if (parsed.error) {
+            errors.push(`줄 ${index + 1}: ${parsed.error}`);
+        } else {
+            const { name, dependencies } = parsed;
+
+            // 컴포넌트 정의 기록
+            definedComponents.add(name);
+
+            // 의존성 저장
+            if (!correctDependencies[name]) {
+                correctDependencies[name] = [];
+            }
+            correctDependencies[name] = [...new Set([...correctDependencies[name], ...dependencies])]; // 중복 제거
+
+            // 하드코딩된 의존성과 비교
+            if (!correctDependencies[name]) {
+                errors.push(`"${name}"는 허용되지 않는 컴포넌트입니다.`);
+            }
         }
     });
-    result = result.join('\n');
 
-    // 결과 반환
-    if (result.length === 0) {
+    // 정의되지 않은 컴포넌트 확인
+    Object.entries(correctDependencies).forEach(([name, dependencies]) => {
+        dependencies.forEach(dep => {
+            if (!definedComponents.has(dep)) {
+                errors.push(`"${dep}"가 정의되지 않았습니다.`);
+            }
+        });
+    });
+
+    // 최종 결과 반환
+    if (errors.length === 0) {
         res.send({ status: "문제 없음", answer: null });
     } else {
-        res.send({ status: "문제 있음\n", answer: result });
+        res.send({ status: "문제 있음", answer: errors.join('\n') });
     }
 });
 
