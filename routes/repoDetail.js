@@ -6,13 +6,57 @@ const multer = require('multer');
 
 let currentFilePath = '';
 
+// 요구 사항 분석
+router.post('/requirements', (req, res) => {
+    const content = req.body.content; // 명령어 내용 받기
+    const lines = content.split('\n'); // 줄 단위로 분리
+    let result = [];
+
+    const requiredConditions = {
+        "A": ["s(0) = 0", "s(1) = 1", "fact(x) = s(x)"],
+        "B": ["wirte(x)", "fact(x+1) = (x+1) * fact(x)", "call(A)"],
+        "user": ["wirte(x)", "fact(5, x)", "Call(B)"]
+    };
+
+    // 분석 함수
+    const analyzeLine = (line) => {
+        const [key, value] = line.split('=').map((part) => part.trim());
+
+        if (!requiredConditions[key]) {
+            return `정의되지 않은 변수 "${key}"`;
+        }
+
+        const conditions = requiredConditions[key];
+        if (!conditions.includes(value)) {
+            return `변수 "${key}"에서 조건 "${value}"이(가) 필요 조건에 맞지 않음`;
+        }
+        return null; // 문제가 없으면 null 반환
+    };
+
+    // 각 줄 분석
+    lines.forEach((line, index) => {
+        if (!line.trim()) return; // 빈 줄은 스킵
+        const error = analyzeLine(line);
+        if (error) {
+            result.push(`줄 ${index + 1}: ${error} `);
+        }
+    });
+    result = result.join('\n');
+
+    // 결과 반환
+    if (result.length === 0) {
+        res.send({ status: "문제 없음", answer: null });
+    } else {
+        res.send({ status: "문제 있음\n", answer: result });
+    }
+});
+
 // 파일 내용 반환 라우터 (보안 강화 및 경로 확인 추가)
 router.get('/file-content', (req, res) => {
     console.log("파일 선택함");
 
     // query로 받은 경로를 안전하게 처리 (절대 경로로 변환)
     const filePath = req.query.path;
-    currentFilePath = path.join(filePath, '..');
 
     // 파일 존재 여부 확인
     fs.exists(filePath, (exists) => {
@@ -54,6 +98,8 @@ router.get('/:id', async (req, res) => {
         SET Views = Views + 1 
         WHERE Id = ?`;
 
+    const currentview = 'INSERT INTO recent_view (user_id, post_id) VALUES (?, ?) ON DUPLICATE KEY UPDATE viewed_at = CURRENT_TIMESTAMP';
+
     try {
         console.log('요청된 레퍼지토리 ID :', repoId);
 
@@ -73,8 +119,9 @@ router.get('/:id', async (req, res) => {
             });
         });
 
-        // 세션에서 현재 사용자 이름 가져오기
-        const currentUsername = req.session.user.Name;
+        // 세션에서 현재 사용자 ID와 이름 가져오기
+        const currentUserId = req.session.user ? req.session.user.Id : null; // 사용자 ID
+        const currentUsername = req.session.user ? req.session.user.Name : 'Guest'; // 기본값 설정
         console.log(currentUsername);
 
         // 레포지토리의 주인과 비교
@@ -87,10 +134,26 @@ router.get('/:id', async (req, res) => {
             });
         });
 
-        currentFilePath = files[0].Path;
+        if (files.length === 0) {
+            console.error('파일 목록이 비어 있습니다.');
+            return res.status(404).send('해당 레포지토리에 파일이 없습니다.');
+        }
+        if(files[0] != null){
+            currentFilePath = files[0].Path;
+        }
         console.log(currentFilePath);
         const readmeFile = files.find(file => file.File_name === 'README.md');
         const initialFilePath = readmeFile ? readmeFile.Path : null;
+
+        // 현재 사용자와 레포지토리 ID를 사용하여 recent_views에 삽입
+        if (currentUserId) {
+            await new Promise((resolve, reject) => {
+                req.db.query(currentview, [currentUserId, repoId], (err, result) => {
+                    if (err) reject(err);
+                    else resolve(result);
+                });
+            });
+        }
 
         res.render('repoDetail', {
             repoName: repoInfo.Name,
@@ -104,13 +167,14 @@ router.get('/:id', async (req, res) => {
             })),
             isOwner: isOwner,  // 주인 여부를 클라이언트로 전달
             repoId: repoId,
-            initialFilePath: currentFilePath
+            initialFilePath: initialFilePath
         });
     } catch (err) {
         console.error(err);
         res.status(500).send('오류 발생');
     }
 });
+
 
 
 
