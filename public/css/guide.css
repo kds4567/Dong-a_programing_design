@@ -1,0 +1,244 @@
+/* Global Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    color: #333;
+    background: #f8f9fa; /* 부드러운 배경색 */
+}
+
+/* Hub Content Styles */
+.hub-content {
+    padding-top: 40px;
+    margin: 50px auto;
+    max-width: 1000px; /* 중앙 정렬 및 최대 너비 */
+    background: #fff; /* 박스 배경 흰색 */
+}
+
+/* Section Titles */
+.hub-content h2 {
+    color: #0056b3;
+    font-size: 1.8em;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 0.5em;
+    margin-bottom: 1em;
+}
+
+/* Paragraph Styling */
+.hub-content p {
+    margin-bottom: 1em;
+    line-height: 1.8; /* 가독성을 위한 줄 간격 */
+    font-size: 1.1em;
+}
+
+/* Unordered List */
+.hub-content ul {
+    list-style-type: disc;
+    padding-left: 1.5em;
+}
+
+/* Footer Styles */
+.hub-footer {
+    background: #222;
+    color: #fff;
+    text-align: center;
+    padding: 1.5em 0;
+    margin-top: 50px;
+    font-size: 0.9em;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1); /* 위쪽 그림자 */
+}
+
+.hub-footer p {
+    margin: 0;
+}
+
+/* 공통 섹션 스타일 */
+.intro-block, .features-block {
+    background: #ffffff;
+    padding: 20px 30px;
+    margin: 50px auto;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.intro-block h2, .features-block h2 {
+    color: #0056b3;
+    font-size: 1.8em;
+    border-bottom: 2px solid #0056b3;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.intro-block p, .features-block p {
+    font-size: 1.1em;
+    line-height: 1.8;
+    margin-bottom: 15px;
+}
+
+.features-block ul {
+    list-style-type: disc;
+    margin-left: 20px;
+}
+
+.features-block ul.details {
+    margin-left: 30px;
+    list-style-type: circle;
+    font-size: 1em;
+    color: #555;
+}
+
+.details{
+    padding: 10px;
+}
+
+.features-block strong{
+    color: #0056b3;
+    font-size: 1.2em;
+}
+
+/* Guide Section */
+.usage-guide {
+
+    margin: 50px auto;
+    max-width: 1000px;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    line-height: 1.8;
+    visibility: hidden; /* 처음에 숨김 */
+    
+}
+
+/* Section Titles */
+.usage-guide h2 {
+    color: #0056b3;
+    font-size: 1.8em;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 0.5em;
+    margin-bottom: 1em;
+}
+
+.usage-guide h3 {
+    color: #333;
+    font-size: 1.5em;
+    margin-top: 1.5em;
+}
+
+/* Paragraphs */
+.usage-guide p {
+    font-size: 1.1em;
+    margin-bottom: 1em;
+}
+
+/* Code Blocks */
+.usage-guide pre {
+    background-color: #f8f9fa;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    overflow-x: auto;
+    font-family: monospace;
+    font-size: 1em;
+    line-height: 1.6;
+    color: #333;
+}
+
+/* 문법 키워드 표 스타일 */
+.usage-guide table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 1.1em;
+    text-align: left;
+    background-color: #f8f9fa;
+}
+
+.usage-guide table th,
+.usage-guide table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.usage-guide table th {
+    background-color: #0056b3;
+    color: #fff;
+    font-weight: bold;
+    text-align: center;
+}
+
+.usage-guide table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.usage-guide table tr:hover {
+    background-color: #eaf3ff;
+}
+
+.usage-guide table td {
+    vertical-align: top;
+}
+.usage-guide pre:nth-child(even) {
+    background-color: #f4f4f4; /* 짝수 코드 블록의 배경색 */
+}
+
+/**/
+/* 목차 스타일 */
+.table-of-contents {
+    background: #f8f9fa;
+    padding: 15px 20px;
+    border-bottom: 1px solid #ddd;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.table-of-contents ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    position: relative;
+}
+
+.table-of-contents li {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.table-of-contents li:not(:last-child)::after {
+    content: "";
+    width: 2px;
+    height: 20px;
+    background: #ddd;
+    margin-left: 20px;
+    position: absolute;
+    right: -15px;
+}
+
+.table-of-contents a {
+    text-decoration: none;
+    color: #0056b3;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.table-of-contents a:hover {
+    color: #003d82;
+}
+
+
+.fadeIn {
+    opacity: 1;
+    animation: fadeIn 0.8s ease-out;
+    visibility: visible; /* 보이게 전환 */
+}

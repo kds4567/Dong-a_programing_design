@@ -1,13 +1,521 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Guide Page</title>
+    <link rel="stylesheet" href="/css/guide.css">
+
+    <!--top bar css-->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/line-awesome.min.css">
+    <link rel="stylesheet" href="/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/responsive.css">
 </head>
 <body>
-    <h1>가이드 페이지입니다.</h1>
-    <p>여기에 사용자 가이드를 작성하세요.</p>
-    <a href="/index">돌아가기</a>
+    <!--top bar-->
+    <header class="header-area">
+        <div class="top-header">
+            <div class="container">
+                <div class="row align-items-center justify-content-center">
+                    <div class="col-lg-6 col-sm-6">
+                        <ul class="left-info">
+                            <li>
+                                <a href="mailto:hello@atorn.com">
+                                    <i class="las la-envelope"></i>
+                                    swdesign@donga.ac.kr
+                                </a>
+                            </li>
+                            <li>
+                                <a href="tel:+823-456-879">
+                                    <i class="las la-phone"></i>
+                                    +82 1234 5678
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="col-lg-6 col-sm-6">
+                        <ul class="right-info">
+                            
+                            <li class="heder-btn">
+                                <!--myrepository 생성 html 연결-->
+                                <a href="/logout">Logout</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Start Navbar Area -->
+        <div class="navbar-area">
+            <div class="atorn-responsive-nav">
+                <div class="container">
+                    <div class="atorn-responsive-menu">
+                        <div class="logo">
+                                <img src="/images/Donga_logo1.png" class="logo1" alt="logo">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="atorn-nav">
+                <div class="container">
+                    <nav class="navbar navbar-expand-md navbar-light">
+                        <a class="navbar-brand">
+                            <img src="/images/Donga_logo1.png" class="logo1" alt="logo">
+                        </a>
+
+                        <div class="collapse navbar-collapse mean-menu">
+                            <ul class="navbar-nav ms-auto">
+                                <li class="nav-item">
+                                    <!--가이드 페이지 html 연결-->
+                                    <a href="/" class="nav-link">Home</a>
+                                </li>
+                                <li class="nav-item">
+                                    <!--가이드 페이지 html 연결-->
+                                    <a href="/#ct-real" class="nav-link">Share Repo</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        FAQ <i class="las la-angle-down"></i>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li class="nav-item">
+                                            <!--FAQ html 연결-->
+                                            <a href="" class="nav-link">FAQ 작성</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="" class="nav-link">자주 묻는 질문</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item">
+                                    <!--가이드 페이지 html 연결-->
+                                    <a href="/guide" class="nav-link">Guide Page</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="javascript:void(0)" class="nav-link search-box">
+                                        <i class="las la-search"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <!-- End Navbar Area -->
+    </header>
+
+    <nav class="table-of-contents">
+        <ul>
+            <li><a href="#section-intro">1. 동아설계코드란 무엇인가?</a></li>
+            <li><a href="#section-features">2. 동아설계코드의 특징 및 장점</a></li>
+            <li><a href="#section-usage-guide">3. 동아설계코드의 사용법 예제 가이드</a></li>
+            <li><a href="#section-examples">4. 동아설계코드의 예시</a></li>
+        </ul>
+    </nav>
+
+    <main class="hub-content">
+        <section class="intro" id="section-intro">
+            <div class="intro-block">
+                <h2>1. 동아설계코드란 무엇인가?</h2>
+                <p>
+                    동아설계코드는 작업 수행에 필요한 조건(사전 조건)과 작업 완료 후 보장되는 결과(사후 조건)를 명확히 정의하여 
+                    시스템을 설계하는 방식입니다.
+                </p>
+                <p>
+                    이 접근 방식은 기존의 "순방향 프로그래밍(forward programming)"과는 달리, 필요한 정보나 계산을 추적하여 
+                    거슬러 올라가는 과정이 포함되어 있어 "역방향 프로그래밍"의 특성을 띠고 있습니다.
+                </p>
+                <p>
+                    이 방식은 명확한 의존 관계, 효율적인 정보 추적, 결과 중심적 실행을 통해 복잡한 시스템을 간결하게 구현하고 
+                    유지보수성을 높입니다. 이제, 동아설계코드로 여러분의 시스템 설계 방식을 혁신하세요!
+                </p>
+            </div>
+        </section>
+        
+        <section class="features" id="section-features">
+            <div class="features-block">
+                <h2>2. 동아설계코드의 특징 및 장점</h2>
+                
+                <h3>특징</h3>
+                <ul>
+                    <li>
+                        <strong>조건 중심 실행</strong>
+                        <ul class="details">
+                            <li>프로그램은 특정 목표(예: fact(5) 계산)를 달성하기 위해 필요한 조건들을 탐색하며 실행됩니다.</li>
+                            <li>필요한 조건이 충족되지 않았다면, 이를 채우기 위한 이전 단계로 거슬러 올라가 계산합니다.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>계산 흐름의 역동성</strong>
+                        <ul class="details">
+                            <li>계산의 방향이 고정되어 있지 않고, 필요한 정보를 얻기 위해 양방향으로 진행됩니다.</li>
+                            <li>의존성 그래프를 따라 작업을 병렬적으로 진행하거나 필요한 부분만 추적합니다.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>계약 기반 설계</strong>
+                        <ul class="details">
+                            <li>각 작업(예: fact(x))은 특정 계약(예: fact(x) = x * fact(x-1))을 기반으로 정의됩니다.</li>
+                            <li>계약을 통해 요구 사항을 충족하며, 작업이 자동으로 올바른 방향으로 구성됩니다.</li>
+                        </ul>
+                    </li>
+                </ul>
+                
+                <h3>장점</h3>
+                <ul>
+                    <li>
+                        <strong>버그 감소</strong>
+                        <ul class="details">
+                            <li>런타임 오류 대신 계약 위반을 통해 문제를 조기에 발견할 수 있습니다.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>테스트 용이성</strong>
+                        <ul class="details">
+                            <li>계약에 따라 기대 결과를 쉽게 확인할 수 있습니다.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>효율적인 실행</strong>
+                        <ul class="details">
+                            <li>필요한 정보만 계산하므로 불필요한 작업을 줄입니다.</li>
+                            <li>병렬화를 통해 작업 속도를 향상시킬 수 있습니다.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>계약 기반 추적</strong>
+                        <ul class="details">
+                            <li>계산의 흐름이 명확하지 않아도 계약 조건을 통해 필요한 작업을 역으로 찾아감.</li>
+                            <li>복잡한 문제를 단순한 계약으로 분해 가능.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>동적 의존성 관리</strong>
+                        <ul class="details">
+                            <li>데이터 의존성을 동적으로 해결.</li>
+                            <li>실행 흐름이 유연하여 다양한 계산 패턴에 적용 가능.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>유지보수와 확장성</strong>
+                        <ul class="details">
+                            <li>각 계산 단계가 계약으로 정의되므로, 새로운 기능 추가나 변경 시 기존 시스템에 미치는 영향을 최소화.</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </section>
+        
+        
+        <section class="usage-guide" id="section-usage-guide">
+            <h2>3. 동아설계코드의 사용법 예제 가이드</h2>
+            
+            <h3>예제 가이드:</h3>
+            <pre>
+        컴1 : fib(0,1), fib(1,1), fib(x+2) = fib(x+1) + fib(x)
+        컴2 : write(x).fib(2,x)^(컴1)
+        컴3 : write(x).fib(3,x)^(컴1,컴2)
+        컴4 : write(x).fib(4,x)^(컴1,컴2,컴3)
+        컴5 : write(x).fib(5,x)^(컴1,컴3,컴4)
+        user: write(x).fib(5,x)^(컴5)
+            </pre>
+            
+            <h3>1. 노드 정의:</h3>
+            <p>노드는 특정 작업을 수행하거나 계산을 책임지는 단위를 의미합니다.</p>
+            <p><strong>형식:</strong></p>
+            <pre>&lt;노드 이름&gt; : &lt;작업&gt;. &lt;조건&gt;^(&lt;의존성&gt;)
+        예) 컴2 : write(x).fib(2,x)^(컴1)
+            컴2: 노드 이름
+            write(x): 실행 작업
+            fib(2,x): 계산 대상
+            ^(컴1): 의존성
+            </pre>
+        
+            <h3>2. 의존성 표현:</h3>
+            <p>계산 또는 작업이 완료되기 위해 필요한 다른 노드를 명시.</p>
+            <p><strong>형식:</strong> ^(&lt;노드1&gt;, &lt;노드2&gt;, ...)</p>
+            <p>(병렬 가능성은 기본적으로 허용되며, 명시적으로 설정 가능.)</p>
+        
+            <h3>3. 정의 노드:</h3>
+            <p>모든 계산의 근간이 되는 정의를 포함한 노드.</p>
+            <p><strong>예:</strong></p>
+            <pre>컴1 : fib(0,1), fib(1,1), fib(x+2) = fib(x+1) + fib(x)</pre>
+        
+            <h3>4. 작업 노드:</h3>
+            <p>계산을 수행하거나 결과를 출력하는 노드.</p>
+            <p><strong>예:</strong></p>
+            <pre>컴5 : write(x).fib(5,x)^(컴1,컴3,컴4)</pre>
+        
+            <h3>5. 결과 출력:</h3>
+            <p>사용자 요청을 처리하기 위한 최종 출력 노드.</p>
+            <p><strong>예:</strong></p>
+            <pre>user: write(x).fib(5,x)^(컴5)</pre>
+
+            <h3>문법 키워드</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>키워드</th>
+                        <th>설명</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>write(x)</td>
+                        <td>결과를 출력하는 작업</td>
+                    </tr>
+                    <tr>
+                        <td>fib, fact, D[][]</td>
+                        <td>사용자 정의 함수</td>
+                    </tr>
+                    <tr>
+                        <td>^(...)</td>
+                        <td>의존성 표현</td>
+                    </tr>
+                    <tr>
+                        <td>&lt;작업&gt;</td>
+                        <td>노드가 수행할 작업 (계산, 출력 등)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        <section class="usage-guide" id="section-examples">
+            <h2>4. 동아설계코드의 예시</h2>
+        
+            <h3>Fibonacci</h3>
+            <pre>
+        컴1 : fib(0,1), fib(1,1), fib(x+2) = fib(x+1) + fib(x)
+        컴2 : write(x).fib(2,x)^(컴1)
+        컴3 : write(x).fib(3,x)^(컴1,컴2)
+        컴4 : write(x).fib(4,x)^(컴1,컴2,컴3)
+        컴5 : write(x).fib(5,x)^(컴1,컴3,컴4)
+        user: write(x).fib(5,x)^(컴5)
+            </pre>
+        
+            <h3>Factorial</h3>
+            <pre>
+        컴1 : fact(0,1), fact(n) = n * fact(n-1)
+        컴2 : write(x).fact(1,x)^(컴1)
+        컴3 : write(x).fact(2,x)^(컴1,컴2)
+        컴4 : write(x).fact(3,x)^(컴1,컴3)
+        컴5 : write(x).fact(4,x)^(컴1,컴4)
+        컴6 : write(x).fact(5,x)^(컴1,컴5)
+        user: write(x).fact(5,x)^(컴6)
+            </pre>
+        
+            <h3>Dijkstra Shortest Path</h3>
+            <pre>
+        컴1 : graph(i, j, w) = {
+          (A, B, 15), (B, C, 21), (A, D, 12), (B, E, 7),
+          (D, E, 10), (E, F, 10), (F, G, 19),
+        }
+        
+        컴2 : write(D[i][j], check[i]).
+              D[i][j] = INF if i ≠ j else 0
+              check[i] = False for all i   # 거리 및 방문 상태 초기화
+        
+        컴2_1 : write(D[i][j], check[i]).
+              if D[i][j] is null or check[i] is null:  # 초기 데이터가 없을 경우
+                 D[i][j], check[i] = D[i][j], check[i]^(컴2)  # 컴2를 참조하여 초기화
+              else:
+                 return D[i][j], check[i]  # 저장된 데이터 반환
+        
+        컴3_1 : write(prev).
+                 prev = argmin(D[destination][prev]) where graph[current][prev] ≠ INF and !check[prev]^(컴1, 컴2_1)
+        
+        컴3 : write(D[prev][destination], check[current]).
+              D[prev][destination] = min(D[prev][destination], D[destination][current] + graph[current][prev])^(컴1, 컴2_1, 컴3_1)
+              check[current] = True   # 현재 노드 방문 처리
+              update D[i][j], check[i] in 컴2_1  # 갱신된 데이터를 컴2_1에 저장
+        
+        컴4 : write(D[source][destination]).D[source][destination]^(컴3)
+        
+        user : write(result).D[source][destination]^(컴4)
+            </pre>
+        </section>        
+    </main>
+    <footer class="footer-area pt-100 pb-70">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-5 col-sm-6">
+                    <div class="footer-widget">
+                        <div class="logo">
+                            <img src="/images/Donga_logo2.png" alt="logo">
+                        </div>
+                        <p>You can design better software through Dong-A University design code, and get better design code ideas through the sharing page.</p>
+    
+                        <ul class="footer-socials">
+                            <li>
+                                <a href="https://www.facebook.com/login/" target="_blank">
+                                    <i class="lab la-facebook-f"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://twitter.com/i/flow/login" target="_blank">
+                                    <i class="lab la-twitter"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://www.instagram.com/" target="_blank">
+                                    <i class="lab la-instagram"></i>
+                                </a>
+                            </li>
+                            <li>
+                                 <a href="https://www.google.co.uk/" target="_blank">
+                                    <i class="lab la-google-plus"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+    
+                <div class="col-lg-2 col-sm-6">
+                    <div class="footer-widget">
+                        <h3>PM</h3>
+                
+                        <ul class="footer-text">
+                            <li>
+                                <a href="">
+                                    <i class="las la-star"></i>
+                                    Juseok Son
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/myrepo">
+                                    <i class="las la-star"></i>
+                                    Daeseong Kim
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="col-lg-2 col-sm-6">
+                    <div class="footer-widget pl-50">
+                        <h3>Front-end</h3>
+    
+                        <ul class="footer-text">
+                            <li>
+                                <a href="">
+                                    <i class="las la-star"></i>
+                                    Jaeung Lee
+                                </a>
+                            </li>
+                            <li>
+                                <a href="">
+                                    <i class="las la-star"></i>
+                                    Subin Choi
+                                </a>
+                            </li>
+                            <li>
+                                <a href="">
+                                    <i class="las la-star"></i>
+                                    Yeonghun Jeong
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+    
+                <div class="col-lg-3 col-sm-6">
+                    <div class="footer-widget pl-50">
+                        <h3>Back-end</h3>
+    
+                        <ul class="footer-text">
+                            <li>
+                                <a href="">
+                                    <i class="las la-star"></i>
+                                    Heewoong Jang
+                                </a>
+                            </li>
+                            <li>
+                                <a href="">
+                                    <i class="las la-star"></i>
+                                    Minsu Kim
+                                </a>
+                            </li>
+                            <li>
+                                <a href="">
+                                    <i class="las la-star"></i>
+                                    Sehyeon Kim
+                                </a>
+                            </li>
+                            <li>
+                                <a href="">
+                                    <i class="las la-star"></i>
+                                    Seongmin Im
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
 </body>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+    // 모든 li 태그를 선택
+        const listItems = document.querySelectorAll('.features > ul > li');
+
+        listItems.forEach(item => {
+            item.addEventListener('click', function (e) {
+                e.stopPropagation(); // 이벤트 전파 방지
+                console.log('Clicked:', this); // 클릭된 요소 확인
+
+                const details = this.querySelector('.details');
+                if (details) {
+                    // display 상태를 정확히 토글
+                    if (details.style.display === 'none' || details.style.display === '') {
+                        details.style.display = 'block';
+                    } else {
+                        details.style.display = 'none';
+                    }
+                }
+            });
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const links = document.querySelectorAll('.table-of-contents a');
+
+        links.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80, // Header height adjustment
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    });
+    document.addEventListener('DOMContentLoaded', () => {
+        const usageGuides = document.querySelectorAll('.usage-guide');
+
+        usageGuides.forEach((section, index) => {
+            setTimeout(() => {
+                section.classList.add('fadeIn'); // fadeIn 클래스를 추가
+            }, 300 * index); // 섹션별 딜레이 추가
+        });
+    });
+
+    
+</script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </html>
+<!---->

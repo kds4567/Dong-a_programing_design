@@ -54,6 +54,7 @@ app.use('/index', require('./routes/index')); // my repository
 app.use('/repo', require('./routes/repo'));
 app.use('/repoDetail', require('./routes/repoDetail'));
 app.use('/myrepo', require('./routes/home'));
+app.use('/guide', require('./routes/guide'));
 
 // 서버 시작
 app.listen(PORT, () => {

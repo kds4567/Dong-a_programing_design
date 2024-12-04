@@ -74,11 +74,6 @@
 
                     <div class="collapse navbar-collapse mean-menu">
                         <ul class="navbar-nav ms-auto">
-                            <!--<li class="nav-item">
-                                <a href="" class="nav-link">
-                                    My Repository
-                                </a>
-                            </li>-->
                             <li class="nav-item">
                                 <!--가이드 페이지 html 연결-->
                                 <a href="/" class="nav-link">Home</a>
@@ -103,7 +98,7 @@
                             </li>
                             <li class="nav-item">
                                 <!--가이드 페이지 html 연결-->
-                                <a href="" class="nav-link">Guide Page</a>
+                                <a href="/guide" class="nav-link">Guide Page</a>
                             </li>
                             <li class="nav-item">
                                 <a href="javascript:void(0)" class="nav-link search-box">
@@ -214,34 +209,6 @@
                     <% }) %>
                 </div>  
             </div>
-            <!-- <div class= "mostview">
-                <% data2.forEach(row2 => { %>
-                    <h1>보유 repo중 가장 많은 조회수</h1>
-                    <h2>저장소 이름: <%= row2.Name %></h2>
-                    <h2>조회수: <%= row2.Views %></h2>
-                    <h2>마지막 업데이트: <%= new Date(row2.Updated).toLocaleString('ko-KR', {
-                        year: 'numeric',
-                        month: '2-digit',
-                        day: '2-digit',
-                        hour: '2-digit',
-                        minute: '2-digit',
-                        hour12: false
-                    }) %></h2>
-                <% }) %>
-            </div> -->
-            <!-- <% data3.forEach(row3 => { %>
-                <h1>최근본 저장소</h1>
-                <h2>저장소 이름: <%= row3.Name %></h2>
-                <h2>조회수: <%= row3.Views %></h2>
-                <h2>마지막 조회: <%= new Date(new Date(row3.viewed_at).getTime() + 9 * 60 * 60 * 1000).toLocaleString('ko-KR', {
-                    year: 'numeric',
-                    month: '2-digit',
-                    day: '2-digit',
-                    hour: '2-digit',
-                    minute: '2-digit',
-                    hour12: false
-                }) %></h2>
-            <% }) %> -->
             <% if (user.Username == 'admin') { %>
                 <a href="/user">유저 관리 페이지</a>
                 <a href="/repo">저장소 관리 페이지</a>
