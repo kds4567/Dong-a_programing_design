@@ -158,18 +158,17 @@
                                                 <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Most View</h6>
                                                 <div class="row">
                                                     <div class="col-sm-6">
-                                                        <p class="m-b-10 f-w-600">Recent</p>
                                                         <% data3.forEach(row3 => { %>
-                                                            <a href="/repoDetail/<%= row3.Id %>" class="text-muted f-w-400"><%= row3.Name %></a>
-                                                            <h6 class="text-muted f-w-400">조회수: <%= row3.Views %></h6>
-                                                            <h6 class="text-muted f-w-400">마지막 조회: <%= new Date(new Date(row3.viewed_at).getTime() + 9 * 60 * 60 * 1000).toLocaleString('ko-KR', {
+                                                            <a href="/repoDetail/<%= row3.Id %>" class="text-muted-a"><%= row3.Name %></a>
+                                                            <p class="text-muted f-w-400">조회수: <%= row3.Views %></p>
+                                                            <p class="text-muted f-w-400">마지막 조회: <%= new Date(new Date(row3.viewed_at).getTime() + 9 * 60 * 60 * 1000).toLocaleString('ko-KR', {
                                                                 year: 'numeric',
                                                                 month: '2-digit',
                                                                 day: '2-digit',
                                                                 hour: '2-digit',
                                                                 minute: '2-digit',
                                                                 hour12: false
-                                                            }) %></h6>
+                                                            }) %></p>
                                                         <% }) %>
                                                     </div>
                                                     
@@ -215,7 +214,7 @@
                     <% }) %>
                 </div>  
             </div>
-            <div class= "mostview">
+            <!-- <div class= "mostview">
                 <% data2.forEach(row2 => { %>
                     <h1>보유 repo중 가장 많은 조회수</h1>
                     <h2>저장소 이름: <%= row2.Name %></h2>
@@ -229,8 +228,8 @@
                         hour12: false
                     }) %></h2>
                 <% }) %>
-            </div>
-            <% data3.forEach(row3 => { %>
+            </div> -->
+            <!-- <% data3.forEach(row3 => { %>
                 <h1>최근본 저장소</h1>
                 <h2>저장소 이름: <%= row3.Name %></h2>
                 <h2>조회수: <%= row3.Views %></h2>
@@ -242,7 +241,7 @@
                     minute: '2-digit',
                     hour12: false
                 }) %></h2>
-            <% }) %>
+            <% }) %> -->
             <% if (user.Username == 'admin') { %>
                 <a href="/user">유저 관리 페이지</a>
                 <a href="/repo">저장소 관리 페이지</a>

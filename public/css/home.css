@@ -204,7 +204,7 @@ main.content button:hover {
     display: flex;
     flex-wrap: wrap; /* 카드들이 여러 줄로 배치되도록 설정 */
     gap: 15px; /* 카드 간 간격 */
-    justify-content: space-between; /* 카드들이 공간을 고르게 차지하도록 설정 */
+    /* justify-content: space-between; 카드들이 공간을 고르게 차지하도록 설정 */
 }
 
 /* RSS 카드 스타일 */
@@ -307,4 +307,11 @@ h6 {
 #description{
     color: #007BFF;
     font-weight: bold;
+}
+.text-muted{
+    margin: 5px;
+}
+.text-muted-a{
+    font-weight: bold;
+    font-size: 15px;
 }
