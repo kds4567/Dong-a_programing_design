@@ -15,8 +15,87 @@
     <link rel="stylesheet" href="/css/owl.carousel.min.css">
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/responsive.css">
+    <style>
+        /* 팝업창의 스타일 */
+        #popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            background-color: #f8f9fa; /* 배경색 변경 */
+            border-radius: 8px; /* 모서리 둥글게 */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* 그림자 추가 */
+            z-index: 1000; /* 다른 요소 위에 표시되도록 높은 z-index 값 설정 */
+        }
+
+        /* 팝업창 제목 스타일 */
+        #popup h3 {
+            margin-bottom: 15px;
+            font-weight: bold;
+            color: #343a40; /* 제목 색상 */
+        }
+
+        /* 텍스트 영역 스타일 */
+        #description {
+            color: black;
+            width: 100%; /* 너비를 100%로 설정 */
+            padding: 10px; /* 패딩 추가 */
+            border: 1px solid #ced4da; /* 테두리 색상 */
+            border-radius: 4px; /* 모서리 둥글게 */
+            resize: none; /* 크기 조절 방지 */
+        }
+
+        /* 팝업창 내 버튼들이 포함될 div 스타일 */
+        #popup .button-container {
+            text-align: right; /* 버튼을 우측 정렬 */
+        }
+
+        /* 버튼 스타일 */
+        button {
+            background-color: #34dbb4; /* 버튼 배경색 */
+            color: white; /* 버튼 글자색 */
+            border: none; /* 테두리 제거 */
+            padding: 10px 15px; /* 패딩 추가 */
+            border-radius: 4px; /* 모서리 둥글게 */
+            cursor: pointer; /* 커서 포인터로 변경 */
+            margin-right: 10px; /* 버튼 간격 추가 */
+        }
+
+        button:hover {
+            background-color: #0056b3; /* 버튼 hover 시 색상 변경 */
+        }
+
+        /* 배경 흐리게 처리 */
+        #overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7); /* 반투명 배경 색상 변경 */
+            z-index: 999; /* 팝업 뒤에 배경이 오도록 설정 */
+        }
+
+    </style>
 </head>
 <body>
+
+<!-- 팝업창 배경(overlay) -->
+<div id="overlay"></div>
+
+<!-- 팝업창 -->
+<div id="popup">
+    <h3>Repo 설명 입력</h3>
+    <textarea id="description" name="description" required placeholder="Repo 설명" rows="4" cols="50"></textarea>
+    <br><br>
+    <div class="button-container">
+        <button onclick="submitForm()">생성</button>
+        <button onclick="closePopup()">취소</button>
+    </div>
+</div>
 <!--top bar-->
 <header class="header-area">
     <div class="top-header">
@@ -64,6 +143,7 @@
                 </div>
             </div>
         </div>
+    </div>
 
         <div class="atorn-nav">
             <div class="container">
@@ -173,9 +253,9 @@
                                                     <li><a href="#" data-toggle="tooltip" title="Twitter"><i class="mdi mdi-twitter"></i></a></li>
                                                     <li><a href="#" data-toggle="tooltip" title="Instagram"><i class="mdi mdi-instagram"></i></a></li>
                                                     <li>
-                                                        <form action="/myrepo/createrepo" method="post" class="create-repo-form">
+                                                        <form id="repoForm" action="/myrepo/createrepo" method="post" class="create-repo-form">
                                                             <input type="text" id="repoName" name="Name" required placeholder="새 Repo 이름">
-                                                            <button type="submit">생성</button>
+                                                            <button type="button" onclick="showPopup()">생성</button>
                                                         </form>
                                                     </li>
                                                 </ul>
@@ -339,5 +419,33 @@
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script>
+    // 팝업창을 띄우는 함수
+    function showPopup() {
+        document.getElementById('popup').style.display = 'block';
+    }
+
+    // 폼을 제출하는 함수
+    function submitForm() {
+        // description 값을 가져옵니다.
+        var description = document.getElementById('description').value;
+
+        // description 값을 폼에 추가
+        var form = document.getElementById('repoForm');
+        var descriptionInput = document.createElement('input');
+        descriptionInput.type = 'hidden';
+        descriptionInput.name = 'description';
+        descriptionInput.value = description;
+        form.appendChild(descriptionInput);
+
+        // 폼 제출
+        form.submit();
+    }
+
+    // 팝업창을 닫는 함수
+    function closePopup() {
+        document.getElementById('popup').style.display = 'none';
+    }
+</script>
 </body>
 </html>
