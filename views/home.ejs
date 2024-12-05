@@ -446,6 +446,22 @@
     function closePopup() {
         document.getElementById('popup').style.display = 'none';
     }
+
+    // 엔터 키를 눌렀을 때 팝업을 표시하는 함수
+    document.getElementById('repoName').addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault(); // 기본 엔터 동작 방지 (폼 제출 방지)
+            showPopup(); // 팝업창 표시
+        }
+    });
+
+    // 팝업 내 텍스트 영역에서 엔터 키를 눌렀을 때 생성 버튼 클릭
+    document.getElementById('description').addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault(); // 기본 엔터 동작 방지
+            submitForm(); // 생성 버튼 클릭 효과
+        }
+    });
 </script>
 </body>
 </html>
