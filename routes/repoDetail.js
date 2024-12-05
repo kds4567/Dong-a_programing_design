@@ -12,31 +12,23 @@ router.post('/requirements', (req, res) => {
     const lines = content.split('\n'); // 줄 단위로 분리
     let errors = []; // 에러 목록
 
-    // 동적으로 의존성을 저장할 객체
-    const correctDependencies = {};
+    // 하드코딩된 의존성
+    const correctDependencies = {
+        "컴1": [],
+        "컴2": ["컴1"],
+        "컴3": ["컴1", "컴2"],
+        "컴4": ["컴1", "컴3"],
+        "컴5": ["컴1", "컴4"],
+        "컴6": ["컴1", "컴5"],
+        "user": ["컴6"]
+    };
 
     // 정의된 컴포넌트를 추적
     const definedComponents = new Set();
 
-    // 첫 번째 줄을 읽고 분류
-    const requirename = lines.shift().trim();
-    let DependencyPattern;
-
-    // Fibonacci 관련 패턴
-    if (requirename.includes('fibonacci')) {
-        DependencyPattern = /^(컴\d+|user)\s*:\s*.+?(?:\^\(([^)]+)\))?$/;
-    }// Factorial 관련 패턴
-    else if (requirename.includes('factorial')) {
-        DependencyPattern = /^(컴\d+|user)\s*:\s*.+?(?:\^\(([^)]+)\))?$/;
-    }
-    else {
-        errors.push(`첫 번째 줄에서 유효한 분류를 찾을 수 없습니다: "${requirename}"`);
-        return res.send({ status: "문제 있음", answer: errors.join('\n') });
-    }
-
     // 컴포넌트 분석 함수
     const parseLine = (line) => {
-        const match = line.match(DependencyPattern); // 동적으로 패턴 적용
+        const match = line.match(/^(컴\d+|user)\s*:\s*.+?(?:\^\(([^)]+)\))?$/);
         if (!match) {
             return { error: `잘못된 형식: "${line}"` };
         }
@@ -59,15 +51,17 @@ router.post('/requirements', (req, res) => {
             // 컴포넌트 정의 기록
             definedComponents.add(name);
 
-            // 의존성 저장
-            if (!correctDependencies[name]) {
-                correctDependencies[name] = [];
-            }
-            correctDependencies[name] = [...new Set([...correctDependencies[name], ...dependencies])]; // 중복 제거
-
             // 하드코딩된 의존성과 비교
             if (!correctDependencies[name]) {
                 errors.push(`"${name}"는 허용되지 않는 컴포넌트입니다.`);
+            } else {
+                const correctDeps = correctDependencies[name];
+                const missingDeps = correctDeps.filter(dep => !dependencies.includes(dep));
+                if (missingDeps.length > 0) {
+                    errors.push(
+                        `"${name}"의 의존성 ${missingDeps.map(dep => `"${dep}"`).join(', ')}가 누락되었습니다.`
+                    );
+                }
             }
         }
     });
@@ -88,6 +82,7 @@ router.post('/requirements', (req, res) => {
         res.send({ status: "문제 있음", answer: errors.join('\n') });
     }
 });
+
 
 // 파일 내용 반환 라우터 (보안 강화 및 경로 확인 추가)
 router.get('/file-content', (req, res) => {
