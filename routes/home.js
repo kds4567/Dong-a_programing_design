@@ -49,6 +49,7 @@ router.get('/', (req, res) => {
 // 레포지토리 생성 처리
 router.post('/createrepo', async (req, res) => {
     const repoName = req.body.Name;
+    const description = req.body.description;
     const ownerId = req.session.user ? req.session.user.Id : null;
 
     // 사용자 인증 확인
@@ -56,7 +57,7 @@ router.post('/createrepo', async (req, res) => {
         return res.status(401).send('사용자가 로그인하지 않았습니다.');
     }
 
-    const insertRepoQuery = "INSERT INTO repo (Name, Owner_id) VALUES (?, ?)";
+    const insertRepoQuery = "INSERT INTO repo (Name, Owner_id, Description) VALUES (?, ?, ?)";
     const checkRepoExistsQuery = "SELECT * FROM repo WHERE Name = ? AND Owner_id = ?";
     const insertFileQuery = `
         INSERT INTO file (Repo_id, File_name, Path, Created_at, Updated_at)
@@ -78,7 +79,7 @@ router.post('/createrepo', async (req, res) => {
 
         // 2. 데이터베이스에 레포지토리 정보 삽입
         const result = await new Promise((resolve, reject) => {
-            req.db.query(insertRepoQuery, [repoName, ownerId], (err, result) => {
+            req.db.query(insertRepoQuery, [repoName, ownerId, description], (err, result) => {
                 if (err) reject(err);
                 else resolve(result);
             });

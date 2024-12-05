@@ -172,10 +172,6 @@ router.get('/:id', async (req, res) => {
             });
         });
 
-        if (files.length === 0) {
-            console.error('파일 목록이 비어 있습니다.');
-            return res.status(404).send('해당 레포지토리에 파일이 없습니다.');
-        }
         if(files[0] != null){
             currentFilePath = files[0].Path;
         }
