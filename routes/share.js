@@ -10,7 +10,7 @@ router.use(bodyParser.urlencoded({ extended: true }));
 
 router.get('/', (req,res) => {
     const ownerId = req.session.user ? req.session.user.Id : null;
-    const query = "SELECT Id, Name, Views, Updated FROM repo ORDER BY Views DESC LIMIT 9";
+    const query = "SELECT Id, Name, Views, Updated, Description FROM repo ORDER BY Views DESC LIMIT 9";
     const query1 = 'SELECT Id, Name FROM repo WHERE Owner_id = ?';
 
     const queryPromise = new Promise((resolve, reject) => {
