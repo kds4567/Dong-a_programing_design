@@ -314,7 +314,7 @@ router.delete('/delete-repo', (req, res) => {
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         // 업로드 파일의 저장 경로를 currentFilePath로 설정
-        cb(null, currentFilePath);
+        cb(null, path.dirname(currentFilePath));
     },
     filename: (req, file, cb) => {
         // 파일 이름을 UTF-8로 변환하여 저장
@@ -341,7 +341,9 @@ router.post('/upload-file', upload, (req, res) => {
 
     // 파일 이름과 경로 설정
     const fileName = Buffer.from(file.originalname, 'latin1').toString('utf8');
-    const filePath = path.join(currentFilePath, fileName);
+    const filePath = path.join(path.dirname(currentFilePath), fileName);
+
+    console.log(`upload 파일 경로: ${filePath}`);
 
     // 파일 정보를 데이터베이스에 저장
     const insertFileQuery = `
@@ -368,7 +370,7 @@ router.post('/create-file', (req, res) => {
         fileName += '.txt';
     }
     // 저장할 디렉토리 경로 (예: 리포지토리 내부의 디렉토리 경로)
-    const directoryPath = path.join(filePath, '..');
+    const directoryPath = path.dirname(filePath);
     console.log('새로운 파일을 저장할 경로 : ', directoryPath);
 
     // 파일이 이미 존재하는지 확인
